@@ -1157,4 +1157,28 @@ async function verifyAuthCode(){
     st('s3');
   } catch(err){ g('e2').textContent = 'Неверный код: ' + err.message; st('s2'); }
 }
+
+  async function autoRestoreAccount(){
+  var savedEm = (localStorage.getItem('bc_em') || OWNER).toLowerCase();
+  try {
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
+    var docs = pRes.documents || [];
+    var existing = docs.find(function(d){ return (d.email || '').toLowerCase() === savedEm; });
+    if(existing){
+      me = existing;
+      localStorage.setItem('bc_uid', me.$id);
+      localStorage.setItem('bc_em', savedEm);
+      if(savedEm === OWNER && !me.is_dev){
+        me = await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', {
+          data: { is_dev: true, plan: 'ult', ult_em: me.ult_em || '👑' }
+        });
+      }
+      launchCloudApp();
+      return;
+    }
+  } catch(e){}
+  st('s1');
+}
+autoRestoreAccount();
+
 </script>
