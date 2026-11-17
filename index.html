@@ -1104,3 +1104,57 @@ checkUserSession();
 </script>
 </body>
 </html>
+<script>
+var EP = 'https://' + 'fra.cloud.' + 'appwrite.io' + '/v1';
+var PID = '6afaabcb000c658e4466';
+var DID = '6afaacf2001cf616a3a3';
+var OWNER = 'bichat.support@gmail.com';
+var otpUserId = '', pendingEmail = '';
+
+function g(i){ return document.getElementById(i); }
+function st(i){ document.querySelectorAll('.step').forEach(function(x){ x.classList.remove('act'); }); g(i).classList.add('act'); }
+function uid(){ return 'id' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+
+async function api(path, method, body){
+  var opts = { method: method || 'GET', headers: { 'X-Appwrite-Project': PID } };
+  if(body && !(body instanceof FormData)){ opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
+  else if(body){ opts.body = body; }
+  var res = await fetch(EP + path, opts);
+  var data = {}; try { data = await res.json(); } catch(e){}
+  if(!res.ok) throw new Error(data.message || ('Ошибка ' + res.status));
+  return data;
+}
+
+async function sendAuthCode(){
+  var em = g('emInp').value.trim().toLowerCase();
+  if(!em || em.indexOf('@') === -1){ g('e1').textContent = 'Введите корректный e-mail'; return; }
+  g('e1').textContent = ''; pendingEmail = em; st('sl');
+  try {
+    var tok = await api('/account/tokens/email', 'POST', { userId: uid(), email: em });
+    otpUserId = tok.userId;
+    g('lem').textContent = em; g('cd').value = ''; g('e2').textContent = '';
+    st('s2');
+  } catch(err){ g('e1').textContent = err.message; st('s1'); }
+}
+
+async function verifyAuthCode(){
+  var secret = g('cd').value.trim();
+  if(secret.length < 6){ g('e2').textContent = 'Введите 6-значный код'; return; }
+  g('e2').textContent = ''; st('sl');
+  try {
+    var sess = await api('/account/sessions/token', 'POST', { userId: otpUserId, secret: secret });
+    var realUid = (sess && sess.userId) ? sess.userId : otpUserId;
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
+    var existing = (pRes.documents || []).find(function(d){ return (d.email || '').toLowerCase() === pendingEmail; });
+    if(existing){
+      localStorage.setItem('bc_uid', existing.$id);
+      localStorage.setItem('bc_em', pendingEmail);
+      location.reload();
+      return;
+    }
+    localStorage.setItem('bc_uid', realUid);
+    localStorage.setItem('bc_em', pendingEmail);
+    st('s3');
+  } catch(err){ g('e2').textContent = 'Неверный код: ' + err.message; st('s2'); }
+}
+</script>
