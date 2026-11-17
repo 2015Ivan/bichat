@@ -421,6 +421,44 @@ async function loadProfileById(userId, em){
   }
 }
 
+  async function verifyAuthCode(){
+  var secret = g('cd').value.trim();
+  if(secret.length < 6){ g('e2').textContent = 'Введите 6-значный код из письма'; return; }
+  g('e2').textContent = '';
+  st('sl');
+  try {
+    var sess = await api('/account/sessions/token', 'POST', { userId: otpUserId, secret: secret });
+    var realUid = (sess && sess.userId) ? sess.userId : otpUserId;
+    await findOrCreateByEmail(realUid, pendingEmail);
+  } catch(err){
+    g('e2').textContent = 'Неверный код: ' + err.message;
+    st('s2');
+  }
+}
+
+async function findOrCreateByEmail(fallbackUid, em){
+  try {
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
+    var docs = pRes.documents || [];
+    var existing = docs.find(function(d){ return (d.email || '').toLowerCase() === em; });
+    if(existing){
+      me = existing;
+      localStorage.setItem('bc_uid', me.$id);
+      localStorage.setItem('bc_em', em);
+      if(em === OWNER && !me.is_dev){
+        me = await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', {
+          data: { is_dev: true, plan: 'ult', ult_em: me.ult_em || '👑' }
+        });
+      }
+      launchCloudApp();
+      return;
+    }
+  } catch(e){}
+  localStorage.setItem('bc_uid', fallbackUid);
+  localStorage.setItem('bc_em', em);
+  st('s3');
+}
+
 async function checkUserSession(){
   var savedUid = localStorage.getItem('bc_uid');
   var savedEm = localStorage.getItem('bc_em');
