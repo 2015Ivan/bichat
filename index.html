@@ -690,11 +690,14 @@ function selectChat(id, obj){
   renderChatList();
   renderMessages();
 }
-function renderMessages(){
+var lastMsgSig = '';
+function renderMessages(force){
   var box = g('mlst');
-  box.innerHTML = '';
   var msgs = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type !== 'room_meta'; });
-  msgs.forEach(function(m){
+  var sig = curChat + '_' + msgs.length + '_' + (msgs.length ? msgs[msgs.length - 1].$id : '');
+  if(!force && sig === lastMsgSig) return;
+  lastMsgSig = sig;
+  box.innerHTML = '';
     var isMy = (m.sender_id === me.$id && !m.is_support) || (curChat.indexOf('support_') === 0 && curChat !== 'support_' + me.$id && m.is_support);
     var d = document.createElement('div');
     d.className = 'm ' + (isMy ? 'my' : 'in');
