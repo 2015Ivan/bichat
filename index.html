@@ -1101,6 +1101,48 @@ async function sendBroadcast(){
 }
 
 checkUserSession();
+var lastDrawnIds = '';
+function renderMessages(force){
+  var box = g('mlst');
+  var msgs = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type !== 'room_meta'; });
+  var currentIds = curChat + ':' + msgs.map(function(m){ return m.$id; }).join(',');
+  if(!force && currentIds === lastDrawnIds) return;
+  lastDrawnIds = currentIds;
+  box.innerHTML = '';
+  msgs.forEach(function(m){
+    var isMy = (m.sender_id === me.$id && !m.is_support) || (curChat.indexOf('support_') === 0 && curChat !== 'support_' + me.$id && m.is_support);
+    var d = document.createElement('div');
+    d.className = 'm ' + (isMy ? 'my' : 'in');
+    if(!isMy){
+      var snd = document.createElement('div');
+      snd.className = 'm-snd';
+      snd.innerHTML = m.is_support ? '🛡️ Поддержка BiChat <span class="v-ok">✓</span>' : m.sender_name;
+      if(!m.is_support){
+        snd.onclick = function(){
+          var pr = allProfiles.find(function(x){ return x.$id === m.sender_id; });
+          if(pr) openUserProfile(pr);
+        };
+      }
+      d.appendChild(snd);
+    }
+    if(m.media_url){
+      if(m.media_type === 'vid'){
+        var v = document.createElement('video'); v.src = m.media_url; v.controls = true; d.appendChild(v);
+      } else if(m.media_type === 'aud'){
+        var au = document.createElement('audio'); au.src = m.media_url; au.controls = true; d.appendChild(au);
+      } else {
+        var im = document.createElement('img'); im.src = m.media_url; d.appendChild(im);
+      }
+    }
+    if(m.text){
+      var tx = document.createElement('div'); tx.textContent = m.text; d.appendChild(tx);
+    }
+    box.appendChild(d);
+  });
+  box.scrollTop = box.scrollHeight;
+}
+renderMessages(true);
+
 </script>
 </body>
 </html>
