@@ -801,6 +801,7 @@ async function sendCloudMsg(mediaUrl, mediaType){
       });
     }
     await loadAllCloudData();
+    renderMessages(true);
   } catch(e){ alert('Ошибка отправки: ' + e.message); }
 }
 
