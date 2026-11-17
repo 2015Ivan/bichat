@@ -802,7 +802,7 @@ async function sendCloudMsg(mediaUrl, mediaType){
     }
     await loadAllCloudData();
     renderMessages(true);
-  } catch(e){ alert('Ошибка отправки: ' + e.message); }
+  } catch(e){ console.error('Ошибка отправки:', e); }
 }
 
 async function uploadToCloud(file, fileName){
