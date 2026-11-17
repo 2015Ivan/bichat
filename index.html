@@ -4,6 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BiChat</title>
+  <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#060913">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%232563eb'/><path d='M16 20C16 15.5 19.5 12 24 12H40C44.5 12 48 15.5 48 20V32C48 36.5 44.5 40 40 40H26L17 48V40C16.5 38.8 16 37.3 16 32V20Z' fill='white'/></svg>">
+.mob-back{display:none;background:none;border:none;color:#60a5fa;font-size:22px;font-weight:900;cursor:pointer;padding:2px 8px 2px 0}
+@media(max-width:768px){
+  .side{width:100vw;height:100dvh;border-right:none}
+  .main{display:none;width:100vw;height:100dvh}
+  #app.chat-open .side{display:none}
+  #app.chat-open .main{display:flex}
+  .mob-back{display:inline-block}
+  .m{max-width:84%}
+  input,select{font-size:16px!important}
+}
 <style>
 :root{--g:linear-gradient(135deg,#3b82f6,#8b5cf6,#06b6d4);--my:linear-gradient(135deg,#2563eb,#4f46e5)}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif}
@@ -288,8 +303,7 @@ input:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,246,.2)}
   <div class="main">
     <div class="head" style="cursor:pointer" onclick="openHeaderInfo()">
       <div style="display:flex;align-items:center;gap:9px">
-        <div class="av" id="tav" style="width:38px;height:38px"></div>
-        <div>
+        <button type="button" class="mob-back" onclick="event.stopPropagation();g('app').classList.remove('chat-open')">←</button><div class="av" id="tav" style="width:38px;height:38px"></div> 
           <div style="display:flex;align-items:center"><b id="cnam">Общий чат BiChat</b><span id="cVrf"></span></div>
           <div id="csta" style="font-size:11px;color:#10b981">Нажмите, чтобы открыть профиль</div>
         </div>
@@ -714,6 +728,7 @@ function renderChatList(){
 }
 
 function selectChat(id, obj){
+  g('app').classList.add('chat-open');
   curChat = id;
   curChatObj = obj;
   sav(g('tav'), obj.name, obj.av || '', obj.off, obj.em || '');
