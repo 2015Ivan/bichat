@@ -1102,8 +1102,7 @@ async function sendBroadcast(){
 
 checkUserSession();
 </script>
-</body>
-</html>
+
 <script>
 var EP = 'https://' + 'fra.cloud.' + 'appwrite.io' + '/v1';
 var PID = '6afaabcb000c658e4466';
@@ -1146,39 +1145,18 @@ async function verifyAuthCode(){
     var realUid = (sess && sess.userId) ? sess.userId : otpUserId;
     var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
     var existing = (pRes.documents || []).find(function(d){ return (d.email || '').toLowerCase() === pendingEmail; });
-    if(existing){
-      localStorage.setItem('bc_uid', existing.$id);
-      localStorage.setItem('bc_em', pendingEmail);
-      location.reload();
-      return;
-    }
+if(existing){
+  me = existing;
+  localStorage.setItem('bc_uid', me.$id);
+  localStorage.setItem('bc_em', pendingEmail);
+  launchCloudApp();
+  return;
+}
     localStorage.setItem('bc_uid', realUid);
     localStorage.setItem('bc_em', pendingEmail);
     st('s3');
   } catch(err){ g('e2').textContent = 'Неверный код: ' + err.message; st('s2'); }
 }
-
-  async function autoRestoreAccount(){
-  var savedEm = (localStorage.getItem('bc_em') || OWNER).toLowerCase();
-  try {
-    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
-    var docs = pRes.documents || [];
-    var existing = docs.find(function(d){ return (d.email || '').toLowerCase() === savedEm; });
-    if(existing){
-      me = existing;
-      localStorage.setItem('bc_uid', me.$id);
-      localStorage.setItem('bc_em', savedEm);
-      if(savedEm === OWNER && !me.is_dev){
-        me = await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', {
-          data: { is_dev: true, plan: 'ult', ult_em: me.ult_em || '👑' }
-        });
-      }
-      launchCloudApp();
-      return;
-    }
-  } catch(e){}
-  st('s1');
-}
-autoRestoreAccount();
-
 </script>
+</body>
+</html>
