@@ -393,6 +393,7 @@ function getNick(p){
   if(p.bio.indexOf('@') === 0) return p.bio.split('|')[0].trim().toLowerCase();
   return '';
 }
+
 function getBioText(p){
   if(!p || !p.bio) return '';
   if(p.bio.indexOf('@') === 0){
