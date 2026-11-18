@@ -36,10 +36,15 @@ body.theme-light input,body.theme-light select{background:#f1f5f9}
 input:focus,select:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,246,.22)}
 .btn{width:100%;padding:12px 15px;border:none;border-radius:13px;background:var(--accent);background-size:200% 200%;animation:gradShift 5s ease infinite;color:#fff;font-weight:700;font-size:14px;cursor:pointer;margin-top:6px;transition:transform .15s}
 .btn:active{transform:scale(.97)}
-.b2{background:rgba(51,65,85,.8);animation:none}
+.b2{background:rgba(51,65,85,.82);animation:none}
 .b3{background:linear-gradient(135deg,#ef4444,#dc2626);animation:none}
 .bg{background:linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6)}
 .bu{background:linear-gradient(135deg,#ec4899,#8b5cf6,#06b6d4)}
+.tab-row{display:flex;gap:8px;margin-bottom:14px;background:rgba(6,10,20,.65);padding:5px;border-radius:14px;border:1px solid var(--border)}
+.tab-btn{flex:1;padding:9px;border:none;border-radius:10px;background:transparent;color:var(--muted);font-weight:700;font-size:13px;cursor:pointer;transition:.2s}
+.tab-btn.act{background:#2563eb;color:#fff;box-shadow:0 4px 12px rgba(37,99,235,.4)}
+.confirm-box{background:rgba(6,10,20,.75);border:1px solid rgba(96,165,250,.35);border-radius:18px;padding:16px;margin:10px 0}
+.lock-box{background:rgba(239,68,68,.16);border:1px solid rgba(239,68,68,.45);border-radius:14px;padding:12px;margin:8px 0;color:#fca5a5;font-size:12px}
 .pol-row{display:flex;align-items:flex-start;gap:8px;text-align:left;font-size:12px;color:var(--muted);margin:6px 0 10px}
 .pol-row input{width:16px;height:16px;margin-top:2px;cursor:pointer;accent-color:#3b82f6;flex-shrink:0}
 .pol-link{color:#60a5fa;text-decoration:underline;cursor:pointer;font-weight:600}
@@ -133,28 +138,70 @@ body.theme-light .ibtn{background:#e2e8f0}
   <div class="card">
     <div class="logo-halo"><div class="logo-core"><svg class="cloud-svg" viewBox="0 0 64 64" fill="none"><path d="M18 46H46C51.5 46 56 41.8 56 36.5C56 31.6 52.3 27.6 47.5 27.1C45.8 19.6 39.2 14 31.2 14C24.1 14 18.1 18.5 15.8 24.9C10.8 25.8 7 30.2 7 35.5C7 41.3 11.8 46 18 46Z" fill="#ffffff"/></svg></div></div>
     <h2 style="margin-bottom:2px">BiChat</h2>
-    <p style="font-size:12px;color:#94a3b8;margin-bottom:14px">Приватный облачный мессенджер</p>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">Приватный облачный мессенджер</p>
+
+    <div class="tab-row">
+      <button type="button" class="tab-btn act" id="tabLogin" onclick="switchAuthTab('login')">Вход</button>
+      <button type="button" class="tab-btn" id="tabReg" onclick="switchAuthTab('reg')">Регистрация</button>
+    </div>
+
+    <!-- Шаг 1 Входа: ввод e-mail -->
     <div class="step act" id="s1">
-      <input id="emInp" type="email" placeholder="Введите ваш e-mail">
-      <label class="pol-row"><input type="checkbox" id="polChk" checked><span>Я принимаю <span class="pol-link" onclick="om('mPol')">Политику конфиденциальности BiChat</span></span></label>
+      <input id="emInp" type="email" placeholder="Введите ваш e-mail" onkeydown="if(event.key==='Enter')findAccountByEmail()">
       <p id="e1" style="color:#fca5a5;font-size:12px"></p>
-      <button type="button" class="btn" onclick="sendAuthCode()">Получить код на почту</button>
+      <button type="button" class="btn" onclick="findAccountByEmail()">Продолжить</button>
     </div>
-    <div class="step" id="sl"><div class="spin"></div><p style="font-size:13px;color:#93c5fd">Подключение к облаку...</p></div>
-    <div class="step" id="s2">
-      <p style="font-size:13px;margin-bottom:8px">Код отправлен на <b id="lem" style="color:#60a5fa"></b></p>
-      <input id="cd" type="tel" maxlength="6" placeholder="000000" style="text-align:center;font-size:22px;letter-spacing:6px">
-      <p id="e2" style="color:#fca5a5;font-size:12px"></p>
-      <button type="button" class="btn" onclick="verifyAuthCode()">Подтвердить код</button>
-      <button type="button" class="btn b2" onclick="st('s1')">Назад</button>
+
+    <!-- Загрузка -->
+    <div class="step" id="sl"><div class="spin"></div><p style="font-size:13px;color:#93c5fd">Поиск аккаунта в облаке...</p></div>
+
+    <!-- Шаг 2 Входа: карточка подтверждения "Да, это я / Нет, это не я" -->
+    <div class="step" id="sConfirm">
+      <p style="font-size:12px;color:#94a3b8">Найден следующий профиль:</p>
+      <div class="confirm-box">
+        <div class="av" id="cfAv" style="width:68px;height:68px;font-size:28px;margin:0 auto 8px"></div>
+        <h3 id="cfName" style="margin-bottom:2px"></h3>
+        <p id="cfNick" style="font-size:13px;color:#60a5fa;font-weight:700"></p>
+      </div>
+      <p style="font-size:13px;margin-bottom:8px;font-weight:600">Это ваш аккаунт?</p>
+      <button type="button" class="btn" onclick="confirmIsMe()">✅ Да, это я</button>
+      <button type="button" class="btn b2" onclick="switchAuthTab('login')">❌ Нет, это не я</button>
     </div>
-    <div class="step" id="s3">
-      <p style="font-size:13px;color:#60a5fa;margin-bottom:6px">Настройка нового аккаунта</p>
+
+    <!-- Шаг 3 Входа: ввод пароля, подсказка и защита от перебора -->
+    <div class="step" id="sPass">
+      <p style="font-size:13px;margin-bottom:6px">Вход в профиль <b id="lpName" style="color:#60a5fa"></b></p>
+      <input id="passInp" type="password" placeholder="Введите пароль от аккаунта" onkeydown="if(event.key==='Enter')submitPasswordLogin()">
+      <div id="hintArea" style="display:none;margin-bottom:6px">
+        <button type="button" class="btn b2" style="padding:7px;font-size:12px" onclick="g('hintText').style.display='block'">💡 Показать подсказку</button>
+        <p id="hintText" style="display:none;font-size:12px;color:#fbbf24;margin-top:5px"></p>
+      </div>
+      <div id="lockBanner" class="lock-box" style="display:none"></div>
+      <p id="ePass" style="color:#fca5a5;font-size:12px"></p>
+      <button type="button" class="btn" id="btnPassEnter" onclick="submitPasswordLogin()">Войти в BiChat</button>
+      <button type="button" class="btn b2" onclick="switchAuthTab('login')">Назад</button>
+    </div>
+
+    <!-- Шаг 4 Входа: если старый аккаунт ещё без пароля — просим придумать пароль сразу -->
+    <div class="step" id="sSetOldPass">
+      <p style="font-size:13px;color:#fbbf24;margin-bottom:6px">Для защиты аккаунта задайте постоянный пароль:</p>
+      <input id="oldNewPass" type="password" placeholder="Придумайте пароль (минимум 4 символа)">
+      <input id="oldNewHint" placeholder="Подсказка к паролю (необязательно)">
+      <p id="eOldPass" style="color:#fca5a5;font-size:12px"></p>
+      <button type="button" class="btn" onclick="saveFirstPasswordForOldUser()">Сохранить пароль и войти</button>
+    </div>
+
+    <!-- Вкладка Регистрации -->
+    <div class="step" id="sReg">
+      <input id="regEm" type="email" placeholder="Ваш e-mail">
       <input id="rn" placeholder="Ваше имя (например: Иван)">
       <input id="ru" placeholder="Уникальный @username (например: ivan)">
+      <input id="regPass" type="password" placeholder="Придумайте пароль (минимум 4 символа)">
+      <input id="regHint" placeholder="Подсказка к паролю (необязательно)">
       <input id="rb" placeholder="О себе (необязательно)">
-      <p id="e3" style="color:#fca5a5;font-size:12px"></p>
-      <button type="button" class="btn" onclick="finishRegister()">Завершить регистрацию</button>
+      <label class="pol-row"><input type="checkbox" id="polChk" checked><span>Я принимаю <span class="pol-link" onclick="om('mPol')">Политику конфиденциальности BiChat</span></span></label>
+      <p id="eReg" style="color:#fca5a5;font-size:12px"></p>
+      <button type="button" class="btn" onclick="registerWithPassword()">Создать аккаунт</button>
     </div>
   </div>
 </div>
@@ -163,13 +210,13 @@ body.theme-light .ibtn{background:#e2e8f0}
   <h3 style="margin-bottom:4px">Политика конфиденциальности BiChat</h3>
   <div class="pol-text">
     <h4>1. Какие данные мы собираем</h4>
-    <p>BiChat сохраняет в облачной базе Appwrite только сведения, которые вы указываете сами: адрес электронной почты (для входа по коду), отображаемое имя, уникальный @username, описание профиля, аватарку, отправленные сообщения, медиафайлы и статусы.</p>
+    <p>BiChat сохраняет в облачной базе Appwrite только сведения, которые вы указываете сами: адрес электронной почты, отображаемое имя, уникальный @username, описание профиля, аватарку, отправленные сообщения, медиафайлы и статусы.</p>
     <h4>2. Приватность и поиск по @username</h4>
     <p>Ваш e-mail скрыт от других пользователей. Другие участники не видят вас в общем списке контактов, пока вы не начнёте переписку или вас не найдут по вашему @username.</p>
     <h4>3. Передача данных третьим лицам</h4>
     <p>Мы не продаём и не передаём ваши персональные данные или переписку рекламным сетям и сторонним лицам. Хранение обеспечивается облачной платформой Appwrite.</p>
     <h4>4. Управление данными и удаление аккаунта</h4>
-    <p>Вы можете в любой момент изменить свои данные, удалить свои сообщения или полностью удалить аккаунт из базы в разделе «Настройки» без дополнительного подтверждения по почте.</p>
+    <p>Вы можете в любой момент изменить свои данные, сменить пароль, удалить свои сообщения или полностью удалить аккаунт из базы в разделе «Настройки».</p>
   </div>
   <button type="button" class="btn" onclick="g('polChk').checked=true;cm('mPol')">Принимаю</button>
 </div></div>
@@ -239,6 +286,7 @@ body.theme-light .ibtn{background:#e2e8f0}
   <div class="sview act" id="sv0">
     <h3 style="margin-bottom:10px">Настройки BiChat</h3>
     <div class="si" onclick="sv('sv1')"><span>👤 Профиль, @username и аватар</span><span>→</span></div>
+    <div class="si" onclick="sv('sv5')"><span>🔐 Пароль и подсказка для входа</span><span>→</span></div>
     <div class="si" onclick="sv('sv4')"><span>🎨 Тема оформления</span><span>→</span></div>
     <div class="si" onclick="sv('sv2')"><span>💎 Подписка Plus / Ultimate</span><span>→</span></div>
     <div class="si" onclick="om('mPol')"><span>📄 Политика конфиденциальности</span><span>→</span></div>
@@ -259,6 +307,14 @@ body.theme-light .ibtn{background:#e2e8f0}
     <button type="button" class="btn" onclick="saveProfCloud()">Сохранить изменения</button>
     <button type="button" class="btn b2" onclick="sv('sv0')">← Назад</button>
   </div>
+  <div class="sview" id="sv5">
+    <h3 style="margin-bottom:8px">Пароль и подсказка</h3>
+    <input id="setNewPass" type="password" placeholder="Новый пароль (минимум 4 символа)">
+    <input id="setNewHint" placeholder="Подсказка к паролю (необязательно)">
+    <p id="passSavedMsg" style="font-size:11px;color:#10b981;margin:4px 0"></p>
+    <button type="button" class="btn" onclick="updatePasswordInSettings()">Обновить пароль</button>
+    <button type="button" class="btn b2" onclick="sv('sv0')">← Назад</button>
+  </div>
   <div class="sview" id="sv4">
     <h3 style="margin-bottom:8px">Выберите тему оформления</h3>
     <div class="si" onclick="applyTheme('')"><span>🌌 Тёмный космос (по умолчанию)</span><span>✓</span></div>
@@ -277,7 +333,7 @@ body.theme-light .ibtn{background:#e2e8f0}
   </div>
   <div class="sview" id="sv3">
     <h3 style="color:#ef4444;margin-bottom:6px">Удаление аккаунта</h3>
-    <p style="font-size:12px;color:#cbd5e1;margin-bottom:10px">Ваш профиль будет удалён из базы без отправки кода на почту. Подтвердить?</p>
+    <p style="font-size:12px;color:#cbd5e1;margin-bottom:10px">Ваш профиль будет удалён из базы навсегда. Подтвердить?</p>
     <button type="button" class="btn b3" onclick="deleteAccountNow()">Да, удалить аккаунт навсегда</button>
     <button type="button" class="btn b2" onclick="sv('sv0')">Отмена</button>
   </div>
@@ -334,29 +390,16 @@ body.theme-light .ibtn{background:#e2e8f0}
         <div class="av" id="tav" style="width:38px;height:38px"></div>
         <div style="min-width:0">
           <div style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="cnam">Общий чат BiChat</div>
-          <div style="font-size:11px;color:#10b981;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="csta">нажмите для профиля</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pin-bar" id="pinBar" onclick="scrollToPinned()">
-      <div style="min-width:0"><b style="font-size:11px;color:#60a5fa;display:block">📌 Закреплённое сообщение</b><div class="pin-txt" id="pinTxt"></div></div>
-      <button type="button" class="ibtn" style="width:26px;height:26px;font-size:12px" onclick="event.stopPropagation();unpinCurrentChat()">✖</button>
-    </div>
-
-    <div class="msgs" id="mlst"></div>
-
-    <div class="emoji-pop" id="emojiPop">
 <script>
 var EP = 'https://' + 'fra.cloud.' + 'appwrite.io' + '/v1';
 var PID = '6afaabcb000c658e4466';
 var DID = '6afaacf2001cf616a3a3';
 var OWNER = 'bichat.support@gmail.com';
 
-var me = null, curChat = 'global', curChatObj = {};
+var me = null, candidateUser = null, curChat = 'global', curChatObj = {};
 var allProfiles = [], allMessages = [], allStories = [];
-var otpUserId = '', pendingEmail = '', tempAvUrl = '', selUltEm = '';
-var syncTimer = null, mediaRec = null, audioChunks = [], recTimer = null, recSeconds = 0;
+var tempAvUrl = '', selUltEm = '', syncTimer = null, lockTimer = null;
+var mediaRec = null, audioChunks = [], recTimer = null, recSeconds = 0;
 var lastDrawnIds = '', selectedMsg = null, replyToMsg = null, editingMsg = null, currentPinMsgId = '';
 var STICKERS = ['😎','🔥','❤️','😂','🥳','🚀','👑','💎','👍','🙌','😭','🤯','🥶','🤡','👻','🐱','🐶','🍕'];
 var STATUS_EMOS = ['', '👑', '🔥', '⚡', '💎', '🚀', '😎', '❤️', '✨', '🎧', '🎮', '🍀'];
@@ -393,7 +436,6 @@ function getNick(p){
   if(p.bio.indexOf('@') === 0) return p.bio.split('|')[0].trim().toLowerCase();
   return '';
 }
-
 function getBioText(p){
   if(!p || !p.bio) return '';
   if(p.bio.indexOf('@') === 0){
@@ -430,89 +472,201 @@ function sav(el, name, url, isUlt, em){
   }
 }
 
-async function sendAuthCode(){
-  var em = g('emInp').value.trim().toLowerCase();
-  if(!em || em.indexOf('@') === -1){ g('e1').textContent = 'Введите корректный e-mail'; return; }
-  if(!g('polChk').checked){ g('e1').textContent = 'Примите Политику конфиденциальности'; return; }
-  g('e1').textContent = ''; pendingEmail = em; st('sl');
-  try {
-    var tok = await api('/account/tokens/email', 'POST', { userId: uid(), email: em });
-    otpUserId = tok.userId; g('lem').textContent = em; g('cd').value = ''; g('e2').textContent = '';
-    st('s2');
-  } catch(err){ g('e1').textContent = err.message; st('s1'); }
+function switchAuthTab(mode){
+  g('tabLogin').classList.toggle('act', mode === 'login');
+  g('tabReg').classList.toggle('act', mode === 'reg');
+  g('e1').textContent = ''; g('eReg').textContent = '';
+  if(mode === 'login') st('s1'); else st('sReg');
 }
 
-async function verifyAuthCode(){
-  var secret = g('cd').value.replace(/\D/g, '');
-  if(secret.length < 6){ g('e2').textContent = 'Введите 6 цифр кода'; return; }
-  g('e2').textContent = ''; st('sl');
+function getUserAuthRecord(uidStr){
+  var recs = allMessages.filter(function(m){ return m.chat_id === 'auth_' + uidStr && m.media_type === 'auth_meta'; });
+  if(!recs.length) return null;
+  var last = recs[recs.length - 1];
+  try { var obj = JSON.parse(last.text); obj.docId = last.$id; return obj; } catch(e){ return null; }
+}
+
+async function saveUserAuthRecord(uidStr, passVal, hintVal){
+  var old = getUserAuthRecord(uidStr);
+  var payload = JSON.stringify({ pass: passVal, hint: hintVal || '' });
+  if(old && old.docId){
+    await api('/databases/' + DID + '/collections/messages/documents/' + old.docId, 'PATCH', { data: { text: payload } });
+  } else {
+    await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
+      documentId: uid(), data: { chat_id: 'auth_' + uidStr, sender_id: uidStr, sender_name: 'AUTH', text: payload, media_url: '', media_type: 'auth_meta', is_support: false }
+    });
+  }
+}
+
+async function findAccountByEmail(){
+  var em = g('emInp').value.trim().toLowerCase();
+  if(!em || em.indexOf('@') === -1){ g('e1').textContent = 'Введите корректный e-mail'; return; }
+  g('e1').textContent = ''; st('sl');
   try {
-    var sess = await api('/account/sessions/token', 'POST', { userId: otpUserId, secret: secret });
-    var realUid = (sess && sess.userId) ? sess.userId : otpUserId;
     var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
-    var existing = (pRes.documents || []).find(function(d){ return (d.email || '').toLowerCase() === pendingEmail; });
-    if(existing){
-      me = existing;
-      localStorage.setItem('bc_uid', me.$id);
-      localStorage.setItem('bc_em', pendingEmail);
-      launchCloudApp();
-      return;
+    var mRes = await api('/databases/' + DID + '/collections/messages/documents', 'GET');
+    allProfiles = pRes.documents || [];
+    allMessages = mRes.documents || [];
+    var found = allProfiles.find(function(d){ return (d.email || '').toLowerCase() === em; });
+    if(!found){ g('e1').textContent = 'Аккаунт с таким e-mail не найден. Нажмите «Регистрация».'; st('s1'); return; }
+    candidateUser = found;
+    sav(g('cfAv'), found.name, found.avatar_url, found.plan === 'ult' || found.is_dev, '');
+    g('cfName').innerHTML = found.name + (found.is_dev ? ' <span class="v-ok">✓</span>' : '');
+    g('cfNick').textContent = getNick(found) || found.email;
+    st('sConfirm');
+  } catch(err){ g('e1').textContent = err.message; st('s1'); }
+}
+function confirmIsMe(){
+  if(!candidateUser) return;
+  var authRec = getUserAuthRecord(candidateUser.$id);
+  if(!authRec || !authRec.pass){
+    g('eOldPass').textContent = '';
+    st('sSetOldPass');
+    return;
+  }
+  g('lpName').textContent = candidateUser.name;
+  g('passInp').value = ''; g('ePass').textContent = '';
+  g('hintText').style.display = 'none';
+  if(authRec.hint){
+    g('hintArea').style.display = 'block';
+    g('hintText').textContent = 'Подсказка: ' + authRec.hint;
+  } else {
+    g('hintArea').style.display = 'none';
+  }
+  st('sPass');
+  checkLockState();
+}
+
+async function saveFirstPasswordForOldUser(){
+  var p = g('oldNewPass').value.trim();
+  if(p.length < 4){ g('eOldPass').textContent = 'Пароль должен быть не короче 4 символов'; return; }
+  st('sl');
+  try {
+    await saveUserAuthRecord(candidateUser.$id, p, g('oldNewHint').value.trim());
+    me = candidateUser;
+    localStorage.setItem('bc_uid', me.$id);
+    localStorage.setItem('bc_em', me.email);
+    launchCloudApp();
+  } catch(err){ g('eOldPass').textContent = err.message; st('sSetOldPass'); }
+}
+
+function getLockData(){
+  if(!candidateUser) return { fails: 0, until: 0 };
+  try { return JSON.parse(localStorage.getItem('bc_lock_' + candidateUser.$id) || '{"fails":0,"until":0}'); } catch(e){ return { fails: 0, until: 0 }; }
+}
+function setLockData(obj){
+  if(candidateUser) localStorage.setItem('bc_lock_' + candidateUser.$id, JSON.stringify(obj));
+}
+
+function checkLockState(){
+  clearInterval(lockTimer);
+  var ld = getLockData();
+  var banner = g('lockBanner'), btn = g('btnPassEnter'), inp = g('passInp');
+  if(ld.until > Date.now()){
+    btn.disabled = true; inp.disabled = true; banner.style.display = 'block';
+    var tick = function(){
+      var left = Math.ceil((ld.until - Date.now()) / 1000);
+      if(left <= 0){
+        clearInterval(lockTimer);
+        btn.disabled = false; inp.disabled = false; banner.style.display = 'none'; g('ePass').textContent = '';
+        return;
+      }
+      var mins = Math.floor(left / 60), secs = left % 60;
+      var tStr = (mins > 0 ? mins + ' мин. ' : '') + secs + ' сек.';
+      banner.innerHTML = '<b>🔒 Вход временно заблокирован</b><br>Причина: превышено количество неверных попыток ввода пароля (3/3).<br>Повторите попытку через: <b>' + tStr + '</b>';
+    };
+    tick();
+    lockTimer = setInterval(tick, 1000);
+    return true;
+  }
+  btn.disabled = false; inp.disabled = false; banner.style.display = 'none';
+  return false;
+}
+
+function submitPasswordLogin(){
+  if(!candidateUser || checkLockState()) return;
+  var entered = g('passInp').value.trim();
+  var authRec = getUserAuthRecord(candidateUser.$id);
+  if(authRec && entered === authRec.pass){
+    setLockData({ fails: 0, until: 0 });
+    me = candidateUser;
+    localStorage.setItem('bc_uid', me.$id);
+    localStorage.setItem('bc_em', me.email);
+    launchCloudApp();
+    return;
+  }
+  var ld = getLockData();
+  ld.fails = (ld.fails || 0) + 1;
+  if(ld.fails === 3){
+    ld.until = Date.now() + 60 * 1000;
+    setLockData(ld);
+    g('ePass').textContent = '';
+    checkLockState();
+  } else if(ld.fails >= 6){
+    ld.until = Date.now() + 5 * 60 * 1000;
+    ld.fails = 3;
+    setLockData(ld);
+    g('ePass').textContent = '';
+    checkLockState();
+  } else {
+    setLockData(ld);
+    var rem = 3 - (ld.fails % 3);
+    g('ePass').textContent = 'Неверный пароль! Осталось попыток до блокировки: ' + rem;
+  }
+}
+
+async function registerWithPassword(){
+  var em = g('regEm').value.trim().toLowerCase();
+  var name = g('rn').value.trim();
+  var rawNick = g('ru').value.trim().replace(/^@+/, '').toLowerCase();
+  var pass = g('regPass').value.trim();
+  var hint = g('regHint').value.trim();
+  if(!em || em.indexOf('@') === -1){ g('eReg').textContent = 'Введите корректный e-mail'; return; }
+  if(!name){ g('eReg').textContent = 'Введите ваше имя'; return; }
+  if(rawNick && !/^[a-z0-9_]{3,20}$/.test(rawNick)){ g('eReg').textContent = 'Username: 3-20 лат. букв, цифр или _'; return; }
+  if(pass.length < 4){ g('eReg').textContent = 'Придумайте пароль (минимум 4 символа)'; return; }
+  if(!g('polChk').checked){ g('eReg').textContent = 'Примите Политику конфиденциальности'; return; }
+  g('eReg').textContent = ''; st('sl');
+  try {
+    var chk = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
+    var docs = chk.documents || [];
+    if(docs.some(function(d){ return (d.email || '').toLowerCase() === em; })){
+      g('eReg').textContent = 'Этот e-mail уже зарегистрирован. Перейдите во вкладку «Вход».'; st('sReg'); return;
     }
-    localStorage.setItem('bc_uid', realUid);
-    localStorage.setItem('bc_em', pendingEmail);
-    st('s3');
-  } catch(err){ g('e2').textContent = 'Неверный код: ' + err.message; st('s2'); }
+    if(rawNick && docs.some(function(d){ return getNick(d) === '@' + rawNick; })){
+      g('eReg').textContent = 'Этот @username уже занят'; st('sReg'); return;
+    }
+    var newUid = uid();
+    var isOwner = (em === OWNER);
+    var autoNick = rawNick || ('user_' + newUid.slice(-5));
+    me = await api('/databases/' + DID + '/collections/profiles/documents', 'POST', {
+      documentId: newUid,
+      data: {
+        email: em, name: name, bio: buildBioField(autoNick, g('rb').value),
+        avatar_url: '', plan: isOwner ? 'ult' : 'free', ult_em: isOwner ? '👑' : '',
+        is_dev: isOwner, is_banned: false, ban_reason: ''
+      }
+    });
+    await saveUserAuthRecord(newUid, pass, hint);
+    localStorage.setItem('bc_uid', me.$id);
+    localStorage.setItem('bc_em', em);
+    launchCloudApp();
+  } catch(err){ g('eReg').textContent = err.message; st('sReg'); }
 }
 
 async function checkUserSession(){
   initStickers();
   var savedEm = (localStorage.getItem('bc_em') || '').toLowerCase();
-  if(!savedEm){ st('s1'); return; }
+  if(!savedEm){ switchAuthTab('login'); return; }
   try {
     var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
     var existing = (pRes.documents || []).find(function(d){ return (d.email || '').toLowerCase() === savedEm; });
     if(existing){ me = existing; localStorage.setItem('bc_uid', me.$id); launchCloudApp(); return; }
   } catch(e){}
-  st('s1');
-}
-
-async function finishRegister(){
-  var name = g('rn').value.trim();
-  var rawNick = g('ru').value.trim().replace(/^@+/, '').toLowerCase();
-  if(!name){ g('e3').textContent = 'Введите ваше имя'; return; }
-  if(rawNick && !/^[a-z0-9_]{3,20}$/.test(rawNick)){ g('e3').textContent = 'Username: 3-20 лат. букв, цифр или _'; return; }
-  var savedUid = localStorage.getItem('bc_uid') || uid();
-  var savedEm = (localStorage.getItem('bc_em') || pendingEmail).toLowerCase();
-  st('sl');
-  try {
-    if(rawNick){
-      var chk = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
-      if((chk.documents || []).some(function(d){ return getNick(d) === '@' + rawNick; })){
-        g('e3').textContent = 'Этот @username уже занят'; st('s3'); return;
-      }
-    }
-    var isOwner = (savedEm === OWNER);
-    var autoNick = rawNick || ('user_' + savedUid.slice(-5));
-    me = await api('/databases/' + DID + '/collections/profiles/documents', 'POST', {
-      documentId: savedUid,
-      data: {
-        email: savedEm,
-        name: name,
-        bio: buildBioField(autoNick, g('rb').value),
-        avatar_url: '',
-        plan: isOwner ? 'ult' : 'free',
-        ult_em: isOwner ? '👑' : '',
-        is_dev: isOwner,
-        is_banned: false,
-        ban_reason: ''
-      }
-    });
-    launchCloudApp();
-  } catch(err){ g('e3').textContent = err.message; st('s3'); }
+  switchAuthTab('login');
 }
 
 function logoutCloud(){ localStorage.removeItem('bc_uid'); localStorage.removeItem('bc_em'); location.reload(); }
-
 async function deleteAccountNow(){
   if(!me || !me.$id) return;
   try { await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'DELETE'); } catch(e){}
@@ -520,7 +674,7 @@ async function deleteAccountNow(){
 }
 
 function launchCloudApp(){
-  if(!me || !me.$id){ st('s1'); return; }
+  if(!me || !me.$id){ switchAuthTab('login'); return; }
   if(me.is_banned){ g('banReason').textContent = me.ban_reason || 'Аккаунт заблокирован'; om('mBan'); return; }
   g('auth').style.display = 'none';
   g('app').style.display = 'flex';
@@ -528,6 +682,7 @@ function launchCloudApp(){
   w.style.display = 'flex';
   setTimeout(function(){ w.style.display = 'none'; }, 1200);
   updateMyHeader();
+  selectChat('global', { id: 'global', type: 'group', name: 'Общий чат BiChat', sub: 'Все друзья и родные', off: true, em: '🌍' });
   pingOnline();
   loadAllCloudData();
   clearInterval(syncTimer);
@@ -572,10 +727,10 @@ async function loadAllCloudData(){
     renderChatList();
     renderPinnedBar();
     renderMessages(false);
-renderStories();
-} catch(e){}
-};
-  function getRooms(){
+    renderStories();
+  } catch(e){}
+}
+function getRooms(){
   var rooms = [];
   allMessages.forEach(function(m){
     if(m.chat_id && m.chat_id.indexOf('room_') === 0 && m.media_type === 'room_meta'){
@@ -772,7 +927,7 @@ async function actDeleteMsg(){
 }
 function renderMessages(force){
   var box = g('mlst');
-  var msgs = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta'; });
+  var msgs = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; });
   var reacts = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type === 'react_meta'; });
   var sig = curChat + ':' + msgs.map(function(m){ return m.$id + (m.text || '').length; }).join(',') + '|r:' + reacts.length;
   if(!force && sig === lastDrawnIds) return;
@@ -984,7 +1139,10 @@ function openSettings(){
   g('en').value = me.name;
   g('eu').value = getNick(me).replace(/^@+/, '');
   g('eb').value = getBioText(me);
-  g('avUpSt').textContent = ''; g('profErr').textContent = '';
+  g('avUpSt').textContent = ''; g('profErr').textContent = ''; g('passSavedMsg').textContent = '';
+  var authRec = getUserAuthRecord(me.$id);
+  g('setNewPass').value = authRec ? authRec.pass : '';
+  g('setNewHint').value = authRec ? (authRec.hint || '') : '';
   tempAvUrl = me.avatar_url || ''; selUltEm = me.ult_em || '';
   var eg = g('emoStatusGrid'); eg.innerHTML = '';
   STATUS_EMOS.forEach(function(em){
@@ -994,6 +1152,13 @@ function openSettings(){
     eg.appendChild(b);
   });
   sv('sv0'); om('mSet');
+}
+async function updatePasswordInSettings(){
+  var p = g('setNewPass').value.trim();
+  if(p.length < 4){ g('passSavedMsg').style.color = '#fca5a5'; g('passSavedMsg').textContent = 'Минимум 4 символа'; return; }
+  await saveUserAuthRecord(me.$id, p, g('setNewHint').value.trim());
+  g('passSavedMsg').style.color = '#10b981';
+  g('passSavedMsg').textContent = 'Пароль и подсказка успешно обновлены!';
 }
 async function saveProfCloud(){
   var newNick = g('eu').value.trim().replace(/^@+/, '').toLowerCase();
@@ -1012,7 +1177,7 @@ function openDash(){
   if(!me.is_dev || (me.email || '').toLowerCase() !== OWNER) return;
   g('stUsers').textContent = allProfiles.length;
   g('stOnline').textContent = allProfiles.filter(isUserOnline).length;
-  g('stMsgs').textContent = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta'; }).length;
+  g('stMsgs').textContent = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; }).length;
   g('stStr').textContent = allStories.length;
   g('btnMaint').textContent = isMaintenanceOn() ? '✅ Выкл тех.работы' : '🛠️ Тех.работы';
   renderDashUsers();
