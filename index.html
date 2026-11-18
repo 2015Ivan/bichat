@@ -87,6 +87,7 @@ body.theme-light .ibtn{background:#e2e8f0}
 .v-ok{display:inline-block;background:#3b82f6;color:#fff;border-radius:50%;width:15px;height:15px;font-size:10px;line-height:15px;text-align:center;margin-left:4px}
 .dev-badge{display:inline-block;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:6px;margin-left:4px}
 .main{position:relative;z-index:35;flex:1;height:100vh;display:flex;flex-direction:column;min-width:0}
+.spy-banner{display:none;background:linear-gradient(90deg,#7c3aed,#ec4899);color:#fff;padding:7px 14px;font-size:12px;font-weight:700;justify-content:space-between;align-items:center;gap:8px;flex-shrink:0}
 .glob-banner{display:none;background:linear-gradient(90deg,#f59e0b,#ec4899,#8b5cf6);color:#fff;padding:7px 14px;font-size:12px;font-weight:700;text-align:center;flex-shrink:0}
 .pin-bar{display:none;background:var(--head);border-bottom:1px solid rgba(59,130,246,.4);padding:7px 14px;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;flex-shrink:0}
 .pin-txt{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -110,6 +111,7 @@ body.theme-light .ibtn{background:#e2e8f0}
 .em-btn:hover{transform:scale(1.2);background:rgba(59,130,246,.25)}
 .rep-bar{display:none;background:var(--head);border-top:1px solid rgba(59,130,246,.4);padding:7px 14px;align-items:center;justify-content:space-between;gap:10px;font-size:12px}
 .rec-bar{background:rgba(239,68,68,.24);color:#fca5a5;border-top:1px solid rgba(239,68,68,.45);padding:6px 14px;font-size:12px;display:none;justify-content:space-between;align-items:center}
+.mute-bar{display:none;background:rgba(239,68,68,.18);border-top:1px solid rgba(239,68,68,.45);padding:11px 14px;text-align:center;font-size:12px;color:#fca5a5;flex-shrink:0}
 .bar{padding:10px 12px;background:var(--head);border-top:1px solid var(--border);display:flex;gap:6px;align-items:center;flex-shrink:0}
 .bar input{flex:1;min-width:0;margin:0;border-radius:20px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.84);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:150;padding:12px}
@@ -120,8 +122,9 @@ body.theme-light .ibtn{background:#e2e8f0}
 .stat-box{background:rgba(6,10,20,.7);border:1px solid var(--border);border-radius:13px;padding:9px 4px}
 .stat-box b{display:block;font-size:17px;color:#60a5fa}
 .stat-box span{font-size:10px;color:var(--muted)}
-.u-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.06);border-radius:11px;margin-bottom:6px;font-size:12px;text-align:left;gap:6px}
-.mini-btn{padding:5px 7px;border:none;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;color:#fff}
+.u-row{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;background:rgba(255,255,255,.06);border-radius:12px;margin-bottom:6px;font-size:12px;text-align:left;gap:6px;cursor:pointer;transition:.15s}
+.u-row:hover{background:rgba(59,130,246,.2)}
+.mini-btn{padding:5px 8px;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;color:#fff}
 .mob-back{display:none}
 @media(max-width:768px){
   html,body,#app{height:100dvh;overflow:hidden}
@@ -144,7 +147,7 @@ body.theme-light .ibtn{background:#e2e8f0}
 <div id="maintScreen">
   <div class="maint-emoji">🛠️</div>
   <h1 style="font-size:28px;color:#fbbf24;margin-bottom:10px;letter-spacing:.3px">Ведутся технические работы</h1>
-  <p style="font-size:15px;color:#cbd5e1;max-width:440px;line-height:1.5">Мы обновляем серверы и улучшаем работу мессенджера BiChat. Доступ откроется автоматически сразу после завершения работ.</p>
+  <p id="maintSub" style="font-size:15px;color:#cbd5e1;max-width:440px;line-height:1.5">Мы обновляем серверы и улучшаем работу мессенджера BiChat. Доступ откроется автоматически сразу после завершения работ.</p>
 </div>
 
 <div id="auth">
@@ -158,17 +161,14 @@ body.theme-light .ibtn{background:#e2e8f0}
       <button type="button" class="tab-btn" id="tabReg" onclick="switchAuthTab('reg')">Регистрация</button>
     </div>
 
-    <!-- ВХОД Шаг 1: ввод e-mail -->
     <div class="step act" id="s1">
       <input id="emInp" type="email" placeholder="Введите ваш e-mail" onkeydown="if(event.key==='Enter')findAccountByEmail()">
       <p id="e1" style="color:#fca5a5;font-size:12px"></p>
       <button type="button" class="btn" onclick="findAccountByEmail()">Продолжить</button>
     </div>
 
-    <!-- Загрузка -->
     <div class="step" id="sl"><div class="spin"></div><p style="font-size:13px;color:#93c5fd">Соединение с облаком...</p></div>
 
-    <!-- ВХОД Шаг 2: подтверждение профиля -->
     <div class="step" id="sConfirm">
       <p style="font-size:12px;color:#94a3b8">Найден следующий профиль:</p>
       <div class="confirm-box">
@@ -181,7 +181,6 @@ body.theme-light .ibtn{background:#e2e8f0}
       <button type="button" class="btn b2" onclick="switchAuthTab('login')">❌ Нет, это не я</button>
     </div>
 
-    <!-- ВХОД Шаг 3: ввод пароля, подсказка и таймер блокировки -->
     <div class="step" id="sPass">
       <p style="font-size:13px;margin-bottom:6px">Вход в профиль <b id="lpName" style="color:#60a5fa"></b></p>
       <input id="passInp" type="password" placeholder="Введите пароль от аккаунта" onkeydown="if(event.key==='Enter')submitPasswordLogin()">
@@ -195,7 +194,6 @@ body.theme-light .ibtn{background:#e2e8f0}
       <button type="button" class="btn b2" onclick="switchAuthTab('login')">Назад</button>
     </div>
 
-    <!-- ВХОД Шаг 4: установка первого пароля для старых аккаунтов -->
     <div class="step" id="sSetOldPass">
       <p style="font-size:13px;color:#fbbf24;margin-bottom:6px">Для защиты аккаунта задайте постоянный пароль:</p>
       <input id="oldNewPass" type="password" placeholder="Придумайте пароль (минимум 4 символа)">
@@ -204,7 +202,6 @@ body.theme-light .ibtn{background:#e2e8f0}
       <button type="button" class="btn" onclick="saveFirstPasswordForOldUser()">Сохранить пароль и войти</button>
     </div>
 
-    <!-- РЕГИСТРАЦИЯ Шаг 1: ввод e-mail и отправка кода -->
     <div class="step" id="sReg1">
       <input id="regEm" type="email" placeholder="Введите ваш e-mail">
       <label class="pol-row"><input type="checkbox" id="polChk" checked><span>Я принимаю <span class="pol-link" onclick="om('mPol')">Политику конфиденциальности BiChat</span></span></label>
@@ -212,7 +209,6 @@ body.theme-light .ibtn{background:#e2e8f0}
       <button type="button" class="btn" onclick="sendRegCode()">Получить код на почту</button>
     </div>
 
-    <!-- РЕГИСТРАЦИЯ Шаг 2: ввод 6-значного кода -->
     <div class="step" id="sReg2">
       <p style="font-size:13px;margin-bottom:8px">Код подтверждения отправлен на <b id="regLem" style="color:#60a5fa"></b></p>
       <input id="regCd" type="tel" maxlength="6" placeholder="000000" style="text-align:center;font-size:22px;letter-spacing:6px">
@@ -221,7 +217,6 @@ body.theme-light .ibtn{background:#e2e8f0}
       <button type="button" class="btn b2" onclick="st('sReg1')">Назад</button>
     </div>
 
-    <!-- РЕГИСТРАЦИЯ Шаг 3: имя, обязательный @username и пароль -->
     <div class="step" id="sReg3">
       <p style="font-size:13px;color:#60a5fa;margin-bottom:6px">Почта подтверждена! Заполните профиль:</p>
       <input id="rn" placeholder="Ваше имя (обязательно)">
@@ -250,6 +245,47 @@ body.theme-light .ibtn{background:#e2e8f0}
 </div></div>
 
 <div class="modal" id="mBan"><div class="card"><div style="font-size:44px;margin-bottom:8px">⛔</div><h3 style="color:#ef4444;margin-bottom:6px">Аккаунт заблокирован</h3><p id="banReason" style="font-size:13px;color:#cbd5e1;margin-bottom:14px"></p><button type="button" class="btn b2" onclick="logoutCloud()">Выйти</button></div></div>
+
+<div class="modal" id="mUrgent"><div class="card" style="border-color:#f59e0b"><div style="font-size:46px;margin-bottom:8px">🚨</div><h3 style="color:#fbbf24;margin-bottom:6px">Важное сообщение от Администрации</h3><p id="urgentTxt" style="font-size:14px;color:#f8fafc;margin-bottom:14px;line-height:1.5"></p><button type="button" class="btn bg" onclick="cm('mUrgent')">Понятно</button></div></div>
+
+<div class="modal" id="mAdmUser"><div class="card" style="width:450px">
+  <div class="av" id="auAv" style="width:68px;height:68px;font-size:28px;margin:0 auto 8px"></div>
+  <h3 id="auName"></h3>
+  <p id="auMeta" style="font-size:12px;color:#60a5fa;margin:4px 0 8px"></p>
+  <p id="auPassInfo" style="font-size:11px;color:#fbbf24;background:rgba(6,10,20,.65);padding:7px;border-radius:10px;margin-bottom:10px"></p>
+
+  <button type="button" class="btn bu" id="auSpyBtn">🕵️ Войти в аккаунт (Режим Невидимки)</button>
+  <div style="display:flex;gap:6px">
+    <button type="button" class="btn" id="auMsgMeBtn" style="flex:1">💬 Написать от себя</button>
+    <button type="button" class="btn bg" id="auMsgSysBtn" style="flex:1">🛡️ Написать от BiChat ✓</button>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button type="button" class="btn b2" id="auVerBtn" style="flex:1">✓ Галочка</button>
+    <button type="button" class="btn b2" id="auUltBtn" style="flex:1">💎 Ultimate</button>
+    <button type="button" class="btn b2" id="auPwdBtn" style="flex:1">🔑 Пароль</button>
+  </div>
+
+  <div style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);border-radius:14px;padding:10px;margin-top:10px;text-align:left">
+    <p style="font-size:11px;color:#fca5a5;font-weight:700;margin-bottom:4px">⚖️ Выдать наказание пользователю:</p>
+    <select id="punType" style="margin:3px 0 6px;padding:8px">
+      <option value="mute_5">🔇 Мут (запрет писать) на 5 минут</option>
+      <option value="mute_60">🔇 Мут (запрет писать) на 1 час</option>
+      <option value="mute_perm">🔇 Вечный мут (только чтение)</option>
+      <option value="tban_10">⏳ Временный бан на 10 минут</option>
+      <option value="tban_60">⏳ Временный бан на 1 час</option>
+      <option value="tban_1440">⏳ Временный бан на 24 часа</option>
+      <option value="pban">⛔ Вечный бан аккаунта</option>
+    </select>
+    <input id="punReason" placeholder="Причина наказания (увидит пользователь)..." style="margin:3px 0 6px;padding:8px">
+    <div style="display:flex;gap:6px">
+      <button type="button" class="btn b3" id="auApplyPunBtn" style="margin:0;flex:1">Применить наказание</button>
+      <button type="button" class="btn b2" id="auClearPunBtn" style="margin:0;flex:1;background:#059669">✅ Снять всё</button>
+    </div>
+  </div>
+
+  <button type="button" class="btn b3" id="auDelBtn" style="margin-top:8px">🗑 Удалить аккаунт из базы навсегда</button>
+  <button type="button" class="btn b2" onclick="cm('mAdmUser')">Закрыть досье</button>
+</div></div>
 
 <div class="modal" id="mMsgAct"><div class="card" style="width:340px">
   <div class="react-row">
@@ -377,7 +413,7 @@ body.theme-light .ibtn{background:#e2e8f0}
   </div>
 </div></div>
 
-<div class="modal" id="mDash"><div class="card" style="width:520px">
+<div class="modal" id="mDash"><div class="card" style="width:530px">
   <h3 style="margin-bottom:6px">🛡️ Dev Dashboard — Центр Управления</h3>
   <div class="dash-grid">
     <div class="stat-box"><b id="stUsers">0</b><span>Юзеров</span></div>
@@ -386,34 +422,56 @@ body.theme-light .ibtn{background:#e2e8f0}
     <div class="stat-box"><b id="stStr">0</b><span>Историй</span></div>
   </div>
   <div class="tab-row">
-    <button type="button" class="tab-btn act" id="dt1" onclick="dv('dvUsers',this)">👥 Юзеры</button>
-    <button type="button" class="tab-btn" id="dt2" onclick="dv('dvMod',this)">💬 Модерация</button>
-    <button type="button" class="tab-btn" id="dt3" onclick="dv('dvBroad',this)">📢 Эфир</button>
-    <button type="button" class="tab-btn" id="dt4" onclick="dv('dvSrv',this)">🛠️ Сервер</button>
+    <button type="button" class="tab-btn act" onclick="dv('dvUsers',this)">👥 Юзеры</button>
+    <button type="button" class="tab-btn" onclick="dv('dvMod',this)">💬 Чаты</button>
+    <button type="button" class="tab-btn" onclick="dv('dvBroad',this)">🚨 Эфир</button>
+    <button type="button" class="tab-btn" onclick="dv('dvRaffle',this)">🎁 Розыгрыш</button>
+    <button type="button" class="tab-btn" onclick="dv('dvSrv',this)">🛠️ Сервер</button>
   </div>
+
   <div class="dview act" id="dvUsers">
-    <input id="admSrch" placeholder="Поиск юзера или @username..." oninput="renderDashUsers()" style="margin-bottom:8px">
-    <div id="dv1" style="max-height:240px;overflow-y:auto"></div>
+    <input id="admSrch" placeholder="Поиск юзера или @username (нажмите для досье)..." oninput="renderDashUsers()" style="margin-bottom:8px">
+    <div id="dv1" style="max-height:250px;overflow-y:auto"></div>
   </div>
+
   <div class="dview" id="dvMod">
     <div style="display:flex;gap:6px;margin-bottom:8px">
       <button type="button" class="btn b3" style="margin:0" onclick="clearGlobalChat()">🧹 Очистить Общий чат</button>
       <button type="button" class="btn b2" style="margin:0" onclick="clearAllStories()">🗑 Удалить все Stories</button>
     </div>
-    <div id="dvMsgsList" style="max-height:230px;overflow-y:auto"></div>
+    <div id="dvMsgsList" style="max-height:240px;overflow-y:auto"></div>
   </div>
+
   <div class="dview" id="dvBroad">
-    <p style="font-size:12px;color:#94a3b8;text-align:left">Официальное объявление в Общий чат:</p>
+    <p style="font-size:12px;color:#94a3b8;text-align:left">Официальное объявление в Общий чат от имени BiChat ✓:</p>
     <div style="display:flex;gap:6px;margin-bottom:10px">
       <input id="admBroad" placeholder="Текст объявления..." style="margin:0;flex:1">
       <button type="button" class="btn" style="width:auto;margin:0;padding:0 14px" onclick="adminBroadcast()">📢</button>
     </div>
-    <p style="font-size:12px;color:#94a3b8;text-align:left">Глобальный баннер сверху экрана у всех:</p>
+    <p style="font-size:12px;color:#fbbf24;text-align:left">🚨 Экстренное окно (Pop-up поверх экрана у всех в сети):</p>
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      <input id="admUrgentInp" placeholder="Текст экстренного сообщения..." style="margin:0;flex:1">
+      <button type="button" class="btn b3" style="width:auto;margin:0;padding:0 12px" onclick="sendUrgentPopup()">Разослать</button>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;text-align:left">Закреплённая плашка сверху у всех (пусто = убрать):</p>
     <div style="display:flex;gap:6px">
-      <input id="admBannerInp" placeholder="Текст плашки (пусто = выключить)..." style="margin:0;flex:1">
-      <button type="button" class="btn bg" style="width:auto;margin:0;padding:0 12px" onclick="setGlobalBanner()">Установить</button>
+      <input id="admBannerInp" placeholder="Текст плашки..." style="margin:0;flex:1">
+      <button type="button" class="btn bg" style="width:auto;margin:0;padding:0 12px" onclick="setGlobalBanner()">OK</button>
     </div>
   </div>
+
+  <div class="dview" id="dvRaffle">
+    <p style="font-size:12px;color:#cbd5e1;margin-bottom:8px">Случайный выбор кандидата на подарок <b>BiChat Ultimate</b> (выдача только после вашего подтверждения):</p>
+    <button type="button" class="btn bu" onclick="rollRaffleWinner()">🎲 Крутить рулетку и выбрать кандидата</button>
+    <div id="raffleCard" class="confirm-box" style="display:none;margin-top:10px">
+      <div class="av" id="rfAv" style="width:60px;height:60px;font-size:24px;margin:0 auto 6px"></div>
+      <h3 id="rfName"></h3>
+      <p id="rfNick" style="font-size:12px;color:#60a5fa;margin-bottom:8px"></p>
+      <button type="button" class="btn bg" onclick="confirmGrantRaffle()">✅ Разрешить и подарить Ultimate</button>
+      <button type="button" class="btn b2" onclick="rollRaffleWinner()">🔄 Выбрать другого</button>
+    </div>
+  </div>
+
   <div class="dview" id="dvSrv">
     <button type="button" class="btn bg" id="btnMaint" onclick="toggleMaintenance()">🛠️ Включить технические работы</button>
     <button type="button" class="btn b2" id="btnFreeze" onclick="toggleFreezeGlobal()">🔒 Заморозить Общий чат (Read-Only)</button>
@@ -440,49 +498,26 @@ body.theme-light .ibtn{background:#e2e8f0}
     </div>
     <div class="st-bar" id="stBar"></div>
     <div style="padding:7px 10px;border-bottom:1px solid var(--border)">
-      <input id="srch" placeholder="Поиск по @username или чату..." oninput="renderChatList()" style="margin:0;padding:9px 12px">
+      <input id="srch" placeholder="Поиск по @username или имени..." oninput="renderChatList()" style="margin:0;padding:9px 12px">
     </div>
     <div class="list" id="clst"></div>
   </div>
 
   <div class="main">
-    <div class="glob-banner" id="globBanner"></div>
-    <div class="head">
-      <div style="display:flex;align-items:center;gap:8px;min-width:0;flex:1;cursor:pointer" onclick="openHeaderInfo()">
-        <button type="button" class="ibtn mob-back" onclick="event.stopPropagation();g('app').classList.remove('chat-open')">←</button>
-        <div class="av" id="tav" style="width:38px;height:38px"></div>
-        <div style="min-width:0">
-          <div style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="cnam">Общий чат BiChat</div>
-          <div style="font-size:11px;color:#10b981;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="csta">нажмите для профиля</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pin-bar" id="pinBar" onclick="scrollToPinned()">
-      <div style="min-width:0"><b style="font-size:11px;color:#60a5fa;display:block">📌 Закреплённое сообщение</b><div class="pin-txt" id="pinTxt"></div></div>
-      <button type="button" class="ibtn" style="width:26px;height:26px;font-size:12px" onclick="event.stopPropagation();unpinCurrentChat()">✖</button>
-    </div>
-
-    <div class="msgs" id="mlst"></div>
-
-    <div class="emoji-pop" id="emojiPop">
-      <div style="font-size:11px;color:#94a3b8;font-weight:700">Быстрые стикеры (нажмите для отправки):</div>
-      <div class="em-grid" id="stickerGrid"></div>
-    </div>
-
-    <div class="rep-bar" id="repBar">
-      <div style="min-width:0"><b style="color:#60a5fa" id="repModeLbl">↩ Ответ: </b><span id="repTxt" style="color:var(--muted)"></span></div>
+    <div class="spy-banner" id="spyBanner">
+      <span id="spyLabel">🕵️ Режим наблюдения за профилем</span>
 <script>
 var EP = 'https://' + 'fra.cloud.' + 'appwrite.io' + '/v1';
 var PID = '6afaabcb000c658e4466';
 var DID = '6afaacf2001cf616a3a3';
 var OWNER = 'bichat.support@gmail.com';
 
-var me = null, candidateUser = null, curChat = 'global', curChatObj = {};
+var me = null, realOwnerMe = null, candidateUser = null, curChat = 'global', curChatObj = {};
 var allProfiles = [], allMessages = [], allStories = [];
-var otpUserId = '', pendingRegEmail = '', tempAvUrl = '', selUltEm = '';
+var otpUserId = '', pendingRegEmail = '', tempAvUrl = '', selUltEm = '', raffleWinner = null;
 var syncTimer = null, lockTimer = null, mediaRec = null, audioChunks = [], recTimer = null, recSeconds = 0;
 var lastDrawnIds = '', selectedMsg = null, replyToMsg = null, editingMsg = null, currentPinMsgId = '';
+var lastPopupId = localStorage.getItem('bc_last_pop') || '';
 var STICKERS = ['😎','🔥','❤️','😂','🥳','🚀','👑','💎','👍','🙌','😭','🤯','🥶','🤡','👻','🐱','🐶','🍕'];
 var STATUS_EMOS = ['', '👑', '🔥', '⚡', '💎', '🚀', '😎', '❤️', '✨', '🎧', '🎮', '🍀'];
 
@@ -507,7 +542,7 @@ function applyTheme(t){
 applyTheme(localStorage.getItem('bc_theme') || '');
 
 function initStickers(){
-  var gr = g('stickerGrid'); gr.innerHTML = '';
+  var gr = g('stickerGrid'); if(!gr) return; gr.innerHTML = '';
   STICKERS.forEach(function(s){
     var b = document.createElement('button'); b.type = 'button'; b.className = 'em-btn'; b.textContent = s;
     b.onclick = function(){ g('emojiPop').style.display = 'none'; sendCloudMsg('', 'sticker', s); };
@@ -523,7 +558,7 @@ function getNick(p){
   if(!p || !p.bio) return '';
   if(p.bio.indexOf('@') === 0){
     var parts = p.bio.split('|');
-    return parts[0].trim().toLowerCase();
+    return String(parts.shift() || '').trim().toLowerCase();
   }
   return '';
 }
@@ -542,13 +577,18 @@ function buildBioField(nick, bioTxt){
 }
 
 async function api(path, method, body){
-  var opts = { method: method || 'GET', headers: { 'X-Appwrite-Project': PID } };
+  var opts = { method: method || 'GET', credentials: 'include', headers: { 'X-Appwrite-Project': PID } };
   if(body && !(body instanceof FormData)){ opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
   else if(body){ opts.body = body; }
   var res = await fetch(EP + path, opts);
   var data = {}; try { data = await res.json(); } catch(e){}
   if(!res.ok) throw new Error(data.message || ('Ошибка ' + res.status));
   return data;
+}
+
+async function ensureStorageSession(){
+  try { await api('/account', 'GET'); }
+  catch(e){ try { await api('/account/sessions/anonymous', 'POST'); } catch(e2){} }
 }
 
 function sav(el, name, url, isUlt, em){
@@ -573,7 +613,7 @@ function switchAuthTab(mode){
 function getUserAuthRecord(uidStr){
   var recs = allMessages.filter(function(m){ return m.chat_id === 'auth_' + uidStr && m.media_type === 'auth_meta'; });
   if(!recs.length) return null;
-  var last = recs[recs.length - 1];
+  var last = recs.slice(-1).pop();
   try { var obj = JSON.parse(last.text); obj.docId = last.$id; return obj; } catch(e){ return null; }
 }
 
@@ -589,13 +629,24 @@ async function saveUserAuthRecord(uidStr, passVal, hintVal){
   }
 }
 
+function getUserPunishment(uidStr){
+  var recs = allMessages.filter(function(m){ return m.chat_id === 'pun_' + uidStr && m.media_type === 'pun_meta'; });
+  if(!recs.length) return null;
+  var last = recs.slice(-1).pop();
+  try {
+    var obj = JSON.parse(last.text);
+    obj.docId = last.$id;
+    if(obj.until && obj.until > 0 && obj.until <= Date.now()) return null;
+    return obj;
+  } catch(e){ return null; }
+}
 async function findAccountByEmail(){
   var em = g('emInp').value.trim().toLowerCase();
   if(!em || em.indexOf('@') === -1){ g('e1').textContent = 'Введите корректный e-mail'; return; }
   g('e1').textContent = ''; st('sl');
   try {
-    var pRes = await api('/databases/' + DID + '/collections/profiles/documents?limit=100', 'GET');
-    var mRes = await api('/databases/' + DID + '/collections/messages/documents?limit=100', 'GET');
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
+    var mRes = await api('/databases/' + DID + '/collections/messages/documents', 'GET');
     allProfiles = pRes.documents || [];
     allMessages = mRes.documents || [];
     var found = allProfiles.find(function(d){ return (d.email || '').toLowerCase() === em; });
@@ -611,22 +662,12 @@ async function findAccountByEmail(){
 function confirmIsMe(){
   if(!candidateUser) return;
   var authRec = getUserAuthRecord(candidateUser.$id);
-  if(!authRec || !authRec.pass){
-    g('eOldPass').textContent = '';
-    st('sSetOldPass');
-    return;
-  }
+  if(!authRec || !authRec.pass){ g('eOldPass').textContent = ''; st('sSetOldPass'); return; }
   g('lpName').textContent = candidateUser.name;
-  g('passInp').value = ''; g('ePass').textContent = '';
-  g('hintText').style.display = 'none';
-  if(authRec.hint){
-    g('hintArea').style.display = 'block';
-    g('hintText').textContent = 'Подсказка: ' + authRec.hint;
-  } else {
-    g('hintArea').style.display = 'none';
-  }
-  st('sPass');
-  checkLockState();
+  g('passInp').value = ''; g('ePass').textContent = ''; g('hintText').style.display = 'none';
+  if(authRec.hint){ g('hintArea').style.display = 'block'; g('hintText').textContent = 'Подсказка: ' + authRec.hint; }
+  else { g('hintArea').style.display = 'none'; }
+  st('sPass'); checkLockState();
 }
 
 async function saveFirstPasswordForOldUser(){
@@ -635,9 +676,7 @@ async function saveFirstPasswordForOldUser(){
   st('sl');
   try {
     await saveUserAuthRecord(candidateUser.$id, p, g('oldNewHint').value.trim());
-    me = candidateUser;
-    localStorage.setItem('bc_uid', me.$id);
-    localStorage.setItem('bc_em', me.email);
+    me = candidateUser; localStorage.setItem('bc_uid', me.$id); localStorage.setItem('bc_em', me.email);
     launchCloudApp();
   } catch(err){ g('eOldPass').textContent = err.message; st('sSetOldPass'); }
 }
@@ -646,80 +685,50 @@ function getLockData(){
   if(!candidateUser) return { fails: 0, until: 0 };
   try { return JSON.parse(localStorage.getItem('bc_lock_' + candidateUser.$id) || '{"fails":0,"until":0}'); } catch(e){ return { fails: 0, until: 0 }; }
 }
-function setLockData(obj){
-  if(candidateUser) localStorage.setItem('bc_lock_' + candidateUser.$id, JSON.stringify(obj));
-}
+function setLockData(obj){ if(candidateUser) localStorage.setItem('bc_lock_' + candidateUser.$id, JSON.stringify(obj)); }
 
 function checkLockState(){
   clearInterval(lockTimer);
-  var ld = getLockData();
-  var banner = g('lockBanner'), btn = g('btnPassEnter'), inp = g('passInp');
+  var ld = getLockData(), banner = g('lockBanner'), btn = g('btnPassEnter'), inp = g('passInp');
   if(ld.until > Date.now()){
     btn.disabled = true; inp.disabled = true; banner.style.display = 'block';
     var tick = function(){
       var left = Math.ceil((ld.until - Date.now()) / 1000);
-      if(left <= 0){
-        clearInterval(lockTimer);
-        btn.disabled = false; inp.disabled = false; banner.style.display = 'none'; g('ePass').textContent = '';
-        return;
-      }
+      if(left <= 0){ clearInterval(lockTimer); btn.disabled = false; inp.disabled = false; banner.style.display = 'none'; g('ePass').textContent = ''; return; }
       var mins = Math.floor(left / 60), secs = left % 60;
-      var tStr = (mins > 0 ? mins + ' мин. ' : '') + secs + ' сек.';
-      banner.innerHTML = '<b>🔒 Вход временно заблокирован</b><br>Причина: превышено количество неверных попыток ввода пароля (3/3).<br>Повторите попытку через: <b>' + tStr + '</b>';
+      banner.innerHTML = '<b>🔒 Вход временно заблокирован</b><br>Причина: превышено количество неверных попыток ввода пароля (3/3).<br>Повторите попытку через: <b>' + (mins > 0 ? mins + ' мин. ' : '') + secs + ' сек.</b>';
     };
-    tick();
-    lockTimer = setInterval(tick, 1000);
-    return true;
+    tick(); lockTimer = setInterval(tick, 1000); return true;
   }
-  btn.disabled = false; inp.disabled = false; banner.style.display = 'none';
-  return false;
+  btn.disabled = false; inp.disabled = false; banner.style.display = 'none'; return false;
 }
 
 function submitPasswordLogin(){
   if(!candidateUser || checkLockState()) return;
-  var entered = g('passInp').value.trim();
-  var authRec = getUserAuthRecord(candidateUser.$id);
+  var entered = g('passInp').value.trim(), authRec = getUserAuthRecord(candidateUser.$id);
   if(authRec && entered === authRec.pass){
-    setLockData({ fails: 0, until: 0 });
-    me = candidateUser;
-    localStorage.setItem('bc_uid', me.$id);
-    localStorage.setItem('bc_em', me.email);
-    launchCloudApp();
-    return;
+    setLockData({ fails: 0, until: 0 }); me = candidateUser;
+    localStorage.setItem('bc_uid', me.$id); localStorage.setItem('bc_em', me.email);
+    launchCloudApp(); return;
   }
-  var ld = getLockData();
-  ld.fails = (ld.fails || 0) + 1;
-  if(ld.fails === 3){
-    ld.until = Date.now() + 60 * 1000;
-    setLockData(ld);
-    g('ePass').textContent = '';
-    checkLockState();
-  } else if(ld.fails >= 6){
-    ld.until = Date.now() + 5 * 60 * 1000;
-    ld.fails = 3;
-    setLockData(ld);
-    g('ePass').textContent = '';
-    checkLockState();
-  } else {
-    setLockData(ld);
-    var rem = 3 - (ld.fails % 3);
-    g('ePass').textContent = 'Неверный пароль! Осталось попыток до блокировки: ' + rem;
-  }
+  var ld = getLockData(); ld.fails = (ld.fails || 0) + 1;
+  if(ld.fails === 3){ ld.until = Date.now() + 60000; setLockData(ld); g('ePass').textContent = ''; checkLockState(); }
+  else if(ld.fails >= 6){ ld.until = Date.now() + 300000; ld.fails = 3; setLockData(ld); g('ePass').textContent = ''; checkLockState(); }
+  else { setLockData(ld); g('ePass').textContent = 'Неверный пароль! Осталось попыток: ' + (3 - (ld.fails % 3)); }
 }
+
 async function sendRegCode(){
   var em = g('regEm').value.trim().toLowerCase();
   if(!em || em.indexOf('@') === -1){ g('eReg1').textContent = 'Введите корректный e-mail'; return; }
   if(!g('polChk').checked){ g('eReg1').textContent = 'Примите Политику конфиденциальности'; return; }
   g('eReg1').textContent = ''; pendingRegEmail = em; st('sl');
   try {
-    var pRes = await api('/databases/' + DID + '/collections/profiles/documents?limit=100', 'GET');
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
     if((pRes.documents || []).some(function(d){ return (d.email || '').toLowerCase() === em; })){
-      g('eReg1').textContent = 'Этот e-mail уже зарегистрирован. Перейдите во вкладку «Вход».';
-      st('sReg1'); return;
+      g('eReg1').textContent = 'Этот e-mail уже зарегистрирован. Нажмите «Вход».'; st('sReg1'); return;
     }
     var tok = await api('/account/tokens/email', 'POST', { userId: uid(), email: em });
-    otpUserId = tok.userId; g('regLem').textContent = em; g('regCd').value = ''; g('eReg2').textContent = '';
-    st('sReg2');
+    otpUserId = tok.userId; g('regLem').textContent = em; g('regCd').value = ''; g('eReg2').textContent = ''; st('sReg2');
   } catch(err){ g('eReg1').textContent = err.message; st('sReg1'); }
 }
 
@@ -729,40 +738,29 @@ async function verifyRegCode(){
   g('eReg2').textContent = ''; st('sl');
   try {
     var sess = await api('/account/sessions/token', 'POST', { userId: otpUserId, secret: secret });
-    var realUid = (sess && sess.userId) ? sess.userId : otpUserId;
-    localStorage.setItem('bc_reg_uid', realUid);
-    g('eReg3').textContent = '';
-    st('sReg3');
+    localStorage.setItem('bc_reg_uid', (sess && sess.userId) ? sess.userId : otpUserId);
+    g('eReg3').textContent = ''; st('sReg3');
   } catch(err){ g('eReg2').textContent = 'Неверный код: ' + err.message; st('sReg2'); }
 }
 
 async function finishRegWithPassword(){
-  var name = g('rn').value.trim();
-  var rawNick = g('ru').value.trim().replace(/^@+/, '').toLowerCase();
-  var pass = g('regPass').value.trim();
-  var hint = g('regHint').value.trim();
+  var name = g('rn').value.trim(), rawNick = g('ru').value.trim().replace(/^@+/, '').toLowerCase(), pass = g('regPass').value.trim(), hint = g('regHint').value.trim();
   if(!name){ g('eReg3').textContent = 'Введите ваше имя'; return; }
   if(!rawNick || !/^[a-z0-9_]{3,20}$/.test(rawNick)){ g('eReg3').textContent = 'Введите @username (3-20 лат. букв, цифр или _)'; return; }
   if(pass.length < 4){ g('eReg3').textContent = 'Придумайте пароль (минимум 4 символа)'; return; }
   g('eReg3').textContent = ''; st('sl');
   try {
-    var chk = await api('/databases/' + DID + '/collections/profiles/documents?limit=100', 'GET');
+    var chk = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
     if((chk.documents || []).some(function(d){ return getNick(d) === '@' + rawNick; })){
-      g('eReg3').textContent = 'Этот @username уже занят, выберите другой'; st('sReg3'); return;
+      g('eReg3').textContent = 'Этот @username уже занят'; st('sReg3'); return;
     }
-    var newUid = localStorage.getItem('bc_reg_uid') || uid();
-    var isOwner = (pendingRegEmail === OWNER);
+    var newUid = localStorage.getItem('bc_reg_uid') || uid(), isOwner = (pendingRegEmail === OWNER);
     me = await api('/databases/' + DID + '/collections/profiles/documents', 'POST', {
       documentId: newUid,
-      data: {
-        email: pendingRegEmail, name: name, bio: buildBioField(rawNick, g('rb').value),
-        avatar_url: '', plan: isOwner ? 'ult' : 'free', ult_em: isOwner ? '👑' : '',
-        is_dev: isOwner, is_banned: false, ban_reason: ''
-      }
+      data: { email: pendingRegEmail, name: name, bio: buildBioField(rawNick, g('rb').value), avatar_url: '', plan: isOwner ? 'ult' : 'free', ult_em: isOwner ? '👑' : '', is_dev: isOwner, is_banned: false, ban_reason: '' }
     });
     await saveUserAuthRecord(newUid, pass, hint);
-    localStorage.setItem('bc_uid', me.$id);
-    localStorage.setItem('bc_em', pendingRegEmail);
+    localStorage.setItem('bc_uid', me.$id); localStorage.setItem('bc_em', pendingRegEmail);
     launchCloudApp();
   } catch(err){ g('eReg3').textContent = err.message; st('sReg3'); }
 }
@@ -772,7 +770,7 @@ async function checkUserSession(){
   var savedEm = (localStorage.getItem('bc_em') || '').toLowerCase();
   if(!savedEm){ switchAuthTab('login'); return; }
   try {
-    var pRes = await api('/databases/' + DID + '/collections/profiles/documents?limit=100', 'GET');
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
     var existing = (pRes.documents || []).find(function(d){ return (d.email || '').toLowerCase() === savedEm; });
     if(existing){ me = existing; localStorage.setItem('bc_uid', me.$id); launchCloudApp(); return; }
   } catch(e){}
@@ -788,21 +786,19 @@ async function deleteAccountNow(){
 
 function launchCloudApp(){
   if(!me || !me.$id){ switchAuthTab('login'); return; }
-  if(me.is_banned){ g('banReason').textContent = me.ban_reason || 'Аккаунт заблокирован'; om('mBan'); return; }
+  ensureStorageSession();
   g('auth').style.display = 'none';
   g('app').style.display = 'flex';
   var w = g('wel'); g('wt').textContent = 'Добро пожаловать, ' + me.name + '!';
-  w.style.display = 'flex';
-  setTimeout(function(){ w.style.display = 'none'; }, 1000);
+  w.style.display = 'flex'; setTimeout(function(){ w.style.display = 'none'; }, 900);
   updateMyHeader();
   selectChat('global', { id: 'global', type: 'group', name: 'Общий чат BiChat', sub: 'Все друзья и родные', off: true, em: '🌍' });
-  pingOnline();
-  loadAllCloudData();
+  pingOnline(); loadAllCloudData();
   clearInterval(syncTimer);
   syncTimer = setInterval(function(){ pingOnline(); loadAllCloudData(); }, 3000);
 }
 async function pingOnline(){
-  if(!me || !me.$id) return;
+  if(!me || !me.$id || realOwnerMe) return;
   try { await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', { data: { ban_reason: me.is_banned ? me.ban_reason : ('online_' + Date.now()) } }); } catch(e){}
 }
 function isUserOnline(p){
@@ -814,46 +810,69 @@ function isMaintenanceOn(){ return allMessages.some(function(m){ return m.chat_i
 function isGlobalFrozen(){ return allMessages.some(function(m){ return m.chat_id === 'sys_freeze' && m.text === 'ON'; }); }
 
 function updateMyHeader(){
-  var isOwnerReal = (me.is_dev && (me.email || '').toLowerCase() === OWNER);
+  var isOwnerReal = (me.is_dev && (me.email || '').toLowerCase() === OWNER && !realOwnerMe);
   var emBadge = me.ult_em ? '<span class="ast">' + me.ult_em + '</span>' : '';
   g('me').innerHTML = me.name + (isOwnerReal ? ' <span class="v-ok">✓</span><span class="dev-badge">DEV</span>' : (me.is_dev ? ' <span class="v-ok">✓</span>' : '')) + emBadge;
   g('mpl').textContent = getNick(me) || me.plan.toUpperCase();
-  g('bDevOpen').style.display = isOwnerReal ? 'inline-flex' : 'none';
+  g('bDevOpen').style.display = (isOwnerReal || realOwnerMe) ? 'inline-flex' : 'none';
   sav(g('mav'), me.name, me.avatar_url, me.plan === 'ult' || isOwnerReal, '');
 }
 
 async function loadAllCloudData(){
   try {
-    var pRes = await api('/databases/' + DID + '/collections/profiles/documents?limit=100', 'GET');
-    var mRes = await api('/databases/' + DID + '/collections/messages/documents?limit=100', 'GET');
-    var sRes = await api('/databases/' + DID + '/collections/stories/documents?limit=100', 'GET');
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
+    var mRes = await api('/databases/' + DID + '/collections/messages/documents', 'GET');
+    var sRes = await api('/databases/' + DID + '/collections/stories/documents', 'GET');
     allProfiles = pRes.documents || [];
     allMessages = mRes.documents || [];
     allStories = (sRes.documents || []).slice().reverse();
 
-    var isOwnerReal = (me.is_dev && (me.email || '').toLowerCase() === OWNER);
+    var isOwnerReal = ((me.is_dev && (me.email || '').toLowerCase() === OWNER) || !!realOwnerMe);
     g('maintScreen').style.display = (!isOwnerReal && isMaintenanceOn()) ? 'flex' : 'none';
 
     var banners = allMessages.filter(function(m){ return m.chat_id === 'sys_banner'; });
     var bEl = g('globBanner');
-    if(banners.length && banners[banners.length - 1].text){
-      bEl.textContent = '📢 ' + banners[banners.length - 1].text;
+    if(banners.length && banners.slice(-1).pop().text){
+      bEl.textContent = '📢 ' + banners.slice(-1).pop().text;
       bEl.style.display = 'block';
     } else {
       bEl.style.display = 'none';
     }
 
+    var urgents = allMessages.filter(function(m){ return m.chat_id === 'sys_urgent'; });
+    if(urgents.length){
+      var lastU = urgents.slice(-1).pop();
+      if(lastU.$id !== lastPopupId){
+        lastPopupId = lastU.$id;
+        localStorage.setItem('bc_last_pop', lastPopupId);
+        g('urgentTxt').textContent = lastU.text;
+        om('mUrgent');
+      }
+    }
+
     var fresh = allProfiles.find(function(x){ return x.$id === me.$id; });
     if(fresh){
-      if(fresh.is_banned){ me = fresh; g('banReason').textContent = me.ban_reason || 'Бан'; om('mBan'); return; }
-      me = fresh; updateMyHeader();
+      me = fresh;
+      updateMyHeader();
     }
 
-    if(curChat === 'global'){
-      var canGlobal = !isGlobalFrozen() || me.is_dev;
-      g('chatBar').style.display = canGlobal ? 'flex' : 'none';
+    if(!realOwnerMe){
+      var pun = getUserPunishment(me.$id);
+      if(me.is_banned || (pun && pun.type === 'ban')){
+        var rsn = (pun && pun.reason) ? pun.reason : (me.ban_reason || 'Аккаунт заблокирован администратором');
+        if(pun && pun.until > 0){
+          var minsLeft = Math.max(1, Math.ceil((pun.until - Date.now()) / 60000));
+          rsn += ' (Осталось: ~' + minsLeft + ' мин.)';
+        }
+        g('banReason').textContent = rsn;
+        om('mBan');
+        return;
+      } else {
+        cm('mBan');
+      }
     }
 
+    updateChatInputAccess();
     renderChatList();
     renderPinnedBar();
     renderMessages(false);
@@ -861,6 +880,25 @@ async function loadAllCloudData(){
   } catch(e){}
 }
 
+function updateChatInputAccess(){
+  var bar = g('chatBar'), mbar = g('muteBar');
+  var pun = !realOwnerMe ? getUserPunishment(me.$id) : null;
+  if(pun && pun.type === 'mute'){
+    bar.style.display = 'none';
+    var mTxt = '🔇 Вам запрещено отправлять сообщения. Причина: ' + (pun.reason || 'Нарушение правил');
+    if(pun.until > 0) mTxt += ' (Осталось: ~' + Math.max(1, Math.ceil((pun.until - Date.now()) / 60000)) + ' мин.)';
+    mbar.textContent = mTxt;
+    mbar.style.display = 'block';
+    return;
+  }
+  mbar.style.display = 'none';
+  var canPost = true;
+  if(curChatObj.type === 'channel' && curChatObj.meta){
+    canPost = (curChatObj.meta.owner === me.$id || (curChatObj.meta.admins || []).indexOf(me.$id) > -1 || me.is_dev);
+  }
+  if(curChat === 'global' && isGlobalFrozen() && !me.is_dev && !realOwnerMe) canPost = false;
+  bar.style.display = canPost ? 'flex' : 'none';
+}
 function getRooms(){
   var rooms = [];
   allMessages.forEach(function(m){
@@ -929,11 +967,9 @@ function renderChatList(){
   var cleanQ = q.replace(/^@+/, '');
   allProfiles.forEach(function(p){
     if(p.$id === me.$id) return;
-    var dmId = getDmId(me.$id, p.$id);
-    var hasHistory = allMessages.some(function(m){ return m.chat_id === dmId; });
     var nick = getNick(p).replace(/^@+/, '');
-    var matchedBySearch = (cleanQ.length >= 2 && (nick.indexOf(cleanQ) > -1 || p.name.toLowerCase().indexOf(cleanQ) > -1));
-    if(!hasHistory && !matchedBySearch) return;
+    if(cleanQ && nick.indexOf(cleanQ) === -1 && p.name.toLowerCase().indexOf(cleanQ) === -1) return;
+    var dmId = getDmId(me.$id, p.$id);
     var onl = isUserOnline(p);
     var d = document.createElement('div'); d.className = 'ci' + (curChat === dmId ? ' act' : '');
     var obj = { id: dmId, type: 'dm', name: p.name, sub: onl ? 'в сети' : (getNick(p) || 'не в сети'), off: p.is_dev, av: p.avatar_url, prof: p };
@@ -951,10 +987,7 @@ function selectChat(id, obj){
   sav(g('tav'), obj.name, obj.av || '', obj.off, obj.em || '');
   g('cnam').innerHTML = obj.name + (obj.off && obj.id !== 'saved_' + me.$id ? ' <span class="v-ok">✓</span>' : '');
   g('csta').textContent = obj.sub || 'нажмите для профиля';
-  var canPost = true;
-  if(obj.type === 'channel' && obj.meta) canPost = (obj.meta.owner === me.$id || (obj.meta.admins || []).indexOf(me.$id) > -1 || me.is_dev);
-  if(id === 'global' && isGlobalFrozen() && !me.is_dev) canPost = false;
-  g('chatBar').style.display = canPost ? 'flex' : 'none';
+  updateChatInputAccess();
   g('app').classList.add('chat-open');
   renderChatList(); renderPinnedBar(); renderMessages(true);
 }
@@ -962,7 +995,7 @@ function renderPinnedBar(){
   var pins = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type === 'pin_meta'; });
   var bar = g('pinBar');
   if(!pins.length){ bar.style.display = 'none'; currentPinMsgId = ''; return; }
-  var lastPin = pins[pins.length - 1];
+  var lastPin = pins.slice(-1).pop();
   currentPinMsgId = lastPin.media_url || '';
   g('pinTxt').textContent = lastPin.text || 'Закреплённое сообщение';
   bar.style.display = 'flex';
@@ -975,7 +1008,7 @@ function scrollToPinned(){
 async function unpinCurrentChat(){
   var pins = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type === 'pin_meta'; });
   for(var i = 0; i < pins.length; i++){
-    try { await api('/databases/' + DID + '/collections/messages/documents/' + pins[i].$id, 'DELETE'); } catch(e){}
+    try { await api('/databases/' + DID + '/collections/messages/documents/' + pins.slice(i, i + 1).pop().$id, 'DELETE'); } catch(e){}
   }
   await loadAllCloudData(); renderPinnedBar();
 }
@@ -985,7 +1018,7 @@ function openMsgActions(m){
   g('maPreview').textContent = m.media_type === 'poll' ? '📊 Опрос' : (m.text || (m.media_type === 'aud' ? '🎙 Голосовое сообщение' : (m.media_type === 'sticker' ? 'Стикер ' + m.media_url : '📎 Медиафайл')));
   var isMine = (m.sender_id === me.$id);
   g('maEditBtn').style.display = (isMine && m.text && m.media_type !== 'sticker' && m.media_type !== 'poll') ? 'block' : 'none';
-  g('maDelBtn').style.display = (isMine || me.is_dev) ? 'block' : 'none';
+  g('maDelBtn').style.display = (isMine || me.is_dev || realOwnerMe) ? 'block' : 'none';
   om('mMsgAct');
 }
 async function addReaction(emo){
@@ -1074,14 +1107,17 @@ async function voteInPoll(msgObj, optIdx){
   try {
     var pData = JSON.parse(msgObj.text);
     pData.opts.forEach(function(o){ o.votes = (o.votes || []).filter(function(u){ return u !== me.$id; }); });
-    pData.opts[optIdx].votes.push(me.$id);
+    var chosen = pData.opts.slice(optIdx, optIdx + 1).pop();
+    if(chosen) chosen.votes.push(me.$id);
     await api('/databases/' + DID + '/collections/messages/documents/' + msgObj.$id, 'PATCH', { data: { text: JSON.stringify(pData) } });
     await loadAllCloudData(); renderMessages(true);
   } catch(e){}
 }
 function renderMessages(force){
   var box = g('mlst');
-  var msgs = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; });
+  var msgs = allMessages.filter(function(m){
+    return m.chat_id === curChat && m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta' && m.media_type !== 'pun_meta';
+  });
   var reacts = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type === 'react_meta'; });
   var sig = curChat + ':' + msgs.map(function(m){ return m.$id + (m.text || '').length; }).join(',') + '|r:' + reacts.length;
   if(!force && sig === lastDrawnIds) return;
@@ -1093,7 +1129,7 @@ function renderMessages(force){
     d.onclick = function(e){ if(e.target.tagName === 'AUDIO' || e.target.tagName === 'VIDEO' || e.target.classList.contains('poll-opt')) return; openMsgActions(m); };
     if(!isMy){
       var snd = document.createElement('div'); snd.className = 'm-snd';
-      snd.innerHTML = m.is_support ? '🛡️ Поддержка BiChat <span class="v-ok">✓</span>' : m.sender_name;
+      snd.innerHTML = m.is_support ? ('🛡️ ' + (m.sender_name || 'BiChat Official') + ' <span class="v-ok">✓</span>') : m.sender_name;
       if(!m.is_support) snd.onclick = function(e){ e.stopPropagation(); var pr = allProfiles.find(function(x){ return x.$id === m.sender_id; }); if(pr) openUserProfile(pr); };
       d.appendChild(snd);
     }
@@ -1217,6 +1253,7 @@ function compressImageFallback(file){
 }
 
 async function uploadToCloud(file, fileName){
+  await ensureStorageSession();
   try {
     var fd = new FormData(); fd.append('fileId', uid());
     if(fileName) fd.append('file', file, fileName); else fd.append('file', file);
@@ -1239,35 +1276,36 @@ async function toggleVoiceRec(){
     mediaRec.ondataavailable = function(e){ if(e.data.size > 0) audioChunks.push(e.data); };
     mediaRec.onstop = async function(){
       stream.getTracks().forEach(function(t){ t.stop(); });
-      var blob = new Blob(audioChunks, { type: 'audio/webm' });
+      var mime = (audioChunks.length && audioChunks.slice(0, 1).pop().type) ? audioChunks.slice(0, 1).pop().type : 'audio/webm';
+      var ext = mime.indexOf('mp4') > -1 ? 'mp4' : 'webm';
+      var blob = new Blob(audioChunks, { type: mime });
       g('csta').textContent = 'Отправка голоса...';
-      try { var url = await uploadToCloud(blob, 'voice_' + Date.now() + '.webm'); await sendCloudMsg(url, 'aud'); } catch(e){}
+      try { var url = await uploadToCloud(blob, 'voice_' + Date.now() + '.' + ext); await sendCloudMsg(url, 'aud'); }
+      catch(err){ alert('Ошибка отправки голосового: ' + err.message); }
       g('csta').textContent = curChatObj.sub || 'в сети';
     };
     mediaRec.start(); recSeconds = 0; g('recSec').textContent = '0с'; bar.style.display = 'flex'; btn.textContent = '⏹'; btn.style.background = '#ef4444';
     recTimer = setInterval(function(){ recSeconds++; g('recSec').textContent = recSeconds + 'с'; }, 1000);
-  } catch(e){}
+  } catch(err){ alert('Нет доступа к микрофону: ' + err.message); }
 }
 
 var chatMediaInp = document.createElement('input'); chatMediaInp.type = 'file'; chatMediaInp.accept = 'image/*,video/*';
 chatMediaInp.onchange = async function(e){
   var file = e.target.files ? e.target.files.item(0) : null; if(!file) return;
-  try { var url = await uploadToCloud(file); await sendCloudMsg(url, file.type.indexOf('video') === 0 ? 'vid' : 'img'); } catch(e){}
+  try { var url = await uploadToCloud(file); await sendCloudMsg(url, file.type.indexOf('video') === 0 ? 'vid' : 'img'); }
+  catch(err){ alert('Ошибка загрузки медиа: ' + err.message); }
   chatMediaInp.value = '';
 };
 
 var avFileInp = document.createElement('input'); avFileInp.type = 'file'; avFileInp.accept = 'image/*';
 avFileInp.onchange = async function(e){
   var file = e.target.files ? e.target.files.item(0) : null; if(!file) return;
-  g('avUpSt').style.color = '#60a5fa';
-  g('avUpSt').textContent = 'Обработка фото...';
+  g('avUpSt').style.color = '#60a5fa'; g('avUpSt').textContent = 'Обработка фото...';
   try {
     tempAvUrl = await uploadToCloud(file);
-    g('avUpSt').style.color = '#10b981';
-    g('avUpSt').textContent = 'Фото готово! Нажмите «Сохранить изменения».';
+    g('avUpSt').style.color = '#10b981'; g('avUpSt').textContent = 'Фото готово! Нажмите «Сохранить изменения».';
   } catch(err){
-    g('avUpSt').style.color = '#fca5a5';
-    g('avUpSt').textContent = 'Ошибка: ' + err.message;
+    g('avUpSt').style.color = '#fca5a5'; g('avUpSt').textContent = 'Ошибка: ' + err.message;
   }
   avFileInp.value = '';
 };
@@ -1308,7 +1346,7 @@ function openUserProfile(p){
   sav(g('upAv'), p.name, p.avatar_url, p.plan === 'ult' || p.is_dev, '');
   g('upNm').innerHTML = p.name + (p.is_dev ? ' <span class="v-ok">✓</span>' : '') + (p.ult_em ? ' ' + p.ult_em : '');
   g('upUser').textContent = getNick(p) || '@без_ника';
-  var onl = (p.$id === me.$id) || isUserOnline(p);
+  var onl = (p.$id === me.$id && !realOwnerMe) || isUserOnline(p);
   g('upStatus').textContent = onl ? '● В сети' : 'Был(а) недавно';
   g('upPlan').textContent = p.is_dev ? 'Верифицированный аккаунт BiChat' : ('Тариф: ' + (p.plan || 'free').toUpperCase());
   g('upBio').textContent = getBioText(p) || 'Пользователь не указал информацию о себе';
@@ -1365,8 +1403,7 @@ async function updatePasswordInSettings(){
   var p = g('setNewPass').value.trim();
   if(p.length < 4){ g('passSavedMsg').style.color = '#fca5a5'; g('passSavedMsg').textContent = 'Минимум 4 символа'; return; }
   await saveUserAuthRecord(me.$id, p, g('setNewHint').value.trim());
-  g('passSavedMsg').style.color = '#10b981';
-  g('passSavedMsg').textContent = 'Пароль и подсказка успешно обновлены!';
+  g('passSavedMsg').style.color = '#10b981'; g('passSavedMsg').textContent = 'Пароль и подсказка успешно обновлены!';
 }
 async function saveProfCloud(){
   var newNick = g('eu').value.trim().replace(/^@+/, '').toLowerCase();
@@ -1384,48 +1421,158 @@ async function saveProfCloud(){
 async function setPlan(p){ me = await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', { data: { plan: p } }); updateMyHeader(); sv('sv0'); }
 
 function openDash(){
-  if(!me.is_dev || (me.email || '').toLowerCase() !== OWNER) return;
+  var isOwnerReal = ((me.is_dev && (me.email || '').toLowerCase() === OWNER) || !!realOwnerMe);
+  if(!isOwnerReal) return;
   g('stUsers').textContent = allProfiles.length;
   g('stOnline').textContent = allProfiles.filter(isUserOnline).length;
-  g('stMsgs').textContent = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; }).length;
+  g('stMsgs').textContent = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta' && m.media_type !== 'pun_meta'; }).length;
   g('stStr').textContent = allStories.length;
   g('btnMaint').textContent = isMaintenanceOn() ? '✅ Выкл технические работы' : '🛠️ Включить технические работы';
   g('btnFreeze').textContent = isGlobalFrozen() ? '🔓 Разморозить Общий чат' : '🔒 Заморозить Общий чат (Read-Only)';
   g('srvNote').textContent = isMaintenanceOn() ? 'Сейчас обычные пользователи видят полноэкранную заставку тех. работ!' : '';
-  renderDashUsers();
-  renderDashModMsgs();
-  om('mDash');
+  renderDashUsers(); renderDashModMsgs(); om('mDash');
 }
+
 function renderDashUsers(){
   var q = (g('admSrch').value || '').toLowerCase(), box = g('dv1'); box.innerHTML = '';
   allProfiles.forEach(function(p){
     var nick = getNick(p);
     if(q && p.name.toLowerCase().indexOf(q) === -1 && nick.indexOf(q) === -1) return;
+    var pun = getUserPunishment(p.$id);
+    var statusTag = p.is_banned ? ' [БАН]' : (pun ? (' [' + pun.type.toUpperCase() + ']') : '');
     var row = document.createElement('div'); row.className = 'u-row';
-    row.innerHTML = '<div style="min-width:0;flex:1"><b>' + p.name + (p.is_dev ? ' ✓' : '') + (p.is_banned ? ' [БАН]' : '') + '</b><div style="font-size:10px;color:#94a3b8">' + (nick || p.email) + ' • ' + (p.plan || 'free').toUpperCase() + '</div></div>';
-    var acts = document.createElement('div'); acts.style.display = 'flex'; acts.style.gap = '3px'; acts.style.flexShrink = '0';
-
-    var bVer = document.createElement('button'); bVer.className = 'mini-btn'; bVer.style.background = '#2563eb'; bVer.textContent = p.is_dev ? 'Снять ✓' : 'Дать ✓';
-    bVer.onclick = async function(){ if(p.$id === me.$id) return; await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_dev: !p.is_dev } }); await loadAllCloudData(); renderDashUsers(); };
-
-    var bUlt = document.createElement('button'); bUlt.className = 'mini-btn'; bUlt.style.background = '#9333ea'; bUlt.textContent = p.plan === 'ult' ? 'Free' : 'Ult';
-    bUlt.onclick = async function(){ await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { plan: p.plan === 'ult' ? 'free' : 'ult' } }); await loadAllCloudData(); renderDashUsers(); };
-
-    var bPwd = document.createElement('button'); bPwd.className = 'mini-btn'; bPwd.style.background = '#d97706'; bPwd.textContent = 'Пароль';
-    bPwd.onclick = async function(){ var np = prompt('Новый пароль для ' + p.name + ' (мин. 4 симв.):'); if(np && np.trim().length >= 4){ await saveUserAuthRecord(p.$id, np.trim(), 'Сброшен админом'); alert('Пароль изменён на: ' + np.trim()); } };
-
-    var bBan = document.createElement('button'); bBan.className = 'mini-btn'; bBan.style.background = p.is_banned ? '#10b981' : '#ef4444'; bBan.textContent = p.is_banned ? 'Разбан' : 'Бан';
-    bBan.onclick = async function(){ if(p.$id === me.$id) return; await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_banned: !p.is_banned, ban_reason: 'Заблокирован администратором' } }); await loadAllCloudData(); renderDashUsers(); };
-
-    var bDel = document.createElement('button'); bDel.className = 'mini-btn'; bDel.style.background = '#7f1d1d'; bDel.textContent = '🗑';
-    bDel.onclick = async function(){ if(p.$id === me.$id) return; if(confirm('Удалить профиль ' + p.name + ' навсегда?')){ await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'DELETE'); await loadAllCloudData(); renderDashUsers(); } };
-
-    acts.append(bVer, bUlt, bPwd, bBan, bDel); row.appendChild(acts); box.appendChild(row);
+    row.innerHTML = '<div style="min-width:0;flex:1"><b>' + p.name + (p.is_dev ? ' ✓' : '') + '<span style="color:#fca5a5">' + statusTag + '</span></b><div style="font-size:10px;color:#94a3b8">' + (nick || p.email) + ' • ' + (p.plan || 'free').toUpperCase() + '</div></div><span style="color:#60a5fa;font-weight:700">Управление →</span>';
+    row.onclick = function(){ openAdminUserCard(p); };
+    box.appendChild(row);
   });
 }
+
+function openAdminUserCard(p){
+  sav(g('auAv'), p.name, p.avatar_url, p.plan === 'ult' || p.is_dev, '');
+  g('auName').innerHTML = p.name + (p.is_dev ? ' <span class="v-ok">✓</span>' : '');
+  g('auMeta').textContent = (getNick(p) || '') + ' • ' + p.email + ' • Тариф: ' + (p.plan || 'free').toUpperCase();
+  var aRec = getUserAuthRecord(p.$id);
+  g('auPassInfo').textContent = aRec ? ('🔑 Пароль: ' + aRec.pass + (aRec.hint ? ' (Подсказка: ' + aRec.hint + ')' : '')) : '🔑 Пароль ещё не задан';
+
+  g('auSpyBtn').onclick = function(){
+    cm('mAdmUser'); cm('mDash');
+    if(!realOwnerMe) realOwnerMe = me;
+    me = p;
+    g('spyLabel').textContent = '🕵️ Наблюдение за: ' + p.name + ' (' + (getNick(p) || p.email) + ')';
+    g('spyBanner').style.display = 'flex';
+    updateMyHeader();
+    selectChat('saved_' + p.$id, { id: 'saved_' + p.$id, type: 'saved', name: 'Избранное (' + p.name + ')', sub: 'Режим наблюдения', off: true, em: '🔖' });
+  };
+
+  g('auMsgMeBtn').onclick = function(){
+    cm('mAdmUser'); cm('mDash');
+    if(realOwnerMe) exitSpyMode();
+    var dmId = getDmId(me.$id, p.$id);
+    selectChat(dmId, { id: dmId, type: 'dm', name: p.name, sub: getNick(p) || 'личный чат', off: p.is_dev, av: p.avatar_url, prof: p });
+  };
+
+  g('auMsgSysBtn').onclick = async function(){
+    var txt = prompt('Введите сообщение для ' + p.name + ' от официального лица BiChat Official ✓:');
+    if(!txt || !txt.trim()) return;
+    var ownerProf = realOwnerMe || me;
+    var dmId = getDmId(ownerProf.$id, p.$id);
+    await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
+      documentId: uid(), data: { chat_id: dmId, sender_id: ownerProf.$id, sender_name: 'BiChat Official', text: txt.trim(), media_url: '', media_type: '', is_support: true }
+    });
+    alert('Сообщение от BiChat Official ✓ отправлено пользователю ' + p.name + '!');
+    await loadAllCloudData();
+  };
+  g('auVerBtn').onclick = async function(){
+    if(p.$id === (realOwnerMe || me).$id) return;
+    await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_dev: !p.is_dev } });
+    await loadAllCloudData(); cm('mAdmUser'); renderDashUsers();
+  };
+
+  g('auUltBtn').onclick = async function(){
+    await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { plan: p.plan === 'ult' ? 'free' : 'ult' } });
+    await loadAllCloudData(); cm('mAdmUser'); renderDashUsers();
+  };
+
+  g('auPwdBtn').onclick = async function(){
+    var np = prompt('Новый пароль для ' + p.name + ' (мин. 4 симв.):');
+    if(np && np.trim().length >= 4){ await saveUserAuthRecord(p.$id, np.trim(), 'Установлен админом'); openAdminUserCard(p); }
+  };
+
+  g('auApplyPunBtn').onclick = async function(){
+    if(p.$id === (realOwnerMe || me).$id) return;
+    var pt = g('punType').value;
+    var rsn = g('punReason').value.trim() || 'Нарушение правил BiChat';
+    var until = 0, kind = 'mute';
+    if(pt === 'mute_5'){ kind = 'mute'; until = Date.now() + 5 * 60000; }
+    else if(pt === 'mute_60'){ kind = 'mute'; until = Date.now() + 60 * 60000; }
+    else if(pt === 'mute_perm'){ kind = 'mute'; until = 0; }
+    else if(pt === 'tban_10'){ kind = 'ban'; until = Date.now() + 10 * 60000; }
+    else if(pt === 'tban_60'){ kind = 'ban'; until = Date.now() + 60 * 60000; }
+    else if(pt === 'tban_1440'){ kind = 'ban'; until = Date.now() + 1440 * 60000; }
+    else if(pt === 'pban'){
+      await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_banned: true, ban_reason: rsn } });
+      await loadAllCloudData(); cm('mAdmUser'); renderDashUsers(); return;
+    }
+    await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
+      documentId: uid(), data: { chat_id: 'pun_' + p.$id, sender_id: 'SYS', sender_name: 'PUN', text: JSON.stringify({ type: kind, until: until, reason: rsn }), media_url: '', media_type: 'pun_meta', is_support: true }
+    });
+    await loadAllCloudData(); cm('mAdmUser'); renderDashUsers();
+  };
+
+  g('auClearPunBtn').onclick = async function(){
+    await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_banned: false, ban_reason: 'online_' + Date.now() } });
+    var oldPuns = allMessages.filter(function(m){ return m.chat_id === 'pun_' + p.$id; });
+    for(var i = 0; i < oldPuns.length; i++){
+      try { await api('/databases/' + DID + '/collections/messages/documents/' + oldPuns.slice(i, i + 1).pop().$id, 'DELETE'); } catch(e){}
+    }
+    await loadAllCloudData(); cm('mAdmUser'); renderDashUsers();
+  };
+
+  g('auDelBtn').onclick = async function(){
+    if(p.$id === (realOwnerMe || me).$id) return;
+    if(confirm('Удалить профиль ' + p.name + ' из базы навсегда?')){
+      await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'DELETE');
+      await loadAllCloudData(); cm('mAdmUser'); renderDashUsers();
+    }
+  };
+
+  om('mAdmUser');
+}
+
+function exitSpyMode(){
+  if(!realOwnerMe) return;
+  me = realOwnerMe;
+  realOwnerMe = null;
+  g('spyBanner').style.display = 'none';
+  updateMyHeader();
+  selectChat('global', { id: 'global', type: 'group', name: 'Общий чат BiChat', sub: 'Все друзья и родные', off: true, em: '🌍' });
+}
+
+function rollRaffleWinner(){
+  var pool = allProfiles.filter(function(p){ return !p.is_dev && !p.is_banned && p.plan !== 'ult'; });
+  if(!pool.length){ alert('Нет подходящих участников без Ultimate!'); return; }
+  var idx = Math.floor(Math.random() * pool.length);
+  raffleWinner = pool.slice(idx, idx + 1).pop();
+  sav(g('rfAv'), raffleWinner.name, raffleWinner.avatar_url, false, '');
+  g('rfName').textContent = raffleWinner.name;
+  g('rfNick').textContent = (getNick(raffleWinner) || '') + ' • ' + raffleWinner.email;
+  g('raffleCard').style.display = 'block';
+}
+
+async function confirmGrantRaffle(){
+  if(!raffleWinner) return;
+  await api('/databases/' + DID + '/collections/profiles/documents/' + raffleWinner.$id, 'PATCH', { data: { plan: 'ult' } });
+  await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
+    documentId: uid(), data: { chat_id: 'global', sender_id: (realOwnerMe || me).$id, sender_name: '🎁 Розыгрыш BiChat', text: 'Поздравляем ' + raffleWinner.name + ' (' + (getNick(raffleWinner) || '') + ') с победой в розыгрыше подписки BiChat Ultimate! 🎉💎', media_url: '', media_type: '', is_support: true }
+  });
+  g('raffleCard').style.display = 'none';
+  raffleWinner = null;
+  await loadAllCloudData(); renderDashUsers();
+}
+
 function renderDashModMsgs(){
   var box = g('dvMsgsList'); box.innerHTML = '';
-  var list = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; }).slice(-25).reverse();
+  var list = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta' && m.media_type !== 'pun_meta'; }).slice(-25).reverse();
   list.forEach(function(m){
     var row = document.createElement('div'); row.className = 'u-row';
     row.innerHTML = '<div style="min-width:0;flex:1"><b>' + m.sender_name + '</b> <span style="color:#60a5fa">[' + m.chat_id.slice(0, 10) + ']</span><div style="font-size:11px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (m.text || m.media_type || 'медиа') + '</div></div>';
@@ -1434,63 +1581,77 @@ function renderDashModMsgs(){
     row.appendChild(b); box.appendChild(row);
   });
 }
+
+async function sendUrgentPopup(){
+  var txt = g('admUrgentInp').value.trim(); if(!txt) return;
+  g('admUrgentInp').value = '';
+  await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
+    documentId: uid(), data: { chat_id: 'sys_urgent', sender_id: 'SYS', sender_name: 'URGENT', text: txt, media_url: '', media_type: 'room_meta', is_support: true }
+  });
+  await loadAllCloudData();
+}
+
 async function toggleMaintenance(){
   var existing = allMessages.filter(function(m){ return m.chat_id === 'sys_maint'; });
   for(var i = 0; i < existing.length; i++){
-    try { await api('/databases/' + DID + '/collections/messages/documents/' + existing[i].$id, 'DELETE'); } catch(e){}
+    try { await api('/databases/' + DID + '/collections/messages/documents/' + existing.slice(i, i + 1).pop().$id, 'DELETE'); } catch(e){}
   }
   if(!existing.length){
     await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
-      documentId: uid(), data: { chat_id: 'sys_maint', sender_id: me.$id, sender_name: 'SYS', text: 'ON', media_url: '', media_type: 'room_meta', is_support: true }
+      documentId: uid(), data: { chat_id: 'sys_maint', sender_id: 'SYS', sender_name: 'SYS', text: 'ON', media_url: '', media_type: 'room_meta', is_support: true }
     });
   }
   await loadAllCloudData(); openDash();
 }
+
 async function toggleFreezeGlobal(){
   var existing = allMessages.filter(function(m){ return m.chat_id === 'sys_freeze'; });
   for(var i = 0; i < existing.length; i++){
-    try { await api('/databases/' + DID + '/collections/messages/documents/' + existing[i].$id, 'DELETE'); } catch(e){}
+    try { await api('/databases/' + DID + '/collections/messages/documents/' + existing.slice(i, i + 1).pop().$id, 'DELETE'); } catch(e){}
   }
   if(!existing.length){
     await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
-      documentId: uid(), data: { chat_id: 'sys_freeze', sender_id: me.$id, sender_name: 'SYS', text: 'ON', media_url: '', media_type: 'room_meta', is_support: true }
+      documentId: uid(), data: { chat_id: 'sys_freeze', sender_id: 'SYS', sender_name: 'SYS', text: 'ON', media_url: '', media_type: 'room_meta', is_support: true }
     });
   }
   await loadAllCloudData(); openDash();
 }
+
 async function setGlobalBanner(){
   var txt = g('admBannerInp').value.trim();
   var old = allMessages.filter(function(m){ return m.chat_id === 'sys_banner'; });
   for(var i = 0; i < old.length; i++){
-    try { await api('/databases/' + DID + '/collections/messages/documents/' + old[i].$id, 'DELETE'); } catch(e){}
+    try { await api('/databases/' + DID + '/collections/messages/documents/' + old.slice(i, i + 1).pop().$id, 'DELETE'); } catch(e){}
   }
   if(txt){
     await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
-      documentId: uid(), data: { chat_id: 'sys_banner', sender_id: me.$id, sender_name: 'SYS', text: txt, media_url: '', media_type: 'room_meta', is_support: true }
+      documentId: uid(), data: { chat_id: 'sys_banner', sender_id: 'SYS', sender_name: 'SYS', text: txt, media_url: '', media_type: 'room_meta', is_support: true }
     });
   }
-  g('admBannerInp').value = '';
-  await loadAllCloudData();
+  g('admBannerInp').value = ''; await loadAllCloudData();
 }
+
 async function adminBroadcast(){
   var txt = g('admBroad').value.trim(); if(!txt) return;
   g('admBroad').value = '';
   await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
-    documentId: uid(), data: { chat_id: 'global', sender_id: me.$id, sender_name: '📢 Администрация BiChat', text: txt, media_url: '', media_type: '', is_support: true }
+    documentId: uid(), data: { chat_id: 'global', sender_id: (realOwnerMe || me).$id, sender_name: 'BiChat Official', text: txt, media_url: '', media_type: '', is_support: true }
   });
   await loadAllCloudData(); renderMessages(true);
 }
+
 async function clearGlobalChat(){
   if(!confirm('Удалить все сообщения в Общем чате?')) return;
   var gMsgs = allMessages.filter(function(m){ return m.chat_id === 'global'; });
   for(var i = 0; i < gMsgs.length; i++){
-    try { await api('/databases/' + DID + '/collections/messages/documents/' + gMsgs[i].$id, 'DELETE'); } catch(e){}
+    try { await api('/databases/' + DID + '/collections/messages/documents/' + gMsgs.slice(i, i + 1).pop().$id, 'DELETE'); } catch(e){}
   }
   await loadAllCloudData(); renderDashModMsgs();
 }
+
 async function clearAllStories(){
   for(var i = 0; i < allStories.length; i++){
-    try { await api('/databases/' + DID + '/collections/stories/documents/' + allStories[i].$id, 'DELETE'); } catch(e){}
+    try { await api('/databases/' + DID + '/collections/stories/documents/' + allStories.slice(i, i + 1).pop().$id, 'DELETE'); } catch(e){}
   }
   await loadAllCloudData(); openDash();
 }
