@@ -455,6 +455,26 @@ body.theme-light .ibtn{background:#e2e8f0}
       <div style="display:flex;align-items:center;gap:8px;min-width:0;flex:1;cursor:pointer" onclick="openHeaderInfo()">
         <button type="button" class="ibtn mob-back" onclick="event.stopPropagation();g('app').classList.remove('chat-open')">←</button>
         <div class="av" id="tav" style="width:38px;height:38px"></div>
+                <div style="min-width:0"><div style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="cnam">Общий чат BiChat</div><div style="font-size:11px;color:#10b981;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="csta">нажмите для профиля</div></div>
+      </div>
+    </div>
+    <div class="pin-bar" id="pinBar" onclick="scrollToPinned()"><div style="min-width:0"><b style="font-size:11px;color:#60a5fa;display:block">📌 Закреплённое сообщение</b><div class="pin-txt" id="pinTxt"></div></div><button type="button" class="ibtn" style="width:26px;height:26px;font-size:12px" onclick="event.stopPropagation();unpinCurrentChat()">✖</button></div>
+    <div class="msgs" id="mlst"></div>
+    <div class="emoji-pop" id="emojiPop"><div style="font-size:11px;color:#94a3b8;font-weight:700">Быстрые стикеры:</div><div class="em-grid" id="stickerGrid"></div></div>
+    <div class="rep-bar" id="repBar"><div style="min-width:0"><b style="color:#60a5fa" id="repModeLbl">↩ Ответ: </b><span id="repTxt" style="color:var(--muted)"></span></div><button type="button" class="ibtn" style="width:24px;height:24px;font-size:11px" onclick="cancelReply()">✖</button></div>
+    <div class="rec-bar" id="recBar"><span>🔴 Идёт запись голоса...</span><b id="recSec">0с</b></div>
+    <div class="mute-bar" id="muteBar"></div>
+    <div class="bar" id="chatBar">
+      <button type="button" class="ibtn" onclick="toggleEmojiPop()" title="Стикеры">😊</button>
+      <button type="button" class="ibtn" onclick="om('mPoll')" title="Создать опрос">📊</button>
+      <button type="button" class="ibtn" onclick="chatMediaInp.click()" title="Фото или видео">📷</button>
+      <input id="minp" placeholder="Написать сообщение..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendCloudMsg()}">
+      <button type="button" class="ibtn" id="micBtn" onclick="toggleVoiceRec()" title="Голосовое">🎙</button>
+      <button type="button" class="ibtn" style="background:#2563eb;color:#fff" onclick="sendCloudMsg()" title="Отправить">➤</button>
+    </div>
+  </div>
+</div>
+
 <script>
 var EP = 'https://' + 'fra.cloud.' + 'appwrite.io' + '/v1';
 var PID = '6afaabcb000c658e4466';
