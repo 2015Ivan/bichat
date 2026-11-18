@@ -9,13 +9,13 @@
 <title>BiChat</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%232563eb'/><path d='M16 20C16 15.5 19.5 12 24 12H40C44.5 12 48 15.5 48 20V32C48 36.5 44.5 40 40 40H26L17 48V40C16.5 38.8 16 37.3 16 32V20Z' fill='white'/></svg>">
 <style>
-:root{--bg:#050814;--panel:rgba(13,20,38,.94);--head:rgba(9,14,28,.97);--card:rgba(15,23,42,.97);--in-msg:rgba(30,41,59,.96);--my-msg:linear-gradient(135deg,#2563eb,#6366f1);--accent:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);--text:#f8fafc;--muted:#94a3b8;--border:rgba(255,255,255,.14);--orb1:#2563eb;--orb2:#7c3aed;--orb3:#06b6d4}
-body.theme-emerald{--bg:#04110e;--panel:rgba(8,28,24,.95);--head:rgba(5,20,17,.98);--card:rgba(10,34,29,.98);--in-msg:rgba(19,52,45,.96);--my-msg:linear-gradient(135deg,#059669,#0d9488);--accent:linear-gradient(135deg,#10b981,#06b6d4,#3b82f6);--orb1:#059669;--orb2:#0d9488;--orb3:#0284c7}
-body.theme-cyber{--bg:#0c0518;--panel:rgba(24,11,46,.95);--head:rgba(17,7,34,.98);--card:rgba(28,13,54,.98);--in-msg:rgba(46,20,82,.96);--my-msg:linear-gradient(135deg,#db2777,#9333ea);--accent:linear-gradient(135deg,#f43f5e,#a855f7,#3b82f6);--orb1:#db2777;--orb2:#7e22ce;--orb3:#4f46e5}
-body.theme-light{--bg:#eef2f9;--panel:rgba(255,255,255,.96);--head:rgba(248,250,252,.99);--card:rgba(255,255,255,.99);--in-msg:#ffffff;--my-msg:linear-gradient(135deg,#2563eb,#4f46e5);--text:#0f172a;--muted:#64748b;--border:rgba(15,23,42,.12);--orb1:#93c5fd;--orb2:#c4b5fd;--orb3:#67e8f9}
+:root{--bg:#050814;--panel:rgba(13,20,38,.95);--head:rgba(9,14,28,.98);--card:rgba(15,23,42,.98);--in-msg:rgba(30,41,59,.96);--my-msg:linear-gradient(135deg,#2563eb,#6366f1);--accent:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);--text:#f8fafc;--muted:#94a3b8;--border:rgba(255,255,255,.14);--orb1:#2563eb;--orb2:#7c3aed;--orb3:#06b6d4}
+body.theme-emerald{--bg:#04110e;--panel:rgba(8,28,24,.96);--head:rgba(5,20,17,.99);--card:rgba(10,34,29,.99);--in-msg:rgba(19,52,45,.96);--my-msg:linear-gradient(135deg,#059669,#0d9488);--accent:linear-gradient(135deg,#10b981,#06b6d4,#3b82f6);--orb1:#059669;--orb2:#0d9488;--orb3:#0284c7}
+body.theme-cyber{--bg:#0c0518;--panel:rgba(24,11,46,.96);--head:rgba(17,7,34,.99);--card:rgba(28,13,54,.99);--in-msg:rgba(46,20,82,.96);--my-msg:linear-gradient(135deg,#db2777,#9333ea);--accent:linear-gradient(135deg,#f43f5e,#a855f7,#3b82f6);--orb1:#db2777;--orb2:#7e22ce;--orb3:#4f46e5}
+body.theme-light{--bg:#eef2f9;--panel:rgba(255,255,255,.97);--head:rgba(248,250,252,.99);--card:rgba(255,255,255,.99);--in-msg:#ffffff;--my-msg:linear-gradient(135deg,#2563eb,#4f46e5);--text:#0f172a;--muted:#64748b;--border:rgba(15,23,42,.12);--orb1:#93c5fd;--orb2:#c4b5fd;--orb3:#67e8f9}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--bg);color:var(--text);height:100vh;width:100vw;overflow:hidden;transition:background .35s,color .35s}
-.orb{position:fixed;border-radius:50%;filter:blur(90px);opacity:.55;animation:orbFloat 11s infinite alternate ease-in-out;pointer-events:none;z-index:0}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);opacity:.5;animation:orbFloat 11s infinite alternate ease-in-out;pointer-events:none;z-index:0}
 .o1{width:420px;height:420px;background:var(--orb1);top:-12%;left:-6%}
 .o2{width:400px;height:400px;background:var(--orb2);bottom:-12%;right:-6%;animation-delay:-4s}
 .o3{width:320px;height:320px;background:var(--orb3);top:38%;left:42%;animation-delay:-7s}
@@ -87,7 +87,7 @@ body.theme-light .ibtn{background:#e2e8f0}
 .v-ok{display:inline-block;background:#3b82f6;color:#fff;border-radius:50%;width:15px;height:15px;font-size:10px;line-height:15px;text-align:center;margin-left:4px}
 .dev-badge{display:inline-block;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:6px;margin-left:4px}
 .main{position:relative;z-index:35;flex:1;height:100vh;display:flex;flex-direction:column;min-width:0}
-.spy-banner{display:none;background:linear-gradient(90deg,#7c3aed,#ec4899);color:#fff;padding:7px 14px;font-size:12px;font-weight:700;justify-content:space-between;align-items:center;gap:8px;flex-shrink:0}
+.spy-float{display:none;position:fixed;bottom:78px;right:16px;z-index:9998;background:linear-gradient(135deg,#ec4899,#7c3aed);color:#fff;border:2px solid #fff;border-radius:16px;padding:10px 14px;font-size:12px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.75);cursor:pointer}
 .glob-banner{display:none;background:linear-gradient(90deg,#f59e0b,#ec4899,#8b5cf6);color:#fff;padding:7px 14px;font-size:12px;font-weight:700;text-align:center;flex-shrink:0}
 .pin-bar{display:none;background:var(--head);border-bottom:1px solid rgba(59,130,246,.4);padding:7px 14px;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;flex-shrink:0}
 .pin-txt{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -115,6 +115,8 @@ body.theme-light .ibtn{background:#e2e8f0}
 .bar{padding:10px 12px;background:var(--head);border-top:1px solid var(--border);display:flex;gap:6px;align-items:center;flex-shrink:0}
 .bar input{flex:1;min-width:0;margin:0;border-radius:20px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.84);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:150;padding:12px}
+#mAdmUser{z-index:260}
+#mPol,#mUrgent,#mBan{z-index:350}
 .react-row{display:flex;justify-content:center;gap:8px;margin-bottom:12px}
 .react-choice{font-size:24px;background:rgba(255,255,255,.08);border:1px solid var(--border);border-radius:12px;padding:6px 10px;cursor:pointer;transition:transform .15s}
 .react-choice:hover{transform:scale(1.22)}
@@ -147,8 +149,10 @@ body.theme-light .ibtn{background:#e2e8f0}
 <div id="maintScreen">
   <div class="maint-emoji">🛠️</div>
   <h1 style="font-size:28px;color:#fbbf24;margin-bottom:10px;letter-spacing:.3px">Ведутся технические работы</h1>
-  <p id="maintSub" style="font-size:15px;color:#cbd5e1;max-width:440px;line-height:1.5">Мы обновляем серверы и улучшаем работу мессенджера BiChat. Доступ откроется автоматически сразу после завершения работ.</p>
+  <p style="font-size:15px;color:#cbd5e1;max-width:440px;line-height:1.5">Мы обновляем серверы и улучшаем работу мессенджера BiChat. Доступ откроется автоматически сразу после завершения работ.</p>
 </div>
+
+<button type="button" class="spy-float" id="spyFloatBtn" onclick="exitSpyMode()">🕵️ Выйти из наблюдения → К себе</button>
 
 <div id="auth">
   <div class="card">
@@ -235,16 +239,16 @@ body.theme-light .ibtn{background:#e2e8f0}
     <h4>1. Какие данные мы собираем</h4>
     <p>BiChat сохраняет в облачной базе Appwrite только сведения, которые вы указываете сами: адрес электронной почты, отображаемое имя, уникальный @username, описание профиля, аватарку, отправленные сообщения, медиафайлы и статусы.</p>
     <h4>2. Приватность и поиск по @username</h4>
-    <p>Ваш e-mail скрыт от других пользователей. Другие участники не видят вас в общем списке контактов, пока вы не начнёте переписку или вас не найдут по вашему @username.</p>
+    <p>Ваш e-mail скрыт от других пользователей. Другие участники видят ваш публичный профиль, @username и открытые чаты.</p>
     <h4>3. Передача данных третьим лицам</h4>
-    <p>Мы не продаём и не передаём ваши персональные данные или переписку рекламным сетям и сторонним лицам. Хранение обеспечивается облачной платформой Appwrite.</p>
-    <h4>4. Управление данными и удаление аккаунта</h4>
-    <p>Вы можете в любой момент изменить свои данные, сменить пароль, удалить свои сообщения или полностью удалить аккаунт из базы в разделе «Настройки».</p>
+    <p>Мы не продаём и не передаём ваши персональные данные рекламным сетям и сторонним лицам.</p>
+    <h4>4. Управление данными</h4>
+    <p>Вы можете в любой момент изменить свои данные, сменить пароль или удалить аккаунт в разделе «Настройки».</p>
   </div>
   <button type="button" class="btn" onclick="g('polChk').checked=true;cm('mPol')">Принимаю</button>
 </div></div>
 
-<div class="modal" id="mBan"><div class="card"><div style="font-size:44px;margin-bottom:8px">⛔</div><h3 style="color:#ef4444;margin-bottom:6px">Аккаунт заблокирован</h3><p id="banReason" style="font-size:13px;color:#cbd5e1;margin-bottom:14px"></p><button type="button" class="btn b2" onclick="logoutCloud()">Выйти</button></div></div>
+<div class="modal" id="mBan"><div class="card"><div style="font-size:44px;margin-bottom:8px">⛔</div><h3 style="color:#ef4444;margin-bottom:6px">Доступ ограничен</h3><p id="banReason" style="font-size:13px;color:#cbd5e1;margin-bottom:14px"></p><button type="button" class="btn b2" onclick="logoutCloud()">Выйти из аккаунта</button></div></div>
 
 <div class="modal" id="mUrgent"><div class="card" style="border-color:#f59e0b"><div style="font-size:46px;margin-bottom:8px">🚨</div><h3 style="color:#fbbf24;margin-bottom:6px">Важное сообщение от Администрации</h3><p id="urgentTxt" style="font-size:14px;color:#f8fafc;margin-bottom:14px;line-height:1.5"></p><button type="button" class="btn bg" onclick="cm('mUrgent')">Понятно</button></div></div>
 
@@ -266,25 +270,25 @@ body.theme-light .ibtn{background:#e2e8f0}
   </div>
 
   <div style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);border-radius:14px;padding:10px;margin-top:10px;text-align:left">
-    <p style="font-size:11px;color:#fca5a5;font-weight:700;margin-bottom:4px">⚖️ Выдать наказание пользователю:</p>
+    <p style="font-size:11px;color:#fca5a5;font-weight:700;margin-bottom:4px">⚖️ Выдать наказание (сработает мгновенно):</p>
     <select id="punType" style="margin:3px 0 6px;padding:8px">
       <option value="mute_5">🔇 Мут (запрет писать) на 5 минут</option>
       <option value="mute_60">🔇 Мут (запрет писать) на 1 час</option>
       <option value="mute_perm">🔇 Вечный мут (только чтение)</option>
-      <option value="tban_10">⏳ Временный бан на 10 минут</option>
+      <option value="tban_5">⏳ Временный бан на 5 минут</option>
       <option value="tban_60">⏳ Временный бан на 1 час</option>
       <option value="tban_1440">⏳ Временный бан на 24 часа</option>
       <option value="pban">⛔ Вечный бан аккаунта</option>
     </select>
-    <input id="punReason" placeholder="Причина наказания (увидит пользователь)..." style="margin:3px 0 6px;padding:8px">
+    <input id="punReason" placeholder="Причина наказания..." style="margin:3px 0 6px;padding:8px">
     <div style="display:flex;gap:6px">
-      <button type="button" class="btn b3" id="auApplyPunBtn" style="margin:0;flex:1">Применить наказание</button>
+      <button type="button" class="btn b3" id="auApplyPunBtn" style="margin:0;flex:1">Применить</button>
       <button type="button" class="btn b2" id="auClearPunBtn" style="margin:0;flex:1;background:#059669">✅ Снять всё</button>
     </div>
   </div>
 
-  <button type="button" class="btn b3" id="auDelBtn" style="margin-top:8px">🗑 Удалить аккаунт из базы навсегда</button>
-  <button type="button" class="btn b2" onclick="cm('mAdmUser')">Закрыть досье</button>
+  <button type="button" class="btn b3" id="auDelBtn" style="margin-top:8px">🗑 Удалить аккаунт навсегда</button>
+  <button type="button" class="btn b2" onclick="cm('mAdmUser')">Закрыть</button>
 </div></div>
 
 <div class="modal" id="mMsgAct"><div class="card" style="width:340px">
@@ -373,7 +377,7 @@ body.theme-light .ibtn{background:#e2e8f0}
     <input id="en" placeholder="Ваше имя">
     <input id="eu" placeholder="Ваш @username (обязательно)">
     <input id="eb" placeholder="О себе">
-    <p style="font-size:11px;color:#94a3b8;text-align:left;margin-top:4px">Анимированный эмодзи-статус рядом с именем:</p>
+    <p style="font-size:11px;color:#94a3b8;text-align:left;margin-top:4px">Анимированный эмодзи-статус:</p>
     <div class="grid" id="emoStatusGrid"></div>
     <button type="button" class="btn bg" onclick="avFileInp.click()">📷 Выбрать фото аватарки</button>
     <p id="avUpSt" style="font-size:11px;color:#10b981;margin:4px 0"></p>
@@ -391,7 +395,7 @@ body.theme-light .ibtn{background:#e2e8f0}
   </div>
   <div class="sview" id="sv4">
     <h3 style="margin-bottom:8px">Выберите тему оформления</h3>
-    <div class="si" onclick="applyTheme('')"><span>🌌 Тёмный космос (по умолчанию)</span><span>✓</span></div>
+    <div class="si" onclick="applyTheme('')"><span>🌌 Тёмный космос</span><span>✓</span></div>
     <div class="si" onclick="applyTheme('theme-emerald')"><span>🌿 Изумрудная ночь</span><span>✓</span></div>
     <div class="si" onclick="applyTheme('theme-cyber')"><span>🔮 Кибер-фиолет</span><span>✓</span></div>
     <div class="si" onclick="applyTheme('theme-light')"><span>☀️ Светлая классика</span><span>✓</span></div>
@@ -399,7 +403,6 @@ body.theme-light .ibtn{background:#e2e8f0}
   </div>
   <div class="sview" id="sv2">
     <h3 style="margin-bottom:6px">Подписки BiChat</h3>
-    <p style="font-size:12px;color:#cbd5e1;margin-bottom:10px;text-align:left"><b>BiChat Plus:</b> эксклюзивный значок и приоритет в чатах.<br><b>BiChat Ultimate:</b> анимированная неоновая рамка вокруг аватара и премиум-статус.</p>
     <button type="button" class="btn bg" onclick="setPlan('plus')">Активировать Plus</button>
     <button type="button" class="btn bu" onclick="setPlan('ult')">Активировать Ultimate</button>
     <button type="button" class="btn b3" onclick="setPlan('free')">Отключить подписку</button>
@@ -407,7 +410,6 @@ body.theme-light .ibtn{background:#e2e8f0}
   </div>
   <div class="sview" id="sv3">
     <h3 style="color:#ef4444;margin-bottom:6px">Удаление аккаунта</h3>
-    <p style="font-size:12px;color:#cbd5e1;margin-bottom:10px">Ваш профиль будет удалён из базы навсегда. Подтвердить?</p>
     <button type="button" class="btn b3" onclick="deleteAccountNow()">Да, удалить аккаунт навсегда</button>
     <button type="button" class="btn b2" onclick="sv('sv0')">Отмена</button>
   </div>
@@ -428,12 +430,10 @@ body.theme-light .ibtn{background:#e2e8f0}
     <button type="button" class="tab-btn" onclick="dv('dvRaffle',this)">🎁 Розыгрыш</button>
     <button type="button" class="tab-btn" onclick="dv('dvSrv',this)">🛠️ Сервер</button>
   </div>
-
   <div class="dview act" id="dvUsers">
-    <input id="admSrch" placeholder="Поиск юзера или @username (нажмите для досье)..." oninput="renderDashUsers()" style="margin-bottom:8px">
+    <input id="admSrch" placeholder="Поиск юзера или @username..." oninput="renderDashUsers()" style="margin-bottom:8px">
     <div id="dv1" style="max-height:250px;overflow-y:auto"></div>
   </div>
-
   <div class="dview" id="dvMod">
     <div style="display:flex;gap:6px;margin-bottom:8px">
       <button type="button" class="btn b3" style="margin:0" onclick="clearGlobalChat()">🧹 Очистить Общий чат</button>
@@ -441,37 +441,24 @@ body.theme-light .ibtn{background:#e2e8f0}
     </div>
     <div id="dvMsgsList" style="max-height:240px;overflow-y:auto"></div>
   </div>
-
   <div class="dview" id="dvBroad">
-    <p style="font-size:12px;color:#94a3b8;text-align:left">Официальное объявление в Общий чат от имени BiChat ✓:</p>
-    <div style="display:flex;gap:6px;margin-bottom:10px">
-      <input id="admBroad" placeholder="Текст объявления..." style="margin:0;flex:1">
-      <button type="button" class="btn" style="width:auto;margin:0;padding:0 14px" onclick="adminBroadcast()">📢</button>
-    </div>
-    <p style="font-size:12px;color:#fbbf24;text-align:left">🚨 Экстренное окно (Pop-up поверх экрана у всех в сети):</p>
-    <div style="display:flex;gap:6px;margin-bottom:10px">
-      <input id="admUrgentInp" placeholder="Текст экстренного сообщения..." style="margin:0;flex:1">
-      <button type="button" class="btn b3" style="width:auto;margin:0;padding:0 12px" onclick="sendUrgentPopup()">Разослать</button>
-    </div>
+    <p style="font-size:12px;color:#94a3b8;text-align:left">Объявление в Общий чат от BiChat Official ✓:</p>
+    <div style="display:flex;gap:6px;margin-bottom:10px"><input id="admBroad" placeholder="Текст объявления..." style="margin:0;flex:1"><button type="button" class="btn" style="width:auto;margin:0;padding:0 14px" onclick="adminBroadcast()">📢</button></div>
+    <p style="font-size:12px;color:#fbbf24;text-align:left">🚨 Экстренное окно (Pop-up всем в сети):</p>
+    <div style="display:flex;gap:6px;margin-bottom:10px"><input id="admUrgentInp" placeholder="Текст экстренного сообщения..." style="margin:0;flex:1"><button type="button" class="btn b3" style="width:auto;margin:0;padding:0 12px" onclick="sendUrgentPopup()">Разослать</button></div>
     <p style="font-size:12px;color:#94a3b8;text-align:left">Закреплённая плашка сверху у всех (пусто = убрать):</p>
-    <div style="display:flex;gap:6px">
-      <input id="admBannerInp" placeholder="Текст плашки..." style="margin:0;flex:1">
-      <button type="button" class="btn bg" style="width:auto;margin:0;padding:0 12px" onclick="setGlobalBanner()">OK</button>
-    </div>
+    <div style="display:flex;gap:6px"><input id="admBannerInp" placeholder="Текст плашки..." style="margin:0;flex:1"><button type="button" class="btn bg" style="width:auto;margin:0;padding:0 12px" onclick="setGlobalBanner()">OK</button></div>
   </div>
-
   <div class="dview" id="dvRaffle">
     <p style="font-size:12px;color:#cbd5e1;margin-bottom:8px">Случайный выбор кандидата на подарок <b>BiChat Ultimate</b> (выдача только после вашего подтверждения):</p>
     <button type="button" class="btn bu" onclick="rollRaffleWinner()">🎲 Крутить рулетку и выбрать кандидата</button>
     <div id="raffleCard" class="confirm-box" style="display:none;margin-top:10px">
       <div class="av" id="rfAv" style="width:60px;height:60px;font-size:24px;margin:0 auto 6px"></div>
-      <h3 id="rfName"></h3>
-      <p id="rfNick" style="font-size:12px;color:#60a5fa;margin-bottom:8px"></p>
+      <h3 id="rfName"></h3><p id="rfNick" style="font-size:12px;color:#60a5fa;margin-bottom:8px"></p>
       <button type="button" class="btn bg" onclick="confirmGrantRaffle()">✅ Разрешить и подарить Ultimate</button>
       <button type="button" class="btn b2" onclick="rollRaffleWinner()">🔄 Выбрать другого</button>
     </div>
   </div>
-
   <div class="dview" id="dvSrv">
     <button type="button" class="btn bg" id="btnMaint" onclick="toggleMaintenance()">🛠️ Включить технические работы</button>
     <button type="button" class="btn b2" id="btnFreeze" onclick="toggleFreezeGlobal()">🔒 Заморозить Общий чат (Read-Only)</button>
@@ -485,32 +472,31 @@ body.theme-light .ibtn{background:#e2e8f0}
     <div class="head">
       <div style="display:flex;align-items:center;gap:8px;cursor:pointer;min-width:0;flex:1" onclick="openUserProfile(me)">
         <div class="av" id="mav" style="width:38px;height:38px"></div>
-        <div style="min-width:0">
-          <div style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="me">BiChat</div>
-          <div style="font-size:11px;color:#60a5fa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="mpl">@username</div>
-        </div>
+        <div style="min-width:0"><div style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="me">BiChat</div><div style="font-size:11px;color:#60a5fa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="mpl">@username</div></div>
       </div>
       <div style="display:flex;gap:5px">
+        <button type="button" class="ibtn" id="bExitSpy" style="display:none;background:#ec4899;color:#fff;width:auto;padding:0 8px;font-size:11px;font-weight:700" onclick="exitSpyMode()">🔙 Выйти</button>
         <button type="button" class="ibtn" onclick="om('mNewRoom')" title="Создать группу/канал">+</button>
         <button type="button" class="ibtn" id="bDevOpen" style="display:none;background:#4f46e5;color:#fff" onclick="openDash()" title="Dev Dashboard">🛡️</button>
         <button type="button" class="ibtn" onclick="openSettings()" title="Настройки">⚙</button>
       </div>
     </div>
     <div class="st-bar" id="stBar"></div>
-    <div style="padding:7px 10px;border-bottom:1px solid var(--border)">
-      <input id="srch" placeholder="Поиск по @username или имени..." oninput="renderChatList()" style="margin:0;padding:9px 12px">
-    </div>
+    <div style="padding:7px 10px;border-bottom:1px solid var(--border)"><input id="srch" placeholder="Поиск по @username или имени..." oninput="renderChatList()" style="margin:0;padding:9px 12px"></div>
     <div class="list" id="clst"></div>
   </div>
-
   <div class="main">
-    <div class="spy-banner" id="spyBanner">
-      <span id="spyLabel">🕵️ Режим наблюдения за профилем</span>
+    <div class="glob-banner" id="globBanner"></div>
+    <div class="head">
+      <div style="display:flex;align-items:center;gap:8px;min-width:0;flex:1;cursor:pointer" onclick="openHeaderInfo()">
+        <button type="button" class="ibtn mob-back" onclick="event.stopPropagation();g('app').classList.remove('chat-open')">←</button>
+        <div class="av" id="tav" style="width:38px;height:38px"></div>
 <script>
 var EP = 'https://' + 'fra.cloud.' + 'appwrite.io' + '/v1';
 var PID = '6afaabcb000c658e4466';
 var DID = '6afaacf2001cf616a3a3';
 var OWNER = 'bichat.support@gmail.com';
+var LIM_Q = '?queries%5B%5D=%7B%22method%22%3A%22limit%22%2C%22values%22%3A%5B100%5D%7D';
 
 var me = null, realOwnerMe = null, candidateUser = null, curChat = 'global', curChatObj = {};
 var allProfiles = [], allMessages = [], allStories = [];
@@ -629,24 +615,29 @@ async function saveUserAuthRecord(uidStr, passVal, hintVal){
   }
 }
 
-function getUserPunishment(uidStr){
-  var recs = allMessages.filter(function(m){ return m.chat_id === 'pun_' + uidStr && m.media_type === 'pun_meta'; });
-  if(!recs.length) return null;
-  var last = recs.slice(-1).pop();
-  try {
-    var obj = JSON.parse(last.text);
-    obj.docId = last.$id;
-    if(obj.until && obj.until > 0 && obj.until <= Date.now()) return null;
-    return obj;
-  } catch(e){ return null; }
+function parseProfilePunishment(p){
+  if(!p) return null;
+  var br = p.ban_reason || '';
+  if(br.indexOf('PUN|') === 0){
+    var parts = br.split('|');
+    var kind = parts.slice(1, 2).pop() || 'ban';
+    var until = Number(parts.slice(2, 3).pop() || 0);
+    var reason = parts.slice(3).join('|') || 'Нарушение правил BiChat';
+    if(until > 0 && until <= Date.now()) return null;
+    return { type: kind, until: until, reason: reason };
+  }
+  if(p.is_banned){
+    return { type: 'ban', until: 0, reason: br || 'Аккаунт заблокирован администратором' };
+  }
+  return null;
 }
 async function findAccountByEmail(){
   var em = g('emInp').value.trim().toLowerCase();
   if(!em || em.indexOf('@') === -1){ g('e1').textContent = 'Введите корректный e-mail'; return; }
   g('e1').textContent = ''; st('sl');
   try {
-    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
-    var mRes = await api('/databases/' + DID + '/collections/messages/documents', 'GET');
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents' + LIM_Q, 'GET');
+    var mRes = await api('/databases/' + DID + '/collections/messages/documents' + LIM_Q, 'GET');
     allProfiles = pRes.documents || [];
     allMessages = mRes.documents || [];
     var found = allProfiles.find(function(d){ return (d.email || '').toLowerCase() === em; });
@@ -723,7 +714,7 @@ async function sendRegCode(){
   if(!g('polChk').checked){ g('eReg1').textContent = 'Примите Политику конфиденциальности'; return; }
   g('eReg1').textContent = ''; pendingRegEmail = em; st('sl');
   try {
-    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents' + LIM_Q, 'GET');
     if((pRes.documents || []).some(function(d){ return (d.email || '').toLowerCase() === em; })){
       g('eReg1').textContent = 'Этот e-mail уже зарегистрирован. Нажмите «Вход».'; st('sReg1'); return;
     }
@@ -750,7 +741,7 @@ async function finishRegWithPassword(){
   if(pass.length < 4){ g('eReg3').textContent = 'Придумайте пароль (минимум 4 символа)'; return; }
   g('eReg3').textContent = ''; st('sl');
   try {
-    var chk = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
+    var chk = await api('/databases/' + DID + '/collections/profiles/documents' + LIM_Q, 'GET');
     if((chk.documents || []).some(function(d){ return getNick(d) === '@' + rawNick; })){
       g('eReg3').textContent = 'Этот @username уже занят'; st('sReg3'); return;
     }
@@ -770,7 +761,7 @@ async function checkUserSession(){
   var savedEm = (localStorage.getItem('bc_em') || '').toLowerCase();
   if(!savedEm){ switchAuthTab('login'); return; }
   try {
-    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents' + LIM_Q, 'GET');
     var existing = (pRes.documents || []).find(function(d){ return (d.email || '').toLowerCase() === savedEm; });
     if(existing){ me = existing; localStorage.setItem('bc_uid', me.$id); launchCloudApp(); return; }
   } catch(e){}
@@ -799,7 +790,8 @@ function launchCloudApp(){
 }
 async function pingOnline(){
   if(!me || !me.$id || realOwnerMe) return;
-  try { await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', { data: { ban_reason: me.is_banned ? me.ban_reason : ('online_' + Date.now()) } }); } catch(e){}
+  if(parseProfilePunishment(me)) return;
+  try { await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', { data: { ban_reason: 'online_' + Date.now() } }); } catch(e){}
 }
 function isUserOnline(p){
   if(!p || !p.ban_reason || p.ban_reason.indexOf('online_') !== 0) return false;
@@ -813,16 +805,18 @@ function updateMyHeader(){
   var isOwnerReal = (me.is_dev && (me.email || '').toLowerCase() === OWNER && !realOwnerMe);
   var emBadge = me.ult_em ? '<span class="ast">' + me.ult_em + '</span>' : '';
   g('me').innerHTML = me.name + (isOwnerReal ? ' <span class="v-ok">✓</span><span class="dev-badge">DEV</span>' : (me.is_dev ? ' <span class="v-ok">✓</span>' : '')) + emBadge;
-  g('mpl').textContent = getNick(me) || me.plan.toUpperCase();
+  g('mpl').textContent = realOwnerMe ? ('🕵️ Наблюдение: ' + (getNick(me) || me.email)) : (getNick(me) || me.plan.toUpperCase());
   g('bDevOpen').style.display = (isOwnerReal || realOwnerMe) ? 'inline-flex' : 'none';
+  g('bExitSpy').style.display = realOwnerMe ? 'inline-flex' : 'none';
+  g('spyFloatBtn').style.display = realOwnerMe ? 'block' : 'none';
   sav(g('mav'), me.name, me.avatar_url, me.plan === 'ult' || isOwnerReal, '');
 }
 
 async function loadAllCloudData(){
   try {
-    var pRes = await api('/databases/' + DID + '/collections/profiles/documents', 'GET');
-    var mRes = await api('/databases/' + DID + '/collections/messages/documents', 'GET');
-    var sRes = await api('/databases/' + DID + '/collections/stories/documents', 'GET');
+    var pRes = await api('/databases/' + DID + '/collections/profiles/documents' + LIM_Q, 'GET');
+    var mRes = await api('/databases/' + DID + '/collections/messages/documents' + LIM_Q, 'GET');
+    var sRes = await api('/databases/' + DID + '/collections/stories/documents' + LIM_Q, 'GET');
     allProfiles = pRes.documents || [];
     allMessages = mRes.documents || [];
     allStories = (sRes.documents || []).slice().reverse();
@@ -857,10 +851,10 @@ async function loadAllCloudData(){
     }
 
     if(!realOwnerMe){
-      var pun = getUserPunishment(me.$id);
-      if(me.is_banned || (pun && pun.type === 'ban')){
-        var rsn = (pun && pun.reason) ? pun.reason : (me.ban_reason || 'Аккаунт заблокирован администратором');
-        if(pun && pun.until > 0){
+      var pun = parseProfilePunishment(me);
+      if(pun && pun.type === 'ban'){
+        var rsn = pun.reason || 'Аккаунт заблокирован администратором';
+        if(pun.until > 0){
           var minsLeft = Math.max(1, Math.ceil((pun.until - Date.now()) / 60000));
           rsn += ' (Осталось: ~' + minsLeft + ' мин.)';
         }
@@ -881,23 +875,30 @@ async function loadAllCloudData(){
 }
 
 function updateChatInputAccess(){
-  var bar = g('chatBar'), mbar = g('muteBar');
-  var pun = !realOwnerMe ? getUserPunishment(me.$id) : null;
-  if(pun && pun.type === 'mute'){
-    bar.style.display = 'none';
-    var mTxt = '🔇 Вам запрещено отправлять сообщения. Причина: ' + (pun.reason || 'Нарушение правил');
-    if(pun.until > 0) mTxt += ' (Осталось: ~' + Math.max(1, Math.ceil((pun.until - Date.now()) / 60000)) + ' мин.)';
-    mbar.textContent = mTxt;
-    mbar.style.display = 'block';
-    return;
+  try {
+    var bar = g('chatBar'), mbar = g('muteBar');
+    if(!bar) return;
+    var pun = (!realOwnerMe && me) ? parseProfilePunishment(me) : null;
+    if(pun && pun.type === 'mute'){
+      bar.style.display = 'none';
+      if(mbar){
+        var mTxt = '🔇 Вам запрещено отправлять сообщения. Причина: ' + (pun.reason || 'Нарушение правил');
+        if(pun.until > 0) mTxt += ' (Осталось: ~' + Math.max(1, Math.ceil((pun.until - Date.now()) / 60000)) + ' мин.)';
+        mbar.textContent = mTxt;
+        mbar.style.display = 'block';
+      }
+      return;
+    }
+    if(mbar) mbar.style.display = 'none';
+    var canPost = true;
+    if(curChatObj && curChatObj.type === 'channel' && curChatObj.meta){
+      canPost = (curChatObj.meta.owner === me.$id || (curChatObj.meta.admins || []).indexOf(me.$id) > -1 || me.is_dev);
+    }
+    if(curChat === 'global' && isGlobalFrozen() && !me.is_dev && !realOwnerMe) canPost = false;
+    bar.style.display = canPost ? 'flex' : 'none';
+  } catch(e){
+    if(g('chatBar')) g('chatBar').style.display = 'flex';
   }
-  mbar.style.display = 'none';
-  var canPost = true;
-  if(curChatObj.type === 'channel' && curChatObj.meta){
-    canPost = (curChatObj.meta.owner === me.$id || (curChatObj.meta.admins || []).indexOf(me.$id) > -1 || me.is_dev);
-  }
-  if(curChat === 'global' && isGlobalFrozen() && !me.is_dev && !realOwnerMe) canPost = false;
-  bar.style.display = canPost ? 'flex' : 'none';
 }
 function getRooms(){
   var rooms = [];
@@ -983,13 +984,23 @@ function renderChatList(){
 }
 
 function selectChat(id, obj){
-  curChat = id; curChatObj = obj; cancelReply(); g('emojiPop').style.display = 'none';
-  sav(g('tav'), obj.name, obj.av || '', obj.off, obj.em || '');
-  g('cnam').innerHTML = obj.name + (obj.off && obj.id !== 'saved_' + me.$id ? ' <span class="v-ok">✓</span>' : '');
-  g('csta').textContent = obj.sub || 'нажмите для профиля';
-  updateChatInputAccess();
-  g('app').classList.add('chat-open');
-  renderChatList(); renderPinnedBar(); renderMessages(true);
+  try {
+    curChat = id;
+    curChatObj = obj || { name: 'Чат', sub: '' };
+    lastDrawnIds = '';
+    cancelReply();
+    if(g('emojiPop')) g('emojiPop').style.display = 'none';
+    sav(g('tav'), curChatObj.name, curChatObj.av || '', curChatObj.off, curChatObj.em || '');
+    g('cnam').innerHTML = curChatObj.name + (curChatObj.off && curChatObj.id !== 'saved_' + me.$id ? ' <span class="v-ok">✓</span>' : '');
+    g('csta').textContent = curChatObj.sub || 'нажмите для профиля';
+    g('app').classList.add('chat-open');
+    updateChatInputAccess();
+    renderChatList();
+    renderPinnedBar();
+    renderMessages(true);
+  } catch(err){
+    alert('Ошибка открытия чата: ' + err.message);
+  }
 }
 function renderPinnedBar(){
   var pins = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type === 'pin_meta'; });
@@ -1116,7 +1127,7 @@ async function voteInPoll(msgObj, optIdx){
 function renderMessages(force){
   var box = g('mlst');
   var msgs = allMessages.filter(function(m){
-    return m.chat_id === curChat && m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta' && m.media_type !== 'pun_meta';
+    return m.chat_id === curChat && m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta';
   });
   var reacts = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type === 'react_meta'; });
   var sig = curChat + ':' + msgs.map(function(m){ return m.$id + (m.text || '').length; }).join(',') + '|r:' + reacts.length;
@@ -1425,7 +1436,7 @@ function openDash(){
   if(!isOwnerReal) return;
   g('stUsers').textContent = allProfiles.length;
   g('stOnline').textContent = allProfiles.filter(isUserOnline).length;
-  g('stMsgs').textContent = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta' && m.media_type !== 'pun_meta'; }).length;
+  g('stMsgs').textContent = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; }).length;
   g('stStr').textContent = allStories.length;
   g('btnMaint').textContent = isMaintenanceOn() ? '✅ Выкл технические работы' : '🛠️ Включить технические работы';
   g('btnFreeze').textContent = isGlobalFrozen() ? '🔓 Разморозить Общий чат' : '🔒 Заморозить Общий чат (Read-Only)';
@@ -1438,8 +1449,8 @@ function renderDashUsers(){
   allProfiles.forEach(function(p){
     var nick = getNick(p);
     if(q && p.name.toLowerCase().indexOf(q) === -1 && nick.indexOf(q) === -1) return;
-    var pun = getUserPunishment(p.$id);
-    var statusTag = p.is_banned ? ' [БАН]' : (pun ? (' [' + pun.type.toUpperCase() + ']') : '');
+    var pun = parseProfilePunishment(p);
+    var statusTag = pun ? (' [' + pun.type.toUpperCase() + ']') : '';
     var row = document.createElement('div'); row.className = 'u-row';
     row.innerHTML = '<div style="min-width:0;flex:1"><b>' + p.name + (p.is_dev ? ' ✓' : '') + '<span style="color:#fca5a5">' + statusTag + '</span></b><div style="font-size:10px;color:#94a3b8">' + (nick || p.email) + ' • ' + (p.plan || 'free').toUpperCase() + '</div></div><span style="color:#60a5fa;font-weight:700">Управление →</span>';
     row.onclick = function(){ openAdminUserCard(p); };
@@ -1458,8 +1469,6 @@ function openAdminUserCard(p){
     cm('mAdmUser'); cm('mDash');
     if(!realOwnerMe) realOwnerMe = me;
     me = p;
-    g('spyLabel').textContent = '🕵️ Наблюдение за: ' + p.name + ' (' + (getNick(p) || p.email) + ')';
-    g('spyBanner').style.display = 'flex';
     updateMyHeader();
     selectChat('saved_' + p.$id, { id: 'saved_' + p.$id, type: 'saved', name: 'Избранное (' + p.name + ')', sub: 'Режим наблюдения', off: true, em: '🔖' });
   };
@@ -1502,29 +1511,21 @@ function openAdminUserCard(p){
     if(p.$id === (realOwnerMe || me).$id) return;
     var pt = g('punType').value;
     var rsn = g('punReason').value.trim() || 'Нарушение правил BiChat';
-    var until = 0, kind = 'mute';
+    var until = 0, kind = 'mute', isBanFlag = false;
     if(pt === 'mute_5'){ kind = 'mute'; until = Date.now() + 5 * 60000; }
     else if(pt === 'mute_60'){ kind = 'mute'; until = Date.now() + 60 * 60000; }
     else if(pt === 'mute_perm'){ kind = 'mute'; until = 0; }
-    else if(pt === 'tban_10'){ kind = 'ban'; until = Date.now() + 10 * 60000; }
-    else if(pt === 'tban_60'){ kind = 'ban'; until = Date.now() + 60 * 60000; }
-    else if(pt === 'tban_1440'){ kind = 'ban'; until = Date.now() + 1440 * 60000; }
-    else if(pt === 'pban'){
-      await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_banned: true, ban_reason: rsn } });
-      await loadAllCloudData(); cm('mAdmUser'); renderDashUsers(); return;
-    }
-    await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
-      documentId: uid(), data: { chat_id: 'pun_' + p.$id, sender_id: 'SYS', sender_name: 'PUN', text: JSON.stringify({ type: kind, until: until, reason: rsn }), media_url: '', media_type: 'pun_meta', is_support: true }
-    });
+    else if(pt === 'tban_5'){ kind = 'ban'; until = Date.now() + 5 * 60000; isBanFlag = true; }
+    else if(pt === 'tban_60'){ kind = 'ban'; until = Date.now() + 60 * 60000; isBanFlag = true; }
+    else if(pt === 'tban_1440'){ kind = 'ban'; until = Date.now() + 1440 * 60000; isBanFlag = true; }
+    else if(pt === 'pban'){ kind = 'ban'; until = 0; isBanFlag = true; }
+    var encodedPun = 'PUN|' + kind + '|' + until + '|' + rsn;
+    await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_banned: isBanFlag, ban_reason: encodedPun } });
     await loadAllCloudData(); cm('mAdmUser'); renderDashUsers();
   };
 
   g('auClearPunBtn').onclick = async function(){
     await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_banned: false, ban_reason: 'online_' + Date.now() } });
-    var oldPuns = allMessages.filter(function(m){ return m.chat_id === 'pun_' + p.$id; });
-    for(var i = 0; i < oldPuns.length; i++){
-      try { await api('/databases/' + DID + '/collections/messages/documents/' + oldPuns.slice(i, i + 1).pop().$id, 'DELETE'); } catch(e){}
-    }
     await loadAllCloudData(); cm('mAdmUser'); renderDashUsers();
   };
 
@@ -1543,7 +1544,6 @@ function exitSpyMode(){
   if(!realOwnerMe) return;
   me = realOwnerMe;
   realOwnerMe = null;
-  g('spyBanner').style.display = 'none';
   updateMyHeader();
   selectChat('global', { id: 'global', type: 'group', name: 'Общий чат BiChat', sub: 'Все друзья и родные', off: true, em: '🌍' });
 }
@@ -1572,7 +1572,7 @@ async function confirmGrantRaffle(){
 
 function renderDashModMsgs(){
   var box = g('dvMsgsList'); box.innerHTML = '';
-  var list = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta' && m.media_type !== 'pun_meta'; }).slice(-25).reverse();
+  var list = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; }).slice(-25).reverse();
   list.forEach(function(m){
     var row = document.createElement('div'); row.className = 'u-row';
     row.innerHTML = '<div style="min-width:0;flex:1"><b>' + m.sender_name + '</b> <span style="color:#60a5fa">[' + m.chat_id.slice(0, 10) + ']</span><div style="font-size:11px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (m.text || m.media_type || 'медиа') + '</div></div>';
