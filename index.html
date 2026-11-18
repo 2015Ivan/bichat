@@ -139,6 +139,13 @@ body.theme-light .ibtn{background:#e2e8f0}
   input,select{font-size:16px!important}
   .dash-grid{grid-template-columns:repeat(2,1fr)}
 }
+  #app { display: flex !important; width: 100vw !important; height: 100vh !important; }
+.main { display: flex !important; flex: 1 !important; flex-direction: column !important; height: 100vh !important; background: rgba(8,12,24,.75); }
+#mlst { display: flex !important; flex: 1 !important; flex-direction: column !important; overflow-y: auto !important; padding: 16px !important; }
+#chatBar { display: flex !important; align-items: center !important; gap: 8px !important; padding: 10px 14px !important; background: #090e1c !important; border-top: 1px solid rgba(255,255,255,.15) !important; z-index: 60 !important; }
+#minp { display: block !important; flex: 1 !important; color: #ffffff !important; background: #1e293b !important; }
+@media(max-width:768px){ #app:not(.chat-open) .main { display: none !important; } #app.chat-open .main { display: flex !important; } }
+
 </style>
 </head>
 <body>
