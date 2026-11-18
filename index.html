@@ -9,13 +9,13 @@
 <title>BiChat</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%232563eb'/><path d='M16 20C16 15.5 19.5 12 24 12H40C44.5 12 48 15.5 48 20V32C48 36.5 44.5 40 40 40H26L17 48V40C16.5 38.8 16 37.3 16 32V20Z' fill='white'/></svg>">
 <style>
-:root{--bg:#050814;--panel:rgba(13,20,38,.92);--head:rgba(9,14,28,.96);--card:rgba(15,23,42,.96);--in-msg:rgba(30,41,59,.95);--my-msg:linear-gradient(135deg,#2563eb,#6366f1);--accent:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);--text:#f8fafc;--muted:#94a3b8;--border:rgba(255,255,255,.14);--orb1:#2563eb;--orb2:#7c3aed;--orb3:#06b6d4}
-body.theme-emerald{--bg:#04110e;--panel:rgba(8,28,24,.94);--head:rgba(5,20,17,.97);--card:rgba(10,34,29,.97);--in-msg:rgba(19,52,45,.95);--my-msg:linear-gradient(135deg,#059669,#0d9488);--accent:linear-gradient(135deg,#10b981,#06b6d4,#3b82f6);--orb1:#059669;--orb2:#0d9488;--orb3:#0284c7}
-body.theme-cyber{--bg:#0c0518;--panel:rgba(24,11,46,.94);--head:rgba(17,7,34,.97);--card:rgba(28,13,54,.97);--in-msg:rgba(46,20,82,.95);--my-msg:linear-gradient(135deg,#db2777,#9333ea);--accent:linear-gradient(135deg,#f43f5e,#a855f7,#3b82f6);--orb1:#db2777;--orb2:#7e22ce;--orb3:#4f46e5}
-body.theme-light{--bg:#eef2f9;--panel:rgba(255,255,255,.95);--head:rgba(248,250,252,.98);--card:rgba(255,255,255,.99);--in-msg:#ffffff;--my-msg:linear-gradient(135deg,#2563eb,#4f46e5);--text:#0f172a;--muted:#64748b;--border:rgba(15,23,42,.12);--orb1:#93c5fd;--orb2:#c4b5fd;--orb3:#67e8f9}
+:root{--bg:#050814;--panel:rgba(13,20,38,.94);--head:rgba(9,14,28,.97);--card:rgba(15,23,42,.97);--in-msg:rgba(30,41,59,.96);--my-msg:linear-gradient(135deg,#2563eb,#6366f1);--accent:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);--text:#f8fafc;--muted:#94a3b8;--border:rgba(255,255,255,.14);--orb1:#2563eb;--orb2:#7c3aed;--orb3:#06b6d4}
+body.theme-emerald{--bg:#04110e;--panel:rgba(8,28,24,.95);--head:rgba(5,20,17,.98);--card:rgba(10,34,29,.98);--in-msg:rgba(19,52,45,.96);--my-msg:linear-gradient(135deg,#059669,#0d9488);--accent:linear-gradient(135deg,#10b981,#06b6d4,#3b82f6);--orb1:#059669;--orb2:#0d9488;--orb3:#0284c7}
+body.theme-cyber{--bg:#0c0518;--panel:rgba(24,11,46,.95);--head:rgba(17,7,34,.98);--card:rgba(28,13,54,.98);--in-msg:rgba(46,20,82,.96);--my-msg:linear-gradient(135deg,#db2777,#9333ea);--accent:linear-gradient(135deg,#f43f5e,#a855f7,#3b82f6);--orb1:#db2777;--orb2:#7e22ce;--orb3:#4f46e5}
+body.theme-light{--bg:#eef2f9;--panel:rgba(255,255,255,.96);--head:rgba(248,250,252,.99);--card:rgba(255,255,255,.99);--in-msg:#ffffff;--my-msg:linear-gradient(135deg,#2563eb,#4f46e5);--text:#0f172a;--muted:#64748b;--border:rgba(15,23,42,.12);--orb1:#93c5fd;--orb2:#c4b5fd;--orb3:#67e8f9}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--bg);color:var(--text);height:100vh;width:100vw;overflow:hidden;transition:background .35s,color .35s}
-.orb{position:fixed;border-radius:50%;filter:blur(90px);opacity:.6;animation:orbFloat 11s infinite alternate ease-in-out;pointer-events:none;z-index:0}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);opacity:.55;animation:orbFloat 11s infinite alternate ease-in-out;pointer-events:none;z-index:0}
 .o1{width:420px;height:420px;background:var(--orb1);top:-12%;left:-6%}
 .o2{width:400px;height:400px;background:var(--orb2);bottom:-12%;right:-6%;animation-delay:-4s}
 .o3{width:320px;height:320px;background:var(--orb3);top:38%;left:42%;animation-delay:-7s}
@@ -24,28 +24,30 @@ html,body{background:var(--bg);color:var(--text);height:100vh;width:100vw;overfl
 @keyframes pulseRing{0%,100%{box-shadow:0 0 0 2px #ec4899,0 0 14px rgba(236,72,153,.65)}50%{box-shadow:0 0 0 3px #8b5cf6,0 0 24px rgba(139,92,246,.95)}}
 @keyframes gradShift{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @keyframes dotBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
-#auth,#wel,#maintScreen{position:fixed;inset:0;background:rgba(4,7,17,.9);backdrop-filter:blur(22px);display:flex;align-items:center;justify-content:center;z-index:90;padding:14px}
-#wel,#maintScreen{display:none;z-index:999;flex-direction:column;text-align:center}
-.card{position:relative;z-index:2;width:440px;max-width:95vw;max-height:90dvh;overflow-y:auto;padding:26px 22px;background:var(--card);backdrop-filter:blur(26px);border:1px solid var(--border);border-radius:26px;box-shadow:0 25px 70px rgba(0,0,0,.8);text-align:center;animation:popIn .35s cubic-bezier(.16,1,.3,1)}
+#auth,#wel{position:fixed;inset:0;background:rgba(4,7,17,.92);backdrop-filter:blur(22px);display:flex;align-items:center;justify-content:center;z-index:90;padding:14px}
+#wel{display:none;z-index:990;flex-direction:column;text-align:center}
+#maintScreen{position:fixed;inset:0;background:radial-gradient(circle at center,#0f172a 0%,#03060f 100%);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:24px;text-align:center}
+.maint-emoji{font-size:78px;margin-bottom:16px;animation:flt 2.2s ease-in-out infinite}
+.card{position:relative;z-index:2;width:440px;max-width:95vw;max-height:90dvh;overflow-y:auto;padding:24px 20px;background:var(--card);backdrop-filter:blur(26px);border:1px solid var(--border);border-radius:26px;box-shadow:0 25px 70px rgba(0,0,0,.8);text-align:center;animation:popIn .35s cubic-bezier(.16,1,.3,1)}
 .logo-halo{width:86px;height:86px;border-radius:50%;margin:0 auto 14px;background:linear-gradient(270deg,#3b82f6,#8b5cf6,#ec4899,#06b6d4);background-size:300% 300%;padding:3px;display:flex;align-items:center;justify-content:center;animation:gradShift 4s ease infinite,pulseRing 2.5s infinite}
 .logo-core{width:100%;height:100%;border-radius:50%;background:#090e1a;display:flex;align-items:center;justify-content:center}
 .bubble-svg{width:46px;height:46px;animation:flt 2.8s ease-in-out infinite}
 .b-dot1{animation:dotBounce 1.4s infinite ease-in-out}
 .b-dot2{animation:dotBounce 1.4s infinite ease-in-out .2s}
 .b-dot3{animation:dotBounce 1.4s infinite ease-in-out .4s}
-input,select{width:100%;padding:12px 14px;margin:5px 0 9px;background:rgba(6,10,20,.8);border:1px solid var(--border);border-radius:13px;color:var(--text);font-size:14px;outline:none;transition:.2s}
+input,select{width:100%;padding:11px 13px;margin:5px 0 8px;background:rgba(6,10,20,.82);border:1px solid var(--border);border-radius:13px;color:var(--text);font-size:14px;outline:none;transition:.2s}
 body.theme-light input,body.theme-light select{background:#f1f5f9}
 input:focus,select:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,246,.22)}
-.btn{width:100%;padding:12px 15px;border:none;border-radius:13px;background:var(--accent);background-size:200% 200%;animation:gradShift 5s ease infinite;color:#fff;font-weight:700;font-size:14px;cursor:pointer;margin-top:6px;transition:transform .15s}
+.btn{width:100%;padding:11px 14px;border:none;border-radius:13px;background:var(--accent);background-size:200% 200%;animation:gradShift 5s ease infinite;color:#fff;font-weight:700;font-size:13px;cursor:pointer;margin-top:6px;transition:transform .15s}
 .btn:active{transform:scale(.97)}
-.b2{background:rgba(51,65,85,.82);animation:none}
+.b2{background:rgba(51,65,85,.85);animation:none}
 .b3{background:linear-gradient(135deg,#ef4444,#dc2626);animation:none}
 .bg{background:linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6)}
 .bu{background:linear-gradient(135deg,#ec4899,#8b5cf6,#06b6d4)}
-.tab-row{display:flex;gap:8px;margin-bottom:14px;background:rgba(6,10,20,.65);padding:5px;border-radius:14px;border:1px solid var(--border)}
-.tab-btn{flex:1;padding:9px;border:none;border-radius:10px;background:transparent;color:var(--muted);font-weight:700;font-size:13px;cursor:pointer;transition:.2s}
+.tab-row{display:flex;gap:6px;margin-bottom:12px;background:rgba(6,10,20,.65);padding:4px;border-radius:13px;border:1px solid var(--border)}
+.tab-btn{flex:1;padding:8px 4px;border:none;border-radius:9px;background:transparent;color:var(--muted);font-weight:700;font-size:12px;cursor:pointer;transition:.2s}
 .tab-btn.act{background:#2563eb;color:#fff;box-shadow:0 4px 12px rgba(37,99,235,.4)}
 .confirm-box{background:rgba(6,10,20,.75);border:1px solid rgba(96,165,250,.35);border-radius:18px;padding:16px;margin:10px 0}
 .lock-box{background:rgba(239,68,68,.16);border:1px solid rgba(239,68,68,.45);border-radius:14px;padding:12px;margin:8px 0;color:#fca5a5;font-size:12px}
@@ -54,8 +56,8 @@ input:focus,select:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,2
 .pol-link{color:#60a5fa;text-decoration:underline;cursor:pointer;font-weight:600}
 .pol-text{max-height:250px;overflow-y:auto;text-align:left;font-size:12px;color:var(--muted);line-height:1.55;background:rgba(6,10,20,.65);padding:14px;border-radius:14px;margin:10px 0;border:1px solid var(--border)}
 .pol-text h4{color:#60a5fa;margin:8px 0 4px;font-size:13px}
-.step,.sview{display:none}
-.step.act,.sview.act{display:block;animation:popIn .25s ease}
+.step,.sview,.dview{display:none}
+.step.act,.sview.act,.dview.act{display:block;animation:popIn .25s ease}
 .spin{width:34px;height:34px;border:3px solid rgba(255,255,255,.15);border-top-color:#60a5fa;border-radius:50%;margin:14px auto;animation:spin .7s linear infinite}
 .si{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:13px;margin-bottom:8px;cursor:pointer;font-size:13px;transition:.18s}
 .si:hover{background:rgba(59,130,246,.22);transform:translateX(3px)}
@@ -63,8 +65,8 @@ input:focus,select:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,2
 .opt{padding:7px;background:rgba(255,255,255,.08);border-radius:10px;font-size:20px;cursor:pointer;border:1px solid transparent}
 .opt.sel{background:rgba(236,72,153,.35);border-color:#ec4899}
 .ast{display:inline-block;margin-left:5px;animation:flt 1.6s infinite}
-#app{display:none;position:relative;z-index:2;width:100vw;height:100vh}
-.side{width:355px;height:100vh;background:var(--panel);backdrop-filter:blur(22px);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+#app{display:none;position:relative;z-index:30;width:100vw;height:100vh;flex-direction:row}
+.side{position:relative;z-index:35;width:355px;height:100vh;background:var(--panel);backdrop-filter:blur(22px);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
 .head{padding:11px 14px;background:var(--head);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:6px}
 .ibtn{width:35px;height:35px;border-radius:11px;border:1px solid var(--border);background:rgba(30,41,59,.8);color:var(--text);font-size:15px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:.18s}
 body.theme-light .ibtn{background:#e2e8f0}
@@ -84,16 +86,19 @@ body.theme-light .ibtn{background:#e2e8f0}
 .ur{animation:pulseRing 2.5s infinite}
 .v-ok{display:inline-block;background:#3b82f6;color:#fff;border-radius:50%;width:15px;height:15px;font-size:10px;line-height:15px;text-align:center;margin-left:4px}
 .dev-badge{display:inline-block;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:6px;margin-left:4px}
-.main{flex:1;height:100vh;display:flex;flex-direction:column;min-width:0;position:relative}
+.main{position:relative;z-index:35;flex:1;height:100vh;display:flex;flex-direction:column;min-width:0}
+.glob-banner{display:none;background:linear-gradient(90deg,#f59e0b,#ec4899,#8b5cf6);color:#fff;padding:7px 14px;font-size:12px;font-weight:700;text-align:center;flex-shrink:0}
 .pin-bar{display:none;background:var(--head);border-bottom:1px solid rgba(59,130,246,.4);padding:7px 14px;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;flex-shrink:0}
 .pin-txt{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .msgs{flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:9px}
-.m{max-width:72%;padding:10px 14px;border-radius:17px;font-size:14px;position:relative;word-wrap:break-word;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.18);animation:popIn .22s ease}
+.m{max-width:74%;padding:10px 14px;border-radius:17px;font-size:14px;position:relative;word-wrap:break-word;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.18);animation:popIn .22s ease}
 .my{align-self:flex-end;background:var(--my-msg);color:#fff;border-bottom-right-radius:4px}
 .in{align-self:flex-start;background:var(--in-msg);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:4px}
 .m-snd{font-size:11px;font-weight:700;color:#60a5fa;margin-bottom:3px}
 .m-rep{background:rgba(0,0,0,.25);border-left:3px solid #38bdf8;padding:4px 8px;border-radius:7px;margin-bottom:5px;font-size:11px;opacity:.92}
 .m-sticker{font-size:56px;line-height:1.1;padding:4px;animation:popIn .35s cubic-bezier(.34,1.56,.64,1)}
+.poll-opt{background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:7px 10px;margin-top:6px;display:flex;justify-content:space-between;align-items:center;font-size:12px;transition:.15s}
+.poll-opt:hover{background:rgba(59,130,246,.35)}
 .m-meta{display:flex;justify-content:flex-end;align-items:center;gap:5px;font-size:10px;opacity:.75;margin-top:4px}
 .m-reacts{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
 .r-pill{background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:2px 6px;font-size:11px}
@@ -107,7 +112,7 @@ body.theme-light .ibtn{background:#e2e8f0}
 .rec-bar{background:rgba(239,68,68,.24);color:#fca5a5;border-top:1px solid rgba(239,68,68,.45);padding:6px 14px;font-size:12px;display:none;justify-content:space-between;align-items:center}
 .bar{padding:10px 12px;background:var(--head);border-top:1px solid var(--border);display:flex;gap:6px;align-items:center;flex-shrink:0}
 .bar input{flex:1;min-width:0;margin:0;border-radius:20px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:120;padding:12px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.84);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:150;padding:12px}
 .react-row{display:flex;justify-content:center;gap:8px;margin-bottom:12px}
 .react-choice{font-size:24px;background:rgba(255,255,255,.08);border:1px solid var(--border);border-radius:12px;padding:6px 10px;cursor:pointer;transition:transform .15s}
 .react-choice:hover{transform:scale(1.22)}
@@ -116,7 +121,7 @@ body.theme-light .ibtn{background:#e2e8f0}
 .stat-box b{display:block;font-size:17px;color:#60a5fa}
 .stat-box span{font-size:10px;color:var(--muted)}
 .u-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.06);border-radius:11px;margin-bottom:6px;font-size:12px;text-align:left;gap:6px}
-.mini-btn{padding:5px 8px;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;color:#fff}
+.mini-btn{padding:5px 7px;border:none;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;color:#fff}
 .mob-back{display:none}
 @media(max-width:768px){
   html,body,#app{height:100dvh;overflow:hidden}
@@ -125,7 +130,7 @@ body.theme-light .ibtn{background:#e2e8f0}
   #app.chat-open .side{display:none}
   #app.chat-open .main{display:flex}
   .mob-back{display:inline-flex}
-  .m{max-width:84%;font-size:15px}
+  .m{max-width:85%;font-size:15px}
   input,select{font-size:16px!important}
   .dash-grid{grid-template-columns:repeat(2,1fr)}
 }
@@ -136,7 +141,11 @@ body.theme-light .ibtn{background:#e2e8f0}
 
 <div id="wel"><div style="font-size:52px;margin-bottom:10px">✨</div><h2 id="wt" style="color:#60a5fa;margin-bottom:6px">Добро пожаловать в BiChat!</h2><p style="color:#94a3b8;font-size:14px">Синхронизация облака...</p></div>
 
-<div id="maintScreen"><div class="card"><div style="font-size:52px;margin-bottom:10px">🛠️</div><h2 style="color:#fbbf24;margin-bottom:6px">Технические работы</h2><p style="font-size:13px;color:#cbd5e1;margin-bottom:14px">Администратор проводит обновление серверов BiChat. Попробуйте зайти через пару минут.</p><button type="button" class="btn b2" onclick="location.reload()">Проверить снова</button></div></div>
+<div id="maintScreen">
+  <div class="maint-emoji">🛠️</div>
+  <h1 style="font-size:28px;color:#fbbf24;margin-bottom:10px;letter-spacing:.3px">Ведутся технические работы</h1>
+  <p style="font-size:15px;color:#cbd5e1;max-width:440px;line-height:1.5">Мы обновляем серверы и улучшаем работу мессенджера BiChat. Доступ откроется автоматически сразу после завершения работ.</p>
+</div>
 
 <div id="auth">
   <div class="card">
@@ -259,6 +268,16 @@ body.theme-light .ibtn{background:#e2e8f0}
   <button type="button" class="btn b2" onclick="cm('mMsgAct')">Отмена</button>
 </div></div>
 
+<div class="modal" id="mPoll"><div class="card" style="width:360px">
+  <h3 style="margin-bottom:8px">📊 Создать опрос</h3>
+  <input id="pollQ" placeholder="Вопрос опроса">
+  <input id="pollO1" placeholder="Вариант 1">
+  <input id="pollO2" placeholder="Вариант 2">
+  <input id="pollO3" placeholder="Вариант 3 (необязательно)">
+  <button type="button" class="btn" onclick="sendCloudPoll()">Отправить опрос</button>
+  <button type="button" class="btn b2" onclick="cm('mPoll')">Отмена</button>
+</div></div>
+
 <div class="modal" id="mFwd"><div class="card" style="width:350px">
   <h3 style="margin-bottom:8px">Переслать сообщение в...</h3>
   <div id="fwdList" style="max-height:260px;overflow-y:auto"></div>
@@ -358,25 +377,49 @@ body.theme-light .ibtn{background:#e2e8f0}
   </div>
 </div></div>
 
-<div class="modal" id="mDash"><div class="card" style="width:490px">
-  <h3 style="margin-bottom:4px">🛡️ Dev Dashboard (Админ-панель)</h3>
+<div class="modal" id="mDash"><div class="card" style="width:520px">
+  <h3 style="margin-bottom:6px">🛡️ Dev Dashboard — Центр Управления</h3>
   <div class="dash-grid">
     <div class="stat-box"><b id="stUsers">0</b><span>Юзеров</span></div>
     <div class="stat-box"><b id="stOnline" style="color:#10b981">0</b><span>Онлайн</span></div>
     <div class="stat-box"><b id="stMsgs">0</b><span>Сообщений</span></div>
     <div class="stat-box"><b id="stStr">0</b><span>Историй</span></div>
   </div>
-  <div style="display:flex;gap:6px;margin-bottom:8px">
-    <input id="admBroad" placeholder="Объявление в Общий чат..." style="margin:0;flex:1">
-    <button type="button" class="btn" style="width:auto;margin:0;padding:0 12px" onclick="adminBroadcast()">📢</button>
+  <div class="tab-row">
+    <button type="button" class="tab-btn act" id="dt1" onclick="dv('dvUsers',this)">👥 Юзеры</button>
+    <button type="button" class="tab-btn" id="dt2" onclick="dv('dvMod',this)">💬 Модерация</button>
+    <button type="button" class="tab-btn" id="dt3" onclick="dv('dvBroad',this)">📢 Эфир</button>
+    <button type="button" class="tab-btn" id="dt4" onclick="dv('dvSrv',this)">🛠️ Сервер</button>
   </div>
-  <div style="display:flex;gap:6px;margin-bottom:8px">
-    <input id="admSrch" placeholder="Поиск юзера или @username..." oninput="renderDashUsers()" style="margin:0;flex:1">
-    <button type="button" class="btn b2" style="width:auto;margin:0;padding:0 9px;font-size:11px" id="btnMaint" onclick="toggleMaintenance()">🛠️ Тех.работы</button>
-    <button type="button" class="btn b3" style="width:auto;margin:0;padding:0 9px;font-size:11px" onclick="clearAllStories()">Сброс сторис</button>
+  <div class="dview act" id="dvUsers">
+    <input id="admSrch" placeholder="Поиск юзера или @username..." oninput="renderDashUsers()" style="margin-bottom:8px">
+    <div id="dv1" style="max-height:240px;overflow-y:auto"></div>
   </div>
-  <div id="dv1" style="max-height:230px;overflow-y:auto"></div>
-  <button type="button" class="btn b2" onclick="cm('mDash')">Закрыть</button>
+  <div class="dview" id="dvMod">
+    <div style="display:flex;gap:6px;margin-bottom:8px">
+      <button type="button" class="btn b3" style="margin:0" onclick="clearGlobalChat()">🧹 Очистить Общий чат</button>
+      <button type="button" class="btn b2" style="margin:0" onclick="clearAllStories()">🗑 Удалить все Stories</button>
+    </div>
+    <div id="dvMsgsList" style="max-height:230px;overflow-y:auto"></div>
+  </div>
+  <div class="dview" id="dvBroad">
+    <p style="font-size:12px;color:#94a3b8;text-align:left">Официальное объявление в Общий чат:</p>
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      <input id="admBroad" placeholder="Текст объявления..." style="margin:0;flex:1">
+      <button type="button" class="btn" style="width:auto;margin:0;padding:0 14px" onclick="adminBroadcast()">📢</button>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;text-align:left">Глобальный баннер сверху экрана у всех:</p>
+    <div style="display:flex;gap:6px">
+      <input id="admBannerInp" placeholder="Текст плашки (пусто = выключить)..." style="margin:0;flex:1">
+      <button type="button" class="btn bg" style="width:auto;margin:0;padding:0 12px" onclick="setGlobalBanner()">Установить</button>
+    </div>
+  </div>
+  <div class="dview" id="dvSrv">
+    <button type="button" class="btn bg" id="btnMaint" onclick="toggleMaintenance()">🛠️ Включить технические работы</button>
+    <button type="button" class="btn b2" id="btnFreeze" onclick="toggleFreezeGlobal()">🔒 Заморозить Общий чат (Read-Only)</button>
+    <p id="srvNote" style="font-size:11px;color:#10b981;margin-top:8px"></p>
+  </div>
+  <button type="button" class="btn b2" onclick="cm('mDash')">Закрыть панель</button>
 </div></div>
 
 <div id="app">
@@ -403,6 +446,7 @@ body.theme-light .ibtn{background:#e2e8f0}
   </div>
 
   <div class="main">
+    <div class="glob-banner" id="globBanner"></div>
     <div class="head">
       <div style="display:flex;align-items:center;gap:8px;min-width:0;flex:1;cursor:pointer" onclick="openHeaderInfo()">
         <button type="button" class="ibtn mob-back" onclick="event.stopPropagation();g('app').classList.remove('chat-open')">←</button>
@@ -428,20 +472,6 @@ body.theme-light .ibtn{background:#e2e8f0}
 
     <div class="rep-bar" id="repBar">
       <div style="min-width:0"><b style="color:#60a5fa" id="repModeLbl">↩ Ответ: </b><span id="repTxt" style="color:var(--muted)"></span></div>
-      <button type="button" class="ibtn" style="width:24px;height:24px;font-size:11px" onclick="cancelReply()">✖</button>
-    </div>
-
-    <div class="rec-bar" id="recBar"><span>🔴 Идёт запись голоса...</span><b id="recSec">0с</b></div>
-
-    <div class="bar" id="chatBar">
-      <button type="button" class="ibtn" onclick="toggleEmojiPop()" title="Стикеры">😊</button>
-      <button type="button" class="ibtn" onclick="chatMediaInp.click()" title="Фото или видео">📷</button>
-      <input id="minp" placeholder="Написать сообщение..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendCloudMsg()}">
-      <button type="button" class="ibtn" id="micBtn" onclick="toggleVoiceRec()" title="Голосовое">🎙</button>
-      <button type="button" class="ibtn" style="background:#2563eb;color:#fff" onclick="sendCloudMsg()" title="Отправить">➤</button>
-    </div>
-  </div>
-</div>
 <script>
 var EP = 'https://' + 'fra.cloud.' + 'appwrite.io' + '/v1';
 var PID = '6afaabcb000c658e4466';
@@ -459,6 +489,12 @@ var STATUS_EMOS = ['', '👑', '🔥', '⚡', '💎', '🚀', '😎', '❤️', 
 function g(i){ return document.getElementById(i); }
 function st(i){ document.querySelectorAll('.step').forEach(function(x){ x.classList.remove('act'); }); g(i).classList.add('act'); }
 function sv(i){ document.querySelectorAll('.sview').forEach(function(x){ x.classList.remove('act'); }); g(i).classList.add('act'); }
+function dv(i, btn){
+  document.querySelectorAll('.dview').forEach(function(x){ x.classList.remove('act'); });
+  g(i).classList.add('act');
+  document.querySelectorAll('#mDash .tab-btn').forEach(function(b){ b.classList.remove('act'); });
+  if(btn) btn.classList.add('act');
+}
 function om(i){ g(i).style.display = 'flex'; }
 function cm(i){ g(i).style.display = 'none'; }
 function uid(){ return 'id' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
@@ -485,7 +521,10 @@ function toggleEmojiPop(){
 
 function getNick(p){
   if(!p || !p.bio) return '';
-  if(p.bio.indexOf('@') === 0) return p.bio.split('|')[0].trim().toLowerCase();
+  if(p.bio.indexOf('@') === 0){
+    var parts = p.bio.split('|');
+    return parts[0].trim().toLowerCase();
+  }
   return '';
 }
 function getBioText(p){
@@ -754,7 +793,7 @@ function launchCloudApp(){
   g('app').style.display = 'flex';
   var w = g('wel'); g('wt').textContent = 'Добро пожаловать, ' + me.name + '!';
   w.style.display = 'flex';
-  setTimeout(function(){ w.style.display = 'none'; }, 1100);
+  setTimeout(function(){ w.style.display = 'none'; }, 1000);
   updateMyHeader();
   selectChat('global', { id: 'global', type: 'group', name: 'Общий чат BiChat', sub: 'Все друзья и родные', off: true, em: '🌍' });
   pingOnline();
@@ -762,7 +801,6 @@ function launchCloudApp(){
   clearInterval(syncTimer);
   syncTimer = setInterval(function(){ pingOnline(); loadAllCloudData(); }, 3000);
 }
-
 async function pingOnline(){
   if(!me || !me.$id) return;
   try { await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', { data: { ban_reason: me.is_banned ? me.ban_reason : ('online_' + Date.now()) } }); } catch(e){}
@@ -773,6 +811,7 @@ function isUserOnline(p){
 }
 function isDevOnline(){ return allProfiles.some(function(p){ return p.is_dev && isUserOnline(p); }); }
 function isMaintenanceOn(){ return allMessages.some(function(m){ return m.chat_id === 'sys_maint' && m.text === 'ON'; }); }
+function isGlobalFrozen(){ return allMessages.some(function(m){ return m.chat_id === 'sys_freeze' && m.text === 'ON'; }); }
 
 function updateMyHeader(){
   var isOwnerReal = (me.is_dev && (me.email || '').toLowerCase() === OWNER);
@@ -791,19 +830,37 @@ async function loadAllCloudData(){
     allProfiles = pRes.documents || [];
     allMessages = mRes.documents || [];
     allStories = (sRes.documents || []).slice().reverse();
+
     var isOwnerReal = (me.is_dev && (me.email || '').toLowerCase() === OWNER);
     g('maintScreen').style.display = (!isOwnerReal && isMaintenanceOn()) ? 'flex' : 'none';
+
+    var banners = allMessages.filter(function(m){ return m.chat_id === 'sys_banner'; });
+    var bEl = g('globBanner');
+    if(banners.length && banners[banners.length - 1].text){
+      bEl.textContent = '📢 ' + banners[banners.length - 1].text;
+      bEl.style.display = 'block';
+    } else {
+      bEl.style.display = 'none';
+    }
+
     var fresh = allProfiles.find(function(x){ return x.$id === me.$id; });
     if(fresh){
       if(fresh.is_banned){ me = fresh; g('banReason').textContent = me.ban_reason || 'Бан'; om('mBan'); return; }
       me = fresh; updateMyHeader();
     }
+
+    if(curChat === 'global'){
+      var canGlobal = !isGlobalFrozen() || me.is_dev;
+      g('chatBar').style.display = canGlobal ? 'flex' : 'none';
+    }
+
     renderChatList();
     renderPinnedBar();
     renderMessages(false);
     renderStories();
   } catch(e){}
 }
+
 function getRooms(){
   var rooms = [];
   allMessages.forEach(function(m){
@@ -896,6 +953,7 @@ function selectChat(id, obj){
   g('csta').textContent = obj.sub || 'нажмите для профиля';
   var canPost = true;
   if(obj.type === 'channel' && obj.meta) canPost = (obj.meta.owner === me.$id || (obj.meta.admins || []).indexOf(me.$id) > -1 || me.is_dev);
+  if(id === 'global' && isGlobalFrozen() && !me.is_dev) canPost = false;
   g('chatBar').style.display = canPost ? 'flex' : 'none';
   g('app').classList.add('chat-open');
   renderChatList(); renderPinnedBar(); renderMessages(true);
@@ -924,9 +982,9 @@ async function unpinCurrentChat(){
 
 function openMsgActions(m){
   selectedMsg = m;
-  g('maPreview').textContent = m.text || (m.media_type === 'aud' ? '🎙 Голосовое сообщение' : (m.media_type === 'sticker' ? 'Стикер ' + m.media_url : '📎 Медиафайл'));
+  g('maPreview').textContent = m.media_type === 'poll' ? '📊 Опрос' : (m.text || (m.media_type === 'aud' ? '🎙 Голосовое сообщение' : (m.media_type === 'sticker' ? 'Стикер ' + m.media_url : '📎 Медиафайл')));
   var isMine = (m.sender_id === me.$id);
-  g('maEditBtn').style.display = (isMine && m.text && m.media_type !== 'sticker') ? 'block' : 'none';
+  g('maEditBtn').style.display = (isMine && m.text && m.media_type !== 'sticker' && m.media_type !== 'poll') ? 'block' : 'none';
   g('maDelBtn').style.display = (isMine || me.is_dev) ? 'block' : 'none';
   om('mMsgAct');
 }
@@ -942,7 +1000,7 @@ function actReplyMsg(){
   if(!selectedMsg) return;
   editingMsg = null; replyToMsg = selectedMsg;
   g('repModeLbl').textContent = '↩ Ответ: ';
-  g('repTxt').textContent = selectedMsg.sender_name + ': ' + (selectedMsg.text || 'Медиафайл');
+  g('repTxt').textContent = selectedMsg.sender_name + ': ' + (selectedMsg.media_type === 'poll' ? '📊 Опрос' : (selectedMsg.text || 'Медиафайл'));
   g('repBar').style.display = 'flex';
   cm('mMsgAct'); g('minp').focus();
 }
@@ -975,7 +1033,7 @@ function openForwardModal(){
       cm('mFwd');
       var fwdTxt = '↪ Переслано от ' + selectedMsg.sender_name + (selectedMsg.text ? ':\n' + selectedMsg.text : '');
       await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
-        documentId: uid(), data: { chat_id: t.id, sender_id: me.$id, sender_name: me.name, text: fwdTxt, media_url: selectedMsg.media_url || '', media_type: selectedMsg.media_type || '', is_support: false }
+        documentId: uid(), data: { chat_id: t.id, sender_id: me.$id, sender_name: me.name, text: fwdTxt, media_url: selectedMsg.media_url || '', media_type: selectedMsg.media_type === 'poll' ? '' : (selectedMsg.media_type || ''), is_support: false }
       });
       await loadAllCloudData(); renderMessages(true);
     };
@@ -987,7 +1045,7 @@ function openForwardModal(){
 async function actPinMsg(){
   if(!selectedMsg) return;
   cm('mMsgAct');
-  var pText = selectedMsg.sender_name + ': ' + (selectedMsg.text || (selectedMsg.media_type === 'aud' ? 'Голосовое сообщение' : 'Медиафайл'));
+  var pText = selectedMsg.sender_name + ': ' + (selectedMsg.media_type === 'poll' ? '📊 Опрос' : (selectedMsg.text || (selectedMsg.media_type === 'aud' ? 'Голосовое сообщение' : 'Медиафайл')));
   await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
     documentId: uid(), data: { chat_id: curChat, sender_id: me.$id, sender_name: me.name, text: pText, media_url: selectedMsg.$id, media_type: 'pin_meta', is_support: false }
   });
@@ -1000,6 +1058,27 @@ async function actDeleteMsg(){
   await loadAllCloudData(); renderMessages(true);
 }
 
+async function sendCloudPoll(){
+  var q = g('pollQ').value.trim(), o1 = g('pollO1').value.trim(), o2 = g('pollO2').value.trim(), o3 = g('pollO3').value.trim();
+  if(!q || !o1 || !o2) return;
+  var opts = [{ txt: o1, votes: [] }, { txt: o2, votes: [] }];
+  if(o3) opts.push({ txt: o3, votes: [] });
+  g('pollQ').value = ''; g('pollO1').value = ''; g('pollO2').value = ''; g('pollO3').value = ''; cm('mPoll');
+  await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
+    documentId: uid(), data: { chat_id: curChat, sender_id: me.$id, sender_name: me.name, text: JSON.stringify({ q: q, opts: opts }), media_url: '', media_type: 'poll', is_support: false }
+  });
+  await loadAllCloudData(); renderMessages(true);
+}
+
+async function voteInPoll(msgObj, optIdx){
+  try {
+    var pData = JSON.parse(msgObj.text);
+    pData.opts.forEach(function(o){ o.votes = (o.votes || []).filter(function(u){ return u !== me.$id; }); });
+    pData.opts[optIdx].votes.push(me.$id);
+    await api('/databases/' + DID + '/collections/messages/documents/' + msgObj.$id, 'PATCH', { data: { text: JSON.stringify(pData) } });
+    await loadAllCloudData(); renderMessages(true);
+  } catch(e){}
+}
 function renderMessages(force){
   var box = g('mlst');
   var msgs = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; });
@@ -1011,28 +1090,44 @@ function renderMessages(force){
   msgs.forEach(function(m){
     var isMy = (m.sender_id === me.$id && !m.is_support) || (curChat.indexOf('support_') === 0 && curChat !== 'support_' + me.$id && m.is_support);
     var d = document.createElement('div'); d.className = 'm ' + (isMy ? 'my' : 'in'); d.id = 'msg_' + m.$id;
-    d.onclick = function(e){ if(e.target.tagName === 'AUDIO' || e.target.tagName === 'VIDEO') return; openMsgActions(m); };
+    d.onclick = function(e){ if(e.target.tagName === 'AUDIO' || e.target.tagName === 'VIDEO' || e.target.classList.contains('poll-opt')) return; openMsgActions(m); };
     if(!isMy){
       var snd = document.createElement('div'); snd.className = 'm-snd';
       snd.innerHTML = m.is_support ? '🛡️ Поддержка BiChat <span class="v-ok">✓</span>' : m.sender_name;
       if(!m.is_support) snd.onclick = function(e){ e.stopPropagation(); var pr = allProfiles.find(function(x){ return x.$id === m.sender_id; }); if(pr) openUserProfile(pr); };
       d.appendChild(snd);
     }
-    var rawTxt = m.text || '';
-    if(rawTxt.indexOf('↩ ') === 0 && rawTxt.indexOf('\n') > -1){
-      var splitIdx = rawTxt.indexOf('\n');
-      var repDiv = document.createElement('div'); repDiv.className = 'm-rep'; repDiv.textContent = rawTxt.slice(0, splitIdx);
-      d.appendChild(repDiv);
-      rawTxt = rawTxt.slice(splitIdx + 1);
+
+    if(m.media_type === 'poll'){
+      try {
+        var pData = JSON.parse(m.text);
+        var qTitle = document.createElement('div'); qTitle.style.fontWeight = '700'; qTitle.textContent = '📊 ' + pData.q;
+        d.appendChild(qTitle);
+        pData.opts.forEach(function(o, idx){
+          var ob = document.createElement('div'); ob.className = 'poll-opt';
+          var voted = (o.votes || []).indexOf(me.$id) > -1;
+          ob.innerHTML = '<span>' + (voted ? '✅ ' : '') + o.txt + '</span><b>' + (o.votes || []).length + '</b>';
+          ob.onclick = function(e){ e.stopPropagation(); voteInPoll(m, idx); };
+          d.appendChild(ob);
+        });
+      } catch(e){}
+    } else {
+      var rawTxt = m.text || '';
+      if(rawTxt.indexOf('↩ ') === 0 && rawTxt.indexOf('\n') > -1){
+        var splitIdx = rawTxt.indexOf('\n');
+        var repDiv = document.createElement('div'); repDiv.className = 'm-rep'; repDiv.textContent = rawTxt.slice(0, splitIdx);
+        d.appendChild(repDiv);
+        rawTxt = rawTxt.slice(splitIdx + 1);
+      }
+      if(m.media_type === 'sticker'){
+        var stDiv = document.createElement('div'); stDiv.className = 'm-sticker'; stDiv.textContent = m.media_url; d.appendChild(stDiv);
+      } else if(m.media_url){
+        if(m.media_type === 'vid'){ var v = document.createElement('video'); v.src = m.media_url; v.controls = true; d.appendChild(v); }
+        else if(m.media_type === 'aud'){ var au = document.createElement('audio'); au.src = m.media_url; au.controls = true; d.appendChild(au); }
+        else { var im = document.createElement('img'); im.src = m.media_url; d.appendChild(im); }
+      }
+      if(rawTxt){ var tx = document.createElement('div'); tx.textContent = rawTxt; d.appendChild(tx); }
     }
-    if(m.media_type === 'sticker'){
-      var stDiv = document.createElement('div'); stDiv.className = 'm-sticker'; stDiv.textContent = m.media_url; d.appendChild(stDiv);
-    } else if(m.media_url){
-      if(m.media_type === 'vid'){ var v = document.createElement('video'); v.src = m.media_url; v.controls = true; d.appendChild(v); }
-      else if(m.media_type === 'aud'){ var au = document.createElement('audio'); au.src = m.media_url; au.controls = true; d.appendChild(au); }
-      else { var im = document.createElement('img'); im.src = m.media_url; d.appendChild(im); }
-    }
-    if(rawTxt){ var tx = document.createElement('div'); tx.textContent = rawTxt; d.appendChild(tx); }
 
     var msgReacts = reacts.filter(function(r){ return r.media_url === m.$id; });
     if(msgReacts.length){
@@ -1073,7 +1168,7 @@ async function sendCloudMsg(mediaUrl, mediaType, stickerChar){
   }
 
   if(replyToMsg){
-    var qLine = '↩ ' + replyToMsg.sender_name + ': ' + (replyToMsg.text || 'Медиафайл').slice(0, 45);
+    var qLine = '↩ ' + replyToMsg.sender_name + ': ' + (replyToMsg.media_type === 'poll' ? '📊 Опрос' : (replyToMsg.text || 'Медиафайл').slice(0, 45));
     txt = qLine + '\n' + txt;
     cancelReply();
   }
@@ -1099,11 +1194,40 @@ async function sendCloudMsg(mediaUrl, mediaType, stickerChar){
     await loadAllCloudData(); renderMessages(true);
   } catch(e){}
 }
+function compressImageFallback(file){
+  return new Promise(function(resolve, reject){
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      var img = new Image();
+      img.onload = function(){
+        var canvas = document.createElement('canvas');
+        var max = 320, w = img.width, h = img.height;
+        if(w > h && w > max){ h = Math.round(h * max / w); w = max; }
+        else if(h > max){ w = Math.round(w * max / h); h = max; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.72));
+      };
+      img.onerror = reject;
+      img.src = ev.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 async function uploadToCloud(file, fileName){
-  var fd = new FormData(); fd.append('fileId', uid());
-  if(fileName) fd.append('file', file, fileName); else fd.append('file', file);
-  var res = await api('/storage/buckets/media/files', 'POST', fd);
-  return EP + '/storage/buckets/media/files/' + res.$id + '/view?project=' + PID;
+  try {
+    var fd = new FormData(); fd.append('fileId', uid());
+    if(fileName) fd.append('file', file, fileName); else fd.append('file', file);
+    var res = await api('/storage/buckets/media/files', 'POST', fd);
+    return EP + '/storage/buckets/media/files/' + res.$id + '/view?project=' + PID;
+  } catch(err){
+    if(file && file.type && file.type.indexOf('image') === 0){
+      return await compressImageFallback(file);
+    }
+    throw err;
+  }
 }
 
 async function toggleVoiceRec(){
@@ -1135,8 +1259,17 @@ chatMediaInp.onchange = async function(e){
 var avFileInp = document.createElement('input'); avFileInp.type = 'file'; avFileInp.accept = 'image/*';
 avFileInp.onchange = async function(e){
   var file = e.target.files ? e.target.files.item(0) : null; if(!file) return;
-  g('avUpSt').textContent = 'Загрузка...';
-  try { tempAvUrl = await uploadToCloud(file); g('avUpSt').textContent = 'Фото готово! Нажмите Сохранить.'; } catch(e){}
+  g('avUpSt').style.color = '#60a5fa';
+  g('avUpSt').textContent = 'Обработка фото...';
+  try {
+    tempAvUrl = await uploadToCloud(file);
+    g('avUpSt').style.color = '#10b981';
+    g('avUpSt').textContent = 'Фото готово! Нажмите «Сохранить изменения».';
+  } catch(err){
+    g('avUpSt').style.color = '#fca5a5';
+    g('avUpSt').textContent = 'Ошибка: ' + err.message;
+  }
+  avFileInp.value = '';
 };
 
 var stMediaInp = document.createElement('input'); stMediaInp.type = 'file'; stMediaInp.accept = 'image/*,video/*';
@@ -1148,7 +1281,8 @@ stMediaInp.onchange = async function(e){
       documentId: uid(), data: { user_id: me.$id, user_name: me.name, media_url: url, media_type: file.type.indexOf('video') === 0 ? 'vid' : 'img', caption: '' }
     });
     await loadAllCloudData();
-  } catch(e){}
+  } catch(err){ alert('Ошибка загрузки Stories: ' + err.message); }
+  stMediaInp.value = '';
 };
 
 function renderStories(){
@@ -1240,10 +1374,12 @@ async function saveProfCloud(){
   if(allProfiles.some(function(d){ return d.$id !== me.$id && getNick(d) === '@' + newNick; })){
     g('profErr').textContent = 'Этот @username уже занят'; return;
   }
-  me = await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', {
-    data: { name: g('en').value.trim() || me.name, bio: buildBioField(newNick, g('eb').value), avatar_url: tempAvUrl, ult_em: selUltEm }
-  });
-  updateMyHeader(); sv('sv0');
+  try {
+    me = await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', {
+      data: { name: g('en').value.trim() || me.name, bio: buildBioField(newNick, g('eb').value), avatar_url: tempAvUrl, ult_em: selUltEm }
+    });
+    updateMyHeader(); sv('sv0');
+  } catch(err){ g('profErr').textContent = 'Ошибка сохранения: ' + err.message; }
 }
 async function setPlan(p){ me = await api('/databases/' + DID + '/collections/profiles/documents/' + me.$id, 'PATCH', { data: { plan: p } }); updateMyHeader(); sv('sv0'); }
 
@@ -1253,9 +1389,50 @@ function openDash(){
   g('stOnline').textContent = allProfiles.filter(isUserOnline).length;
   g('stMsgs').textContent = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; }).length;
   g('stStr').textContent = allStories.length;
-  g('btnMaint').textContent = isMaintenanceOn() ? '✅ Выкл тех.работы' : '🛠️ Тех.работы';
+  g('btnMaint').textContent = isMaintenanceOn() ? '✅ Выкл технические работы' : '🛠️ Включить технические работы';
+  g('btnFreeze').textContent = isGlobalFrozen() ? '🔓 Разморозить Общий чат' : '🔒 Заморозить Общий чат (Read-Only)';
+  g('srvNote').textContent = isMaintenanceOn() ? 'Сейчас обычные пользователи видят полноэкранную заставку тех. работ!' : '';
   renderDashUsers();
+  renderDashModMsgs();
   om('mDash');
+}
+function renderDashUsers(){
+  var q = (g('admSrch').value || '').toLowerCase(), box = g('dv1'); box.innerHTML = '';
+  allProfiles.forEach(function(p){
+    var nick = getNick(p);
+    if(q && p.name.toLowerCase().indexOf(q) === -1 && nick.indexOf(q) === -1) return;
+    var row = document.createElement('div'); row.className = 'u-row';
+    row.innerHTML = '<div style="min-width:0;flex:1"><b>' + p.name + (p.is_dev ? ' ✓' : '') + (p.is_banned ? ' [БАН]' : '') + '</b><div style="font-size:10px;color:#94a3b8">' + (nick || p.email) + ' • ' + (p.plan || 'free').toUpperCase() + '</div></div>';
+    var acts = document.createElement('div'); acts.style.display = 'flex'; acts.style.gap = '3px'; acts.style.flexShrink = '0';
+
+    var bVer = document.createElement('button'); bVer.className = 'mini-btn'; bVer.style.background = '#2563eb'; bVer.textContent = p.is_dev ? 'Снять ✓' : 'Дать ✓';
+    bVer.onclick = async function(){ if(p.$id === me.$id) return; await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_dev: !p.is_dev } }); await loadAllCloudData(); renderDashUsers(); };
+
+    var bUlt = document.createElement('button'); bUlt.className = 'mini-btn'; bUlt.style.background = '#9333ea'; bUlt.textContent = p.plan === 'ult' ? 'Free' : 'Ult';
+    bUlt.onclick = async function(){ await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { plan: p.plan === 'ult' ? 'free' : 'ult' } }); await loadAllCloudData(); renderDashUsers(); };
+
+    var bPwd = document.createElement('button'); bPwd.className = 'mini-btn'; bPwd.style.background = '#d97706'; bPwd.textContent = 'Пароль';
+    bPwd.onclick = async function(){ var np = prompt('Новый пароль для ' + p.name + ' (мин. 4 симв.):'); if(np && np.trim().length >= 4){ await saveUserAuthRecord(p.$id, np.trim(), 'Сброшен админом'); alert('Пароль изменён на: ' + np.trim()); } };
+
+    var bBan = document.createElement('button'); bBan.className = 'mini-btn'; bBan.style.background = p.is_banned ? '#10b981' : '#ef4444'; bBan.textContent = p.is_banned ? 'Разбан' : 'Бан';
+    bBan.onclick = async function(){ if(p.$id === me.$id) return; await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_banned: !p.is_banned, ban_reason: 'Заблокирован администратором' } }); await loadAllCloudData(); renderDashUsers(); };
+
+    var bDel = document.createElement('button'); bDel.className = 'mini-btn'; bDel.style.background = '#7f1d1d'; bDel.textContent = '🗑';
+    bDel.onclick = async function(){ if(p.$id === me.$id) return; if(confirm('Удалить профиль ' + p.name + ' навсегда?')){ await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'DELETE'); await loadAllCloudData(); renderDashUsers(); } };
+
+    acts.append(bVer, bUlt, bPwd, bBan, bDel); row.appendChild(acts); box.appendChild(row);
+  });
+}
+function renderDashModMsgs(){
+  var box = g('dvMsgsList'); box.innerHTML = '';
+  var list = allMessages.filter(function(m){ return m.media_type !== 'room_meta' && m.media_type !== 'pin_meta' && m.media_type !== 'react_meta' && m.media_type !== 'auth_meta'; }).slice(-25).reverse();
+  list.forEach(function(m){
+    var row = document.createElement('div'); row.className = 'u-row';
+    row.innerHTML = '<div style="min-width:0;flex:1"><b>' + m.sender_name + '</b> <span style="color:#60a5fa">[' + m.chat_id.slice(0, 10) + ']</span><div style="font-size:11px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (m.text || m.media_type || 'медиа') + '</div></div>';
+    var b = document.createElement('button'); b.className = 'mini-btn'; b.style.background = '#ef4444'; b.textContent = 'Удалить';
+    b.onclick = async function(){ await api('/databases/' + DID + '/collections/messages/documents/' + m.$id, 'DELETE'); await loadAllCloudData(); renderDashModMsgs(); };
+    row.appendChild(b); box.appendChild(row);
+  });
 }
 async function toggleMaintenance(){
   var existing = allMessages.filter(function(m){ return m.chat_id === 'sys_maint'; });
@@ -1269,26 +1446,31 @@ async function toggleMaintenance(){
   }
   await loadAllCloudData(); openDash();
 }
-function renderDashUsers(){
-  var q = (g('admSrch').value || '').toLowerCase(), box = g('dv1'); box.innerHTML = '';
-  allProfiles.forEach(function(p){
-    var nick = getNick(p);
-    if(q && p.name.toLowerCase().indexOf(q) === -1 && nick.indexOf(q) === -1) return;
-    var row = document.createElement('div'); row.className = 'u-row';
-    row.innerHTML = '<div style="min-width:0;flex:1"><b>' + p.name + (p.is_dev ? ' ✓' : '') + (p.is_banned ? ' [БАН]' : '') + '</b><div style="font-size:10px;color:#94a3b8">' + (nick || p.email) + ' • ' + (p.plan || 'free').toUpperCase() + '</div></div>';
-    var acts = document.createElement('div'); acts.style.display = 'flex'; acts.style.flexShrink = '0';
-
-    var bVer = document.createElement('button'); bVer.className = 'mini-btn'; bVer.style.background = '#2563eb'; bVer.textContent = p.is_dev ? 'Снять ✓' : 'Дать ✓';
-    bVer.onclick = async function(){ if(p.$id === me.$id) return; await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_dev: !p.is_dev } }); await loadAllCloudData(); renderDashUsers(); };
-
-    var bUlt = document.createElement('button'); bUlt.className = 'mini-btn'; bUlt.style.background = '#9333ea'; bUlt.textContent = p.plan === 'ult' ? 'Free' : 'Ult';
-    bUlt.onclick = async function(){ await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { plan: p.plan === 'ult' ? 'free' : 'ult' } }); await loadAllCloudData(); renderDashUsers(); };
-
-    var bBan = document.createElement('button'); bBan.className = 'mini-btn'; bBan.style.background = p.is_banned ? '#10b981' : '#ef4444'; bBan.textContent = p.is_banned ? 'Разбан' : 'Бан';
-    bBan.onclick = async function(){ if(p.$id === me.$id) return; await api('/databases/' + DID + '/collections/profiles/documents/' + p.$id, 'PATCH', { data: { is_banned: !p.is_banned, ban_reason: 'Заблокирован администратором' } }); await loadAllCloudData(); renderDashUsers(); };
-
-    acts.append(bVer, bUlt, bBan); row.appendChild(acts); box.appendChild(row);
-  });
+async function toggleFreezeGlobal(){
+  var existing = allMessages.filter(function(m){ return m.chat_id === 'sys_freeze'; });
+  for(var i = 0; i < existing.length; i++){
+    try { await api('/databases/' + DID + '/collections/messages/documents/' + existing[i].$id, 'DELETE'); } catch(e){}
+  }
+  if(!existing.length){
+    await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
+      documentId: uid(), data: { chat_id: 'sys_freeze', sender_id: me.$id, sender_name: 'SYS', text: 'ON', media_url: '', media_type: 'room_meta', is_support: true }
+    });
+  }
+  await loadAllCloudData(); openDash();
+}
+async function setGlobalBanner(){
+  var txt = g('admBannerInp').value.trim();
+  var old = allMessages.filter(function(m){ return m.chat_id === 'sys_banner'; });
+  for(var i = 0; i < old.length; i++){
+    try { await api('/databases/' + DID + '/collections/messages/documents/' + old[i].$id, 'DELETE'); } catch(e){}
+  }
+  if(txt){
+    await api('/databases/' + DID + '/collections/messages/documents', 'POST', {
+      documentId: uid(), data: { chat_id: 'sys_banner', sender_id: me.$id, sender_name: 'SYS', text: txt, media_url: '', media_type: 'room_meta', is_support: true }
+    });
+  }
+  g('admBannerInp').value = '';
+  await loadAllCloudData();
 }
 async function adminBroadcast(){
   var txt = g('admBroad').value.trim(); if(!txt) return;
@@ -1297,6 +1479,14 @@ async function adminBroadcast(){
     documentId: uid(), data: { chat_id: 'global', sender_id: me.$id, sender_name: '📢 Администрация BiChat', text: txt, media_url: '', media_type: '', is_support: true }
   });
   await loadAllCloudData(); renderMessages(true);
+}
+async function clearGlobalChat(){
+  if(!confirm('Удалить все сообщения в Общем чате?')) return;
+  var gMsgs = allMessages.filter(function(m){ return m.chat_id === 'global'; });
+  for(var i = 0; i < gMsgs.length; i++){
+    try { await api('/databases/' + DID + '/collections/messages/documents/' + gMsgs[i].$id, 'DELETE'); } catch(e){}
+  }
+  await loadAllCloudData(); renderDashModMsgs();
 }
 async function clearAllStories(){
   for(var i = 0; i < allStories.length; i++){
