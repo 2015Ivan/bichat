@@ -983,6 +983,17 @@ function renderChatList(){
   });
 }
 
+function renderPinnedBar(){
+  var bar = g('pinBar');
+  if(!bar) return;
+  var pins = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type === 'pin_meta'; });
+  if(!pins.length){ bar.style.display = 'none'; currentPinMsgId = ''; return; }
+  var lastPin = pins.slice(-1).pop();
+  currentPinMsgId = lastPin.media_url || '';
+  if(g('pinTxt')) g('pinTxt').textContent = lastPin.text || 'Закреплённое сообщение';
+  bar.style.display = 'flex';
+}
+
 function selectChat(id, obj){
   try {
     curChat = id;
@@ -990,10 +1001,10 @@ function selectChat(id, obj){
     lastDrawnIds = '';
     cancelReply();
     if(g('emojiPop')) g('emojiPop').style.display = 'none';
-    sav(g('tav'), curChatObj.name, curChatObj.av || '', curChatObj.off, curChatObj.em || '');
-    g('cnam').innerHTML = curChatObj.name + (curChatObj.off && curChatObj.id !== 'saved_' + me.$id ? ' <span class="v-ok">✓</span>' : '');
-    g('csta').textContent = curChatObj.sub || 'нажмите для профиля';
-    g('app').classList.add('chat-open');
+    if(g('tav')) sav(g('tav'), curChatObj.name, curChatObj.av || '', curChatObj.off, curChatObj.em || '');
+    if(g('cnam')) g('cnam').innerHTML = curChatObj.name + (curChatObj.off && curChatObj.id !== 'saved_' + me.$id ? ' <span class="v-ok">✓</span>' : '');
+    if(g('csta')) g('csta').textContent = curChatObj.sub || 'нажмите для профиля';
+    if(g('app')) g('app').classList.add('chat-open');
     updateChatInputAccess();
     renderChatList();
     renderPinnedBar();
@@ -1002,27 +1013,7 @@ function selectChat(id, obj){
     alert('Ошибка открытия чата: ' + err.message);
   }
 }
-function renderPinnedBar(){
-  var pins = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type === 'pin_meta'; });
-  var bar = g('pinBar');
-  if(!pins.length){ bar.style.display = 'none'; currentPinMsgId = ''; return; }
-  var lastPin = pins.slice(-1).pop();
-  currentPinMsgId = lastPin.media_url || '';
-  g('pinTxt').textContent = lastPin.text || 'Закреплённое сообщение';
-  bar.style.display = 'flex';
-}
-function scrollToPinned(){
-  if(!currentPinMsgId) return;
-  var el = document.getElementById('msg_' + currentPinMsgId);
-  if(el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-async function unpinCurrentChat(){
-  var pins = allMessages.filter(function(m){ return m.chat_id === curChat && m.media_type === 'pin_meta'; });
-  for(var i = 0; i < pins.length; i++){
-    try { await api('/databases/' + DID + '/collections/messages/documents/' + pins.slice(i, i + 1).pop().$id, 'DELETE'); } catch(e){}
-  }
-  await loadAllCloudData(); renderPinnedBar();
-}
+
 
 function openMsgActions(m){
   selectedMsg = m;
