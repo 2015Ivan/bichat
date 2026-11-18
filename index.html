@@ -37,6 +37,7 @@ html,body{background:var(--bg);color:var(--text);height:100vh;width:100vw;overfl
 .b-dot1{animation:dotBounce 1.4s infinite ease-in-out}
 .b-dot2{animation:dotBounce 1.4s infinite ease-in-out .2s}
 .b-dot3{animation:dotBounce 1.4s infinite ease-in-out .4s}
+.beta-pill{position:absolute;top:14px;right:16px;font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--muted);background:rgba(255,255,255,.06);border:1px solid var(--border);padding:3px 8px;border-radius:10px;opacity:.75}
 input,select{width:100%;padding:11px 13px;margin:5px 0 8px;background:rgba(6,10,20,.82);border:1px solid var(--border);border-radius:13px;color:var(--text);font-size:14px;outline:none;transition:.2s}
 body.theme-light input,body.theme-light select{background:#f1f5f9}
 input:focus,select:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,246,.22)}
@@ -67,7 +68,7 @@ input:focus,select:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,2
 .ast{display:inline-block;margin-left:5px;animation:flt 1.6s infinite}
 #app{display:none;position:relative;z-index:30;width:100vw;height:100vh;flex-direction:row}
 .side{position:relative;z-index:35;width:355px;height:100vh;background:var(--panel);backdrop-filter:blur(22px);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
-.head{padding:11px 14px;background:var(--head);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:6px}
+.head{padding:11px 14px;background:var(--head);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:6px;flex-shrink:0}
 .ibtn{width:35px;height:35px;border-radius:11px;border:1px solid var(--border);background:rgba(30,41,59,.8);color:var(--text);font-size:15px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:.18s}
 body.theme-light .ibtn{background:#e2e8f0}
 .ibtn:hover{background:#2563eb;color:#fff;transform:scale(1.06)}
@@ -86,12 +87,12 @@ body.theme-light .ibtn{background:#e2e8f0}
 .ur{animation:pulseRing 2.5s infinite}
 .v-ok{display:inline-block;background:#3b82f6;color:#fff;border-radius:50%;width:15px;height:15px;font-size:10px;line-height:15px;text-align:center;margin-left:4px}
 .dev-badge{display:inline-block;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:6px;margin-left:4px}
-.main{position:relative;z-index:35;flex:1;height:100vh;display:flex;flex-direction:column;min-width:0}
+.main{position:relative;z-index:35;flex:1;height:100vh;display:flex;flex-direction:column;min-width:0;background:rgba(6,10,20,.45)}
 .spy-float{display:none;position:fixed;bottom:78px;right:16px;z-index:9998;background:linear-gradient(135deg,#ec4899,#7c3aed);color:#fff;border:2px solid #fff;border-radius:16px;padding:10px 14px;font-size:12px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.75);cursor:pointer}
 .glob-banner{display:none;background:linear-gradient(90deg,#f59e0b,#ec4899,#8b5cf6);color:#fff;padding:7px 14px;font-size:12px;font-weight:700;text-align:center;flex-shrink:0}
 .pin-bar{display:none;background:var(--head);border-bottom:1px solid rgba(59,130,246,.4);padding:7px 14px;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;flex-shrink:0}
 .pin-txt{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.msgs{flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:9px}
+.msgs{flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;min-height:0}
 .m{max-width:74%;padding:10px 14px;border-radius:17px;font-size:14px;position:relative;word-wrap:break-word;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.18);animation:popIn .22s ease}
 .my{align-self:flex-end;background:var(--my-msg);color:#fff;border-bottom-right-radius:4px}
 .in{align-self:flex-start;background:var(--in-msg);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:4px}
@@ -109,10 +110,10 @@ body.theme-light .ibtn{background:#e2e8f0}
 .em-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:6px}
 .em-btn{font-size:24px;background:rgba(255,255,255,.06);border:none;border-radius:10px;padding:6px;cursor:pointer;transition:transform .15s}
 .em-btn:hover{transform:scale(1.2);background:rgba(59,130,246,.25)}
-.rep-bar{display:none;background:var(--head);border-top:1px solid rgba(59,130,246,.4);padding:7px 14px;align-items:center;justify-content:space-between;gap:10px;font-size:12px}
-.rec-bar{background:rgba(239,68,68,.24);color:#fca5a5;border-top:1px solid rgba(239,68,68,.45);padding:6px 14px;font-size:12px;display:none;justify-content:space-between;align-items:center}
+.rep-bar{display:none;background:var(--head);border-top:1px solid rgba(59,130,246,.4);padding:7px 14px;align-items:center;justify-content:space-between;gap:10px;font-size:12px;flex-shrink:0}
+.rec-bar{background:rgba(239,68,68,.24);color:#fca5a5;border-top:1px solid rgba(239,68,68,.45);padding:6px 14px;font-size:12px;display:none;justify-content:space-between;align-items:center;flex-shrink:0}
 .mute-bar{display:none;background:rgba(239,68,68,.18);border-top:1px solid rgba(239,68,68,.45);padding:11px 14px;text-align:center;font-size:12px;color:#fca5a5;flex-shrink:0}
-.bar{padding:10px 12px;background:var(--head);border-top:1px solid var(--border);display:flex;gap:6px;align-items:center;flex-shrink:0}
+.bar{padding:10px 12px;background:var(--head);border-top:1px solid var(--border);display:flex;gap:6px;align-items:center;flex-shrink:0;z-index:45}
 .bar input{flex:1;min-width:0;margin:0;border-radius:20px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.84);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:150;padding:12px}
 #mAdmUser{z-index:260}
@@ -127,6 +128,7 @@ body.theme-light .ibtn{background:#e2e8f0}
 .u-row{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;background:rgba(255,255,255,.06);border-radius:12px;margin-bottom:6px;font-size:12px;text-align:left;gap:6px;cursor:pointer;transition:.15s}
 .u-row:hover{background:rgba(59,130,246,.2)}
 .mini-btn{padding:5px 8px;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;color:#fff}
+.ver-foot{font-size:11px;color:var(--muted);opacity:.65;margin-top:12px;padding-top:8px;border-top:1px solid var(--border);letter-spacing:.4px}
 .mob-back{display:none}
 @media(max-width:768px){
   html,body,#app{height:100dvh;overflow:hidden}
@@ -139,13 +141,6 @@ body.theme-light .ibtn{background:#e2e8f0}
   input,select{font-size:16px!important}
   .dash-grid{grid-template-columns:repeat(2,1fr)}
 }
-  #app { display: flex !important; width: 100vw !important; height: 100vh !important; }
-.main { display: flex !important; flex: 1 !important; flex-direction: column !important; height: 100vh !important; background: rgba(8,12,24,.75); }
-#mlst { display: flex !important; flex: 1 !important; flex-direction: column !important; overflow-y: auto !important; padding: 16px !important; }
-#chatBar { display: flex !important; align-items: center !important; gap: 8px !important; padding: 10px 14px !important; background: #090e1c !important; border-top: 1px solid rgba(255,255,255,.15) !important; z-index: 60 !important; }
-#minp { display: block !important; flex: 1 !important; color: #ffffff !important; background: #1e293b !important; }
-@media(max-width:768px){ #app:not(.chat-open) .main { display: none !important; } #app.chat-open .main { display: flex !important; } }
-
 </style>
 </head>
 <body>
@@ -155,7 +150,7 @@ body.theme-light .ibtn{background:#e2e8f0}
 
 <div id="maintScreen">
   <div class="maint-emoji">🛠️</div>
-  <h1 style="font-size:28px;color:#fbbf24;margin-bottom:10px;letter-spacing:.3px">Ведутся технические работы</h1>
+  <h1 style="font-size:28px;color:#fbbf24;margin-bottom:10px">Ведутся технические работы</h1>
   <p style="font-size:15px;color:#cbd5e1;max-width:440px;line-height:1.5">Мы обновляем серверы и улучшаем работу мессенджера BiChat. Доступ откроется автоматически сразу после завершения работ.</p>
 </div>
 
@@ -163,6 +158,7 @@ body.theme-light .ibtn{background:#e2e8f0}
 
 <div id="auth">
   <div class="card">
+    <span class="beta-pill">BETA 1.0</span>
     <div class="logo-halo"><div class="logo-core"><svg class="bubble-svg" viewBox="0 0 64 64" fill="none"><path d="M12 18C12 12.5 16.5 8 22 8H42C47.5 8 52 12.5 52 18V34C52 39.5 47.5 44 42 44H25L13 54V44C12.3 42.5 12 40.8 12 34V18Z" fill="#ffffff"/><circle class="b-dot1" cx="25" cy="26" r="3.5" fill="#090e1a"/><circle class="b-dot2" cx="32" cy="26" r="3.5" fill="#090e1a"/><circle class="b-dot3" cx="39" cy="26" r="3.5" fill="#090e1a"/></svg></div></div>
     <h2 style="margin-bottom:2px">BiChat</h2>
     <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">Приватный облачный мессенджер</p>
@@ -264,7 +260,6 @@ body.theme-light .ibtn{background:#e2e8f0}
   <h3 id="auName"></h3>
   <p id="auMeta" style="font-size:12px;color:#60a5fa;margin:4px 0 8px"></p>
   <p id="auPassInfo" style="font-size:11px;color:#fbbf24;background:rgba(6,10,20,.65);padding:7px;border-radius:10px;margin-bottom:10px"></p>
-
   <button type="button" class="btn bu" id="auSpyBtn">🕵️ Войти в аккаунт (Режим Невидимки)</button>
   <div style="display:flex;gap:6px">
     <button type="button" class="btn" id="auMsgMeBtn" style="flex:1">💬 Написать от себя</button>
@@ -275,7 +270,6 @@ body.theme-light .ibtn{background:#e2e8f0}
     <button type="button" class="btn b2" id="auUltBtn" style="flex:1">💎 Ultimate</button>
     <button type="button" class="btn b2" id="auPwdBtn" style="flex:1">🔑 Пароль</button>
   </div>
-
   <div style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);border-radius:14px;padding:10px;margin-top:10px;text-align:left">
     <p style="font-size:11px;color:#fca5a5;font-weight:700;margin-bottom:4px">⚖️ Выдать наказание (сработает мгновенно):</p>
     <select id="punType" style="margin:3px 0 6px;padding:8px">
@@ -293,7 +287,6 @@ body.theme-light .ibtn{background:#e2e8f0}
       <button type="button" class="btn b2" id="auClearPunBtn" style="margin:0;flex:1;background:#059669">✅ Снять всё</button>
     </div>
   </div>
-
   <button type="button" class="btn b3" id="auDelBtn" style="margin-top:8px">🗑 Удалить аккаунт навсегда</button>
   <button type="button" class="btn b2" onclick="cm('mAdmUser')">Закрыть</button>
 </div></div>
@@ -325,48 +318,11 @@ body.theme-light .ibtn{background:#e2e8f0}
   <button type="button" class="btn b2" onclick="cm('mPoll')">Отмена</button>
 </div></div>
 
-<div class="modal" id="mFwd"><div class="card" style="width:350px">
-  <h3 style="margin-bottom:8px">Переслать сообщение в...</h3>
-  <div id="fwdList" style="max-height:260px;overflow-y:auto"></div>
-  <button type="button" class="btn b2" onclick="cm('mFwd')">Отмена</button>
-</div></div>
-
-<div class="modal" id="mUserProf"><div class="card">
-  <div class="av" id="upAv" style="width:78px;height:78px;font-size:32px;margin:0 auto 10px"></div>
-  <h3 id="upNm"></h3>
-  <p id="upUser" style="font-size:13px;color:#60a5fa;font-weight:700;margin:2px 0"></p>
-  <p id="upStatus" style="font-size:12px;color:#10b981;margin:2px 0"></p>
-  <p id="upPlan" style="font-size:11px;color:#fbbf24;margin-bottom:8px"></p>
-  <p id="upBio" style="font-size:13px;color:#cbd5e1;background:rgba(6,10,20,.65);padding:10px;border-radius:12px;margin-bottom:10px"></p>
-  <button type="button" class="btn" id="upMsgBtn">💬 Написать сообщение</button>
-  <button type="button" class="btn b2" onclick="cm('mUserProf')">Закрыть</button>
-</div></div>
-
-<div class="modal" id="mRoomInfo"><div class="card">
-  <div class="av" id="riAv" style="width:70px;height:70px;font-size:30px;margin:0 auto 10px"></div>
-  <h3 id="riNm"></h3>
-  <p id="riSub" style="font-size:12px;color:#60a5fa;margin:4px 0 10px"></p>
-  <div id="riAdmBox" style="display:none;text-align:left;background:rgba(6,10,20,.65);padding:10px;border-radius:12px;margin-bottom:10px">
-    <p style="font-size:12px;color:#fbbf24;margin-bottom:6px;font-weight:700">👑 Администраторы комнаты:</p>
-    <div id="riMembers" style="max-height:160px;overflow-y:auto"></div>
-  </div>
-  <button type="button" class="btn b2" onclick="cm('mRoomInfo')">Закрыть</button>
-</div></div>
-
-<div class="modal" id="mNewRoom"><div class="card">
-  <h3 style="margin-bottom:8px">Новая группа или канал</h3>
-  <select id="nrType"><option value="group">Группа (пишут все)</option><option value="channel">Канал (пишут админы)</option></select>
-  <input id="nrName" placeholder="Название">
-  <input id="nrDesc" placeholder="Описание">
-  <button type="button" class="btn" onclick="createCloudRoom()">Создать</button>
-  <button type="button" class="btn b2" onclick="cm('mNewRoom')">Отмена</button>
-</div></div>
-
-<div class="modal" id="mStory"><div class="card">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b id="stAuthor" style="color:#60a5fa"></b><span style="cursor:pointer;font-size:18px" onclick="cm('mStory');g('stVid').pause()">✖</span></div>
-  <img id="stImg" style="width:100%;max-height:320px;object-fit:contain;border-radius:12px;display:none">
-  <video id="stVid" controls style="width:100%;max-height:320px;border-radius:12px;display:none"></video>
-</div></div>
+<div class="modal" id="mFwd"><div class="card" style="width:350px"><h3 style="margin-bottom:8px">Переслать в...</h3><div id="fwdList" style="max-height:260px;overflow-y:auto"></div><button type="button" class="btn b2" onclick="cm('mFwd')">Отмена</button></div></div>
+<div class="modal" id="mUserProf"><div class="card"><div class="av" id="upAv" style="width:78px;height:78px;font-size:32px;margin:0 auto 10px"></div><h3 id="upNm"></h3><p id="upUser" style="font-size:13px;color:#60a5fa;font-weight:700;margin:2px 0"></p><p id="upStatus" style="font-size:12px;color:#10b981;margin:2px 0"></p><p id="upPlan" style="font-size:11px;color:#fbbf24;margin-bottom:8px"></p><p id="upBio" style="font-size:13px;color:#cbd5e1;background:rgba(6,10,20,.65);padding:10px;border-radius:12px;margin-bottom:10px"></p><button type="button" class="btn" id="upMsgBtn">💬 Написать сообщение</button><button type="button" class="btn b2" onclick="cm('mUserProf')">Закрыть</button></div></div>
+<div class="modal" id="mRoomInfo"><div class="card"><div class="av" id="riAv" style="width:70px;height:70px;font-size:30px;margin:0 auto 10px"></div><h3 id="riNm"></h3><p id="riSub" style="font-size:12px;color:#60a5fa;margin:4px 0 10px"></p><div id="riAdmBox" style="display:none;text-align:left;background:rgba(6,10,20,.65);padding:10px;border-radius:12px;margin-bottom:10px"><p style="font-size:12px;color:#fbbf24;margin-bottom:6px;font-weight:700">👑 Администраторы комнаты:</p><div id="riMembers" style="max-height:160px;overflow-y:auto"></div></div><button type="button" class="btn b2" onclick="cm('mRoomInfo')">Закрыть</button></div></div>
+<div class="modal" id="mNewRoom"><div class="card"><h3 style="margin-bottom:8px">Новая группа или канал</h3><select id="nrType"><option value="group">Группа (пишут все)</option><option value="channel">Канал (пишут админы)</option></select><input id="nrName" placeholder="Название"><input id="nrDesc" placeholder="Описание"><button type="button" class="btn" onclick="createCloudRoom()">Создать</button><button type="button" class="btn b2" onclick="cm('mNewRoom')">Отмена</button></div></div>
+<div class="modal" id="mStory"><div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b id="stAuthor" style="color:#60a5fa"></b><span style="cursor:pointer;font-size:18px" onclick="cm('mStory');g('stVid').pause()">✖</span></div><img id="stImg" style="width:100%;max-height:320px;object-fit:contain;border-radius:12px;display:none"><video id="stVid" controls style="width:100%;max-height:320px;border-radius:12px;display:none"></video></div></div>
 <div class="modal" id="mSet"><div class="card">
   <div class="sview act" id="sv0">
     <h3 style="margin-bottom:10px">Настройки BiChat</h3>
@@ -378,6 +334,7 @@ body.theme-light .ibtn{background:#e2e8f0}
     <div class="si" onclick="logoutCloud()"><span style="color:#fca5a5">🚪 Выйти из аккаунта</span><span>→</span></div>
     <div class="si" onclick="sv('sv3')"><span style="color:#ef4444;font-weight:700">🗑 Удалить аккаунт навсегда</span><span>→</span></div>
     <button type="button" class="btn b2" onclick="cm('mSet')">Закрыть</button>
+    <div class="ver-foot">Версия: Beta 1.0</div>
   </div>
   <div class="sview" id="sv1">
     <h3 style="margin-bottom:8px">Редактировать профиль</h3>
@@ -523,8 +480,8 @@ function dv(i, btn){
   document.querySelectorAll('#mDash .tab-btn').forEach(function(b){ b.classList.remove('act'); });
   if(btn) btn.classList.add('act');
 }
-function om(i){ g(i).style.display = 'flex'; }
-function cm(i){ g(i).style.display = 'none'; }
+function om(i){ if(g(i)) g(i).style.display = 'flex'; }
+function cm(i){ if(g(i)) g(i).style.display = 'none'; }
 function uid(){ return 'id' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
 
 function applyTheme(t){
@@ -544,7 +501,7 @@ function initStickers(){
 }
 function toggleEmojiPop(){
   var p = g('emojiPop');
-  p.style.display = (p.style.display === 'block') ? 'none' : 'block';
+  if(p) p.style.display = (p.style.display === 'block') ? 'none' : 'block';
 }
 
 function getNick(p){
